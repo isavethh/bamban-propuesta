@@ -1,0 +1,1530 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Propuesta BamBam - Diseno Mejorado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --brand: #ff7a00;
+        --brand-dark: #cc6200;
+        --mint: #12b981;
+        --ink: #171717;
+        --muted: #6b7280;
+        --bg: #f7f3ef;
+        --card: #ffffff;
+        --line: #eadfd6;
+        --shadow: 0 18px 40px rgba(20, 12, 4, 0.12);
+        --soft: #fff1e5;
+        --sky: #e9f4ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: radial-gradient(circle at top left, #fff9f4 0%, #f8efe8 35%, #efe9e4 70%, #e9e3de 100%);
+        min-height: 100vh;
+      }
+
+      .stage {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 32px 16px 64px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .shape {
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(0.5px);
+        opacity: 0.7;
+      }
+
+      .shape.orange {
+        width: 240px;
+        height: 240px;
+        background: radial-gradient(circle, #ffb670 0%, rgba(255, 122, 0, 0) 70%);
+        top: -60px;
+        right: 10%;
+      }
+
+      .shape.blue {
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, #cfe8ff 0%, rgba(207, 232, 255, 0) 70%);
+        bottom: 30px;
+        left: 6%;
+      }
+
+      .phone-wrap {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        width: min(980px, 100%);
+        align-items: center;
+      }
+
+      .proposal-header {
+        text-align: center;
+      }
+
+      .proposal-header h1 {
+        font-family: "Fraunces", serif;
+        font-size: clamp(28px, 4vw, 44px);
+        margin: 0 0 8px;
+      }
+
+      .proposal-header p {
+        margin: 0 auto;
+        max-width: 680px;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .phone {
+        width: min(420px, 100%);
+        margin: 0 auto;
+        background: #101010;
+        border-radius: 42px;
+        padding: 14px;
+        box-shadow: var(--shadow);
+      }
+
+      .screen {
+        background: var(--bg);
+        border-radius: 32px;
+        overflow: hidden;
+        min-height: 760px;
+        position: relative;
+      }
+
+      .status {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 18px 6px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .notch {
+        width: 120px;
+        height: 20px;
+        background: #0f0f0f;
+        border-radius: 999px;
+        margin: 0 auto 8px;
+      }
+
+      .app {
+        padding: 0 18px 90px;
+      }
+
+      .app-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 0 10px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .brand-badge {
+        width: 38px;
+        height: 38px;
+        border-radius: 14px;
+        background: linear-gradient(140deg, var(--brand) 0%, #ff9f3f 60%, #ffd8a5 100%);
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        color: #1c0c00;
+        box-shadow: 0 10px 16px rgba(255, 122, 0, 0.25);
+      }
+
+      .brand h2 {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .brand span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .chip-row {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+      }
+
+      .chip {
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: #fff;
+        border: 1px solid var(--line);
+        font-size: 12px;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .chip.active {
+        background: var(--brand);
+        color: #fff;
+        border-color: transparent;
+      }
+
+      .search {
+        margin: 12px 0 16px;
+        position: relative;
+      }
+
+      .search input {
+        width: 100%;
+        padding: 12px 40px 12px 14px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: #fff;
+        font-size: 13px;
+      }
+
+      .search button {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: var(--soft);
+        color: var(--brand-dark);
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      .hero-card {
+        background: linear-gradient(135deg, #fff6ec 0%, #ffffff 60%);
+        border-radius: 22px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        display: grid;
+        gap: 10px;
+        box-shadow: 0 12px 20px rgba(255, 122, 0, 0.08);
+      }
+
+      .hero-card h3 {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .hero-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .cta-row {
+        display: flex;
+        gap: 10px;
+      }
+
+      .btn {
+        border-radius: 12px;
+        padding: 10px 12px;
+        font-size: 12px;
+        border: 1px solid transparent;
+        cursor: pointer;
+      }
+
+      .btn.primary {
+        background: var(--brand);
+        color: #fff;
+      }
+
+      .btn.ghost {
+        background: #fff;
+        border-color: var(--line);
+        color: var(--ink);
+      }
+
+      .section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 18px 0 10px;
+      }
+
+      .section-title h4 {
+        margin: 0;
+        font-size: 14px;
+      }
+
+      .section-title button {
+        border: none;
+        background: transparent;
+        color: var(--brand-dark);
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .card-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: 18px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        display: grid;
+        gap: 6px;
+        position: relative;
+      }
+
+      .card .tag {
+        font-size: 11px;
+        color: var(--brand-dark);
+        background: var(--soft);
+        padding: 4px 8px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        width: fit-content;
+      }
+
+      .card h5 {
+        margin: 0;
+        font-size: 14px;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .card .meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .pill-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .pill {
+        font-size: 11px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .pill.active {
+        border-color: var(--brand);
+        color: var(--brand-dark);
+        background: var(--soft);
+      }
+
+      .ai-banner {
+        background: linear-gradient(120deg, #d8fff1 0%, #f1fffa 60%);
+        border-radius: 18px;
+        padding: 14px;
+        border: 1px solid #b9f0dd;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .ai-badge {
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+        background: #0f9f72;
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+      }
+
+      .ai-banner p {
+        margin: 0;
+        font-size: 12px;
+        color: #0f5d46;
+      }
+
+      .screen-view {
+        display: none;
+        animation: fadeUp 0.35s ease;
+      }
+
+      .screen-view.active {
+        display: block;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .bottom-nav {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+        background: #fff;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        padding: 8px 6px;
+        gap: 6px;
+        box-shadow: 0 10px 20px rgba(15, 10, 0, 0.08);
+      }
+
+      .nav-item {
+        display: grid;
+        place-items: center;
+        gap: 2px;
+        font-size: 10px;
+        color: var(--muted);
+        cursor: pointer;
+        padding: 6px 4px;
+        border-radius: 12px;
+      }
+
+      .nav-item.active {
+        color: var(--brand-dark);
+        background: var(--soft);
+        font-weight: 600;
+      }
+
+      .nav-icon {
+        width: 18px;
+        height: 18px;
+      }
+
+      .floating-ai {
+        position: absolute;
+        right: 18px;
+        bottom: 82px;
+        background: var(--mint);
+        color: #fff;
+        border-radius: 16px;
+        padding: 10px 12px;
+        font-size: 11px;
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        box-shadow: 0 12px 24px rgba(18, 185, 129, 0.35);
+        cursor: pointer;
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(12, 8, 4, 0.4);
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .modal.active {
+        display: flex;
+      }
+
+      .sheet {
+        background: #fff;
+        border-radius: 24px;
+        padding: 18px;
+        width: min(420px, 100%);
+      }
+
+      .sheet h4 {
+        margin: 0 0 10px;
+      }
+
+      .sheet input,
+      .sheet textarea {
+        width: 100%;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        padding: 10px;
+        font-family: inherit;
+        margin-bottom: 10px;
+        font-size: 12px;
+      }
+
+      .chat {
+        display: grid;
+        gap: 10px;
+      }
+
+      .bubble {
+        padding: 10px 12px;
+        border-radius: 14px;
+        font-size: 12px;
+        max-width: 85%;
+      }
+
+      .bubble.bot {
+        background: #fff;
+        border: 1px solid var(--line);
+      }
+
+      .bubble.me {
+        background: var(--soft);
+        margin-left: auto;
+      }
+
+      .chat-input {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .chat-input input {
+        flex: 1;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        padding: 10px;
+      }
+
+      .chat-input button {
+        border-radius: 12px;
+        border: none;
+        padding: 0 12px;
+        background: var(--mint);
+        color: #fff;
+        cursor: pointer;
+      }
+
+      .profile-hero {
+        background: linear-gradient(120deg, #fff1e1 0%, #fffdf8 70%);
+        border-radius: 18px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        display: grid;
+        gap: 6px;
+      }
+
+      .progress {
+        height: 8px;
+        background: #f3f4f6;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .progress span {
+        display: block;
+        height: 100%;
+        background: var(--brand);
+        width: 72%;
+      }
+
+      .grid-two {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .small-card {
+        border-radius: 16px;
+        padding: 12px;
+        background: #fff;
+        border: 1px solid var(--line);
+        font-size: 12px;
+      }
+
+      .toast {
+        position: absolute;
+        top: 80px;
+        right: 20px;
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        padding: 8px 12px;
+        font-size: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+
+      .toast.show {
+        display: block;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 8px;
+        margin: 8px 0 12px;
+      }
+
+      .tab {
+        flex: 1;
+        text-align: center;
+        padding: 8px 0;
+        border-radius: 12px;
+        font-size: 11px;
+        border: 1px solid var(--line);
+        cursor: pointer;
+      }
+
+      /* Categorías de oficios */
+      .category-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin: 12px 0;
+      }
+
+      .cat-card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 10px 8px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .cat-card:hover, .cat-card.active {
+        border-color: var(--brand);
+        background: var(--soft);
+      }
+
+      .cat-card .icon {
+        font-size: 20px;
+        margin-bottom: 4px;
+      }
+
+      .cat-card span {
+        font-size: 10px;
+        color: var(--muted);
+        display: block;
+      }
+
+      /* Botón de ayuda urgente */
+      .urgent-btn {
+        width: 100%;
+        padding: 14px;
+        border-radius: 16px;
+        border: none;
+        background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 8px 20px rgba(255, 107, 53, 0.35);
+        margin: 12px 0;
+      }
+
+      .urgent-btn:active {
+        transform: scale(0.98);
+      }
+
+      /* Estrellas y badges */
+      .stars {
+        display: flex;
+        gap: 2px;
+        font-size: 12px;
+      }
+
+      .stars .filled {
+        color: #fbbf24;
+      }
+
+      .stars .empty {
+        color: #e5e7eb;
+      }
+
+      .badge-row {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 6px;
+      }
+
+      .badge {
+        font-size: 9px;
+        padding: 3px 7px;
+        border-radius: 999px;
+        background: #ecfdf5;
+        color: #059669;
+        border: 1px solid #a7f3d0;
+      }
+
+      .badge.gold {
+        background: #fef3c7;
+        color: #d97706;
+        border-color: #fcd34d;
+      }
+
+      .badge.blue {
+        background: #dbeafe;
+        color: #2563eb;
+        border-color: #93c5fd;
+      }
+
+      /* WhatsApp button */
+      .whatsapp-btn {
+        background: #25d366;
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 10px 12px;
+        font-size: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* Skill chips en perfil */
+      .skill-chips {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin: 8px 0;
+      }
+
+      .skill-chip {
+        font-size: 10px;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: var(--soft);
+        color: var(--brand-dark);
+      }
+
+      /* Disponibilidad */
+      .availability {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        color: var(--mint);
+      }
+
+      .availability .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--mint);
+      }
+
+      /* Trabajos completados */
+      .completed-jobs {
+        font-size: 11px;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .tab.active {
+        border-color: var(--brand);
+        color: var(--brand-dark);
+        background: var(--soft);
+      }
+
+      @media (min-width: 960px) {
+        .phone-wrap {
+          grid-template-columns: 1fr 1fr;
+        }
+        .proposal-header {
+          text-align: left;
+          align-self: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div class="shape orange"></div>
+      <div class="shape blue"></div>
+
+      <div class="phone-wrap">
+        <div class="proposal-header">
+          <h1>Propuesta visual mejorada</h1>
+          <p>
+            Diseño inclusivo para TODOS los trabajos: desde profesionales hasta oficios, 
+            servicio doméstico, gastronomía y más. Sin CV complicado, con contacto directo 
+            por WhatsApp, sistema de estrellas y referencias de boca en boca.
+          </p>
+        </div>
+
+        <div class="phone">
+          <div class="screen">
+            <div class="status">
+              <span>9:41</span>
+              <span>LTE 84%</span>
+            </div>
+            <div class="notch"></div>
+
+            <div class="app">
+              <div class="app-header">
+                <div class="brand">
+                  <div class="brand-badge">B</div>
+                  <div>
+                    <h2>BamBam</h2>
+                    <span>Tu empleo seguro</span>
+                  </div>
+                </div>
+                <button class="btn ghost" id="notify">Notificar</button>
+              </div>
+
+              <div class="screen-view active" data-screen="home">
+                <div class="hero-card">
+                  <h3>Encuentra trabajo o ayuda hoy mismo</h3>
+                  <p>Para todos: desde profesionales hasta oficios y servicios del hogar. Sin CV, contacto directo.</p>
+                  <div class="cta-row">
+                    <button class="btn primary" id="ctaStart">Ver chambas</button>
+                    <button class="btn ghost" id="ctaWorkers">Soy trabajador</button>
+                  </div>
+                </div>
+
+                <button class="urgent-btn" id="needHelpBtn">🆘 Necesito ayuda HOY</button>
+
+                <div class="search">
+                  <input id="globalSearch" type="search" placeholder="Busca mesero, plomero, niñera..." />
+                  <button aria-label="Buscar">🔍</button>
+                </div>
+
+                <div class="section-title">
+                  <h4>¿Qué necesitas?</h4>
+                  <button data-target="services">Ver todo</button>
+                </div>
+                <div class="category-grid" id="categoryGrid">
+                  <div class="cat-card" data-cat="domestico"><div class="icon">🏠</div><span>Doméstico</span></div>
+                  <div class="cat-card" data-cat="gastronomia"><div class="icon">🍽️</div><span>Gastronomía</span></div>
+                  <div class="cat-card" data-cat="oficios"><div class="icon">🔧</div><span>Oficios</span></div>
+                  <div class="cat-card" data-cat="transporte"><div class="icon">🚗</div><span>Transporte</span></div>
+                  <div class="cat-card" data-cat="construccion"><div class="icon">🏗️</div><span>Construcción</span></div>
+                  <div class="cat-card" data-cat="belleza"><div class="icon">💇</div><span>Belleza</span></div>
+                </div>
+
+                <div class="chip-row" id="homeChips">
+                  <div class="chip active">Cerca de mi</div>
+                  <div class="chip">Disponible hoy</div>
+                  <div class="chip">Con referencias</div>
+                  <div class="chip">Pago por hora</div>
+                </div>
+
+                <div class="section-title">
+                  <h4>Trabajadores destacados</h4>
+                  <button data-target="people">Ver todo</button>
+                </div>
+                <div class="card-list" id="homeWorkers"></div>
+
+                <div class="section-title">
+                  <h4>Chambas urgentes</h4>
+                  <button data-target="jobs">Ver todo</button>
+                </div>
+                <div class="card-list" id="homeJobs"></div>
+
+                <div class="ai-banner" style="margin-top: 14px;">
+                  <div class="ai-badge">IA</div>
+                  <div>
+                    <strong>¿No sabes qué buscar?</strong>
+                    <p>Dime qué necesitas y te conecto con la persona ideal.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="screen-view" data-screen="jobs">
+                <div class="section-title">
+                  <h4>Empleos</h4>
+                  <button id="openFilters">Filtros</button>
+                </div>
+                <div class="search">
+                  <input id="jobSearch" type="search" placeholder="Buscar por titulo o empresa" />
+                  <button aria-label="Buscar">🔍</button>
+                </div>
+                <div class="pill-row" id="modalityFilters">
+                  <div class="pill active" data-filter="all">Todos</div>
+                  <div class="pill" data-filter="Presencial">Presencial</div>
+                  <div class="pill" data-filter="Remoto">Remoto</div>
+                  <div class="pill" data-filter="Hibrido">Hibrido</div>
+                </div>
+                <div class="tabs" id="recencyTabs">
+                  <div class="tab active" data-range="7">7 dias</div>
+                  <div class="tab" data-range="30">30 dias</div>
+                  <div class="tab" data-range="365">1 ano</div>
+                </div>
+                <div class="card-list" id="jobsList"></div>
+              </div>
+
+              <div class="screen-view" data-screen="services">
+                <div class="section-title">
+                  <h4>Servicios profesionales</h4>
+                  <button id="clearServices">Limpiar</button>
+                </div>
+                <div class="search">
+                  <input id="serviceSearch" type="search" placeholder="Buscar por habilidad o servicio" />
+                  <button aria-label="Buscar">🔍</button>
+                </div>
+                <div class="chip-row" id="serviceCategories"></div>
+                <div class="card-list" id="serviceList"></div>
+              </div>
+
+              <div class="screen-view" data-screen="people">
+                <div class="section-title">
+                  <h4>Personas</h4>
+                  <button id="connectAll">Conectar</button>
+                </div>
+                <div class="search">
+                  <input id="peopleSearch" type="search" placeholder="Buscar por carrera o ciudad" />
+                  <button aria-label="Buscar">🔍</button>
+                </div>
+                <div class="card-list" id="peopleList"></div>
+              </div>
+
+              <div class="screen-view" data-screen="ventures">
+                <div class="section-title">
+                  <h4>Emprendimientos</h4>
+                  <button id="createVenture">Crear</button>
+                </div>
+                <div class="card-list" id="ventureList"></div>
+              </div>
+
+              <div class="screen-view" data-screen="opportunities">
+                <div class="section-title">
+                  <h4>Oportunidades</h4>
+                  <button id="sortOpp">Ordenar</button>
+                </div>
+                <div class="card-list" id="opportunityList"></div>
+              </div>
+
+              <div class="screen-view" data-screen="profile">
+                <div class="profile-hero">
+                  <div style="display: flex; justify-content: space-between; align-items: start;">
+                    <div>
+                      <strong style="font-size: 16px;">Rosa Mamani</strong>
+                      <p style="margin: 2px 0; font-size: 12px; color: var(--muted);">Empleada doméstica · La Paz</p>
+                    </div>
+                    <div class="stars">
+                      <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span>
+                    </div>
+                  </div>
+                  <div class="badge-row">
+                    <span class="badge gold">⭐ Recomendada</span>
+                    <span class="badge">✓ Puntual</span>
+                    <span class="badge blue">🔒 Verificada</span>
+                  </div>
+                  <div class="availability"><span class="dot"></span> Disponible ahora</div>
+                </div>
+
+                <div class="section-title">
+                  <h4>Lo que sé hacer</h4>
+                  <button id="editProfile">Editar</button>
+                </div>
+                <div class="skill-chips">
+                  <span class="skill-chip">Limpieza profunda</span>
+                  <span class="skill-chip">Cocina boliviana</span>
+                  <span class="skill-chip">Cuidado de niños</span>
+                  <span class="skill-chip">Planchado</span>
+                  <span class="skill-chip">Horario flexible</span>
+                </div>
+
+                <div class="small-card" style="margin-top: 12px;">
+                  <div class="completed-jobs">✅ 47 trabajos completados</div>
+                  <p style="margin: 6px 0 0; font-size: 12px;">"Muy responsable y ordenada. La recomiendo." - María T.</p>
+                </div>
+
+                <div class="section-title">
+                  <h4>Contacto directo</h4>
+                  <button id="viewGoals">Compartir</button>
+                </div>
+                <div class="cta-row">
+                  <button class="whatsapp-btn" id="whatsappBtn">📱 WhatsApp</button>
+                  <button class="btn ghost" id="callBtn">📞 Llamar</button>
+                </div>
+
+                <div class="section-title">
+                  <h4>Mis referencias</h4>
+                  <button>Agregar</button>
+                </div>
+                <div class="grid-two">
+                  <div class="small-card">👤 Sra. Patricia (empleadora 2 años)</div>
+                  <div class="small-card">👤 Don Carlos (referencia personal)</div>
+                </div>
+              </div>
+
+              <div class="screen-view" data-screen="ai">
+                <div class="ai-banner">
+                  <div class="ai-badge">IA</div>
+                  <div>
+                    <strong>Asistente de chambas</strong>
+                    <p>Dime qué sabes hacer o qué necesitas y te ayudo.</p>
+                  </div>
+                </div>
+                <div class="chat" id="chatMessages">
+                  <div class="bubble bot">¡Hola! Soy tu asistente. ¿Buscas trabajo o necesitas contratar a alguien?</div>
+                  <div class="bubble me">Busco trabajo de mesera, tengo experiencia.</div>
+                  <div class="bubble bot">Perfecto. Encontré 3 ofertas de mesera cerca de ti. Una paga 150 Bs/día y es para hoy. ¿Te interesa?</div>
+                  <div class="bubble me">Sí, ¿cómo los contacto?</div>
+                  <div class="bubble bot">Te paso el WhatsApp directo: 70012345. Menciona que vienes de BamBam. ¡Éxito! 👍</div>
+                </div>
+                <div class="chat-input">
+                  <input id="chatInput" type="text" placeholder="Ej: busco trabajo de plomero..." />
+                  <button id="chatSend">Enviar</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="floating-ai" id="aiShortcut">🤖 IA</div>
+            <div class="toast" id="toast">Notificacion activada</div>
+
+            <div class="bottom-nav" id="bottomNav">
+              <div class="nav-item active" data-target="home">
+                <div class="nav-icon">🏠</div>
+                Inicio
+              </div>
+              <div class="nav-item" data-target="jobs">
+                <div class="nav-icon">💼</div>
+                Empleos
+              </div>
+              <div class="nav-item" data-target="services">
+                <div class="nav-icon">🛠️</div>
+                Servicios
+              </div>
+              <div class="nav-item" data-target="people">
+                <div class="nav-icon">👥</div>
+                Personas
+              </div>
+              <div class="nav-item" data-target="profile">
+                <div class="nav-icon">👤</div>
+                Perfil
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="applyModal">
+      <div class="sheet">
+        <h4>Contactar trabajador</h4>
+        <input type="text" placeholder="Tu nombre" />
+        <input type="tel" placeholder="Tu WhatsApp (ej: 70012345)" />
+        <textarea rows="2" placeholder="¿Qué necesitas? (ej: limpieza de departamento)"></textarea>
+        <div class="cta-row">
+          <button class="btn ghost" id="closeModal">Cancelar</button>
+          <button class="btn primary" id="submitModal">Enviar mensaje</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="helpModal">
+      <div class="sheet">
+        <h4>🆘 Necesito ayuda HOY</h4>
+        <p style="font-size: 12px; color: var(--muted); margin: 0 0 12px;">Publica rápido y recibe respuestas en minutos.</p>
+        <input type="text" id="helpWhat" placeholder="¿Qué necesitas? (ej: mesero, plomero, niñera)" />
+        <input type="text" id="helpWhere" placeholder="¿Dónde? (tu zona o dirección)" />
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="helpWhen" placeholder="¿Cuándo? (ej: hoy 3pm)" style="flex: 1;" />
+          <input type="text" id="helpPay" placeholder="¿Cuánto pagas? (Bs)" style="width: 100px;" />
+        </div>
+        <div class="pill-row" style="margin: 10px 0;">
+          <div class="pill active" data-paytype="hora">Por hora</div>
+          <div class="pill" data-paytype="trabajo">Por trabajo</div>
+          <div class="pill" data-paytype="acordar">A acordar</div>
+        </div>
+        <div class="cta-row">
+          <button class="btn ghost" id="closeHelpModal">Cancelar</button>
+          <button class="btn primary" id="submitHelp">📢 Publicar ahora</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const screens = document.querySelectorAll(".screen-view");
+      const navItems = document.querySelectorAll(".nav-item");
+      const toast = document.getElementById("toast");
+      const aiShortcut = document.getElementById("aiShortcut");
+      const applyModal = document.getElementById("applyModal");
+      const jobSearch = document.getElementById("jobSearch");
+      const jobsList = document.getElementById("jobsList");
+      const homeJobs = document.getElementById("homeJobs");
+      const modalityFilters = document.getElementById("modalityFilters");
+      const recencyTabs = document.getElementById("recencyTabs");
+      const serviceCategories = document.getElementById("serviceCategories");
+      const serviceList = document.getElementById("serviceList");
+      const serviceSearch = document.getElementById("serviceSearch");
+      const peopleList = document.getElementById("peopleList");
+      const peopleSearch = document.getElementById("peopleSearch");
+      const ventureList = document.getElementById("ventureList");
+      const opportunityList = document.getElementById("opportunityList");
+      const chatMessages = document.getElementById("chatMessages");
+      const chatInput = document.getElementById("chatInput");
+
+      const state = {
+        screen: "home",
+        jobQuery: "",
+        jobFilter: "all",
+        recency: 7,
+        serviceCategory: "Todos",
+        serviceQuery: "",
+        peopleQuery: "",
+      };
+
+      const jobs = [
+        {
+          title: "Mesero/a para evento",
+          company: "Particular",
+          city: "La Paz",
+          modality: "Presencial",
+          salary: "150 Bs/día",
+          tag: "🔥 Urgente",
+          category: "gastronomia"
+        },
+        {
+          title: "Empleada doméstica cama afuera",
+          company: "Familia Rojas",
+          city: "Zona Sur",
+          modality: "Presencial",
+          salary: "2.800 Bs/mes",
+          tag: "✅ Verificado",
+          category: "domestico"
+        },
+        {
+          title: "Plomero para baño urgente",
+          company: "Edificio Central",
+          city: "Miraflores",
+          modality: "Presencial",
+          salary: "200 Bs",
+          tag: "🆘 Hoy",
+          category: "oficios"
+        },
+        {
+          title: "Niñera fines de semana",
+          company: "Particular",
+          city: "Calacoto",
+          modality: "Presencial",
+          salary: "80 Bs/día",
+          tag: "Fijo",
+          category: "domestico"
+        },
+        {
+          title: "Cocinero/a comida boliviana",
+          company: "Restaurant Pachamama",
+          city: "San Miguel",
+          modality: "Presencial",
+          salary: "3.500 Bs/mes",
+          tag: "⭐ Top",
+          category: "gastronomia"
+        },
+        {
+          title: "Electricista residencial",
+          company: "Condominio Los Pinos",
+          city: "Achumani",
+          modality: "Presencial",
+          salary: "250 Bs",
+          tag: "Mañana",
+          category: "oficios"
+        },
+      ];
+
+      const services = [
+        { name: "Doña Rosa", skill: "Limpieza y cocina", category: "Domestico", rate: "25 Bs/h", stars: 5, badges: ["Puntual", "Recomendada"], jobs: 47, available: true },
+        { name: "Don Pedro", skill: "Plomería y gasfitería", category: "Oficios", rate: "40 Bs/h", stars: 4, badges: ["Verificado"], jobs: 32, available: true },
+        { name: "Carla", skill: "Mesera con experiencia", category: "Gastronomia", rate: "15 Bs/h", stars: 5, badges: ["Puntual"], jobs: 18, available: false },
+        { name: "Miguel", skill: "Electricista certificado", category: "Oficios", rate: "50 Bs/h", stars: 5, badges: ["Verificado", "Top"], jobs: 89, available: true },
+        { name: "Ana", skill: "Peluquera a domicilio", category: "Belleza", rate: "Desde 30 Bs", stars: 4, badges: ["Popular"], jobs: 56, available: true },
+        { name: "Juan Carlos", skill: "Albañil y pintor", category: "Construccion", rate: "35 Bs/h", stars: 4, badges: ["Confiable"], jobs: 41, available: true },
+        { name: "Lucía", skill: "Niñera y cuidado adultos", category: "Domestico", rate: "20 Bs/h", stars: 5, badges: ["Recomendada", "Verificada"], jobs: 63, available: true },
+        { name: "Roberto", skill: "Conductor y delivery", category: "Transporte", rate: "Acordar", stars: 4, badges: ["Tengo moto"], jobs: 120, available: true },
+      ];
+
+      const people = [
+        { name: "Rosa Mamani", role: "Empleada doméstica", city: "La Paz", stars: 5, badges: ["Recomendada"], available: true, jobs: 47 },
+        { name: "Pedro Quispe", role: "Plomero y gasfitero", city: "El Alto", stars: 4, badges: ["Verificado"], available: true, jobs: 32 },
+        { name: "María Condori", role: "Cocinera", city: "Cochabamba", stars: 5, badges: ["Top"], available: false, jobs: 28 },
+        { name: "Carlos Huanca", role: "Electricista", city: "La Paz", stars: 5, badges: ["Certificado"], available: true, jobs: 89 },
+        { name: "Juana Flores", role: "Niñera", city: "Santa Cruz", stars: 4, badges: ["Puntual"], available: true, jobs: 15 },
+      ];
+
+      const ventures = [
+        { name: "Cafe Ayni", desc: "Cafe de especialidad con entregas express" },
+        { name: "EcoPrint", desc: "Impresion sostenible para empresas" },
+        { name: "MotoRun", desc: "Logistica de ultima milla" },
+      ];
+
+      const opportunities = [
+        { title: "Beca UX 2026", desc: "Formacion intensiva con mentorias" },
+        { title: "Voluntariado social", desc: "Apoyo en gestion y comunicacion" },
+        { title: "Pitch Day", desc: "Presenta tu emprendimiento" },
+      ];
+
+      function setScreen(next) {
+        state.screen = next;
+        screens.forEach((screen) => {
+          screen.classList.toggle("active", screen.dataset.screen === next);
+        });
+        navItems.forEach((item) => {
+          item.classList.toggle("active", item.dataset.target === next);
+        });
+      }
+
+      function renderJobs(target, list) {
+        target.innerHTML = "";
+        list.forEach((job) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <span class="tag">${job.tag}</span>
+            <h5>${job.title}</h5>
+            <p>${job.company} · ${job.city}</p>
+            <div class="meta"><span>${job.modality}</span><span>${job.salary}</span></div>
+            <div class="cta-row">
+              <button class="btn ghost">Guardar</button>
+              <button class="whatsapp-btn" data-contact="${job.title}">📱 Contactar</button>
+            </div>
+          `;
+          target.appendChild(card);
+        });
+      }
+
+      function renderServices() {
+        serviceList.innerHTML = "";
+        const filtered = services.filter((item) => {
+          const matchCategory = state.serviceCategory === "Todos" || item.category === state.serviceCategory;
+          const q = state.serviceQuery.toLowerCase();
+          const matchQuery = !q || item.skill.toLowerCase().includes(q) || item.name.toLowerCase().includes(q);
+          return matchCategory && matchQuery;
+        });
+        filtered.forEach((item) => {
+          const starsHtml = Array(5).fill(0).map((_, i) => 
+            i < item.stars ? '<span class="filled">★</span>' : '<span class="empty">★</span>'
+          ).join('');
+          const badgesHtml = item.badges.map(b => `<span class="badge">${b}</span>`).join('');
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+              <span class="tag">${item.category}</span>
+              <div class="stars">${starsHtml}</div>
+            </div>
+            <h5>${item.name}</h5>
+            <p>${item.skill}</p>
+            <div class="badge-row">${badgesHtml}</div>
+            <div class="meta">
+              <span>${item.rate}</span>
+              <span class="completed-jobs">✅ ${item.jobs} trabajos</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+              ${item.available ? '<span class="availability"><span class="dot"></span> Disponible</span>' : '<span style="font-size: 11px; color: var(--muted);">No disponible</span>'}
+              <button class="whatsapp-btn" ${!item.available ? 'disabled style="opacity: 0.5;"' : ''} data-worker="${item.name}">📱 WhatsApp</button>
+            </div>
+          `;
+          serviceList.appendChild(card);
+        });
+      }
+
+      function renderPeople() {
+        peopleList.innerHTML = "";
+        const filtered = people.filter((item) => {
+          const q = state.peopleQuery.toLowerCase();
+          return !q || item.role.toLowerCase().includes(q) || item.city.toLowerCase().includes(q);
+        });
+        filtered.forEach((item) => {
+          const starsHtml = Array(5).fill(0).map((_, i) => 
+            i < item.stars ? '<span class="filled">★</span>' : '<span class="empty">★</span>'
+          ).join('');
+          const badgesHtml = item.badges.map(b => `<span class="badge">${b}</span>`).join('');
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+              <span class="tag">${item.city}</span>
+              <div class="stars">${starsHtml}</div>
+            </div>
+            <h5>${item.name}</h5>
+            <p>${item.role}</p>
+            <div class="badge-row">${badgesHtml}</div>
+            <div class="meta">
+              <span class="completed-jobs">✅ ${item.jobs} trabajos</span>
+              ${item.available ? '<span class="availability"><span class="dot"></span> Disponible</span>' : '<span style="color: var(--muted);">No disponible</span>'}
+            </div>
+            <div class="cta-row">
+              <button class="btn ghost">Ver perfil</button>
+              <button class="whatsapp-btn" ${!item.available ? 'disabled style="opacity: 0.5;"' : ''} data-worker="${item.name}">📱 WhatsApp</button>
+            </div>
+          `;
+          peopleList.appendChild(card);
+        });
+      }
+
+      function renderVenture() {
+        ventureList.innerHTML = "";
+        ventures.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <span class="tag">Emprendimiento</span>
+            <h5>${item.name}</h5>
+            <p>${item.desc}</p>
+            <div class="cta-row">
+              <button class="btn ghost">Ver mas</button>
+              <button class="btn primary">Apoyar</button>
+            </div>
+          `;
+          ventureList.appendChild(card);
+        });
+      }
+
+      function renderOpportunities() {
+        opportunityList.innerHTML = "";
+        opportunities.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <span class="tag">Oportunidad</span>
+            <h5>${item.title}</h5>
+            <p>${item.desc}</p>
+            <div class="cta-row">
+              <button class="btn ghost">Guardar</button>
+              <button class="btn primary">Aplicar</button>
+            </div>
+          `;
+          opportunityList.appendChild(card);
+        });
+      }
+
+      function renderHome() {
+        renderJobs(homeJobs, jobs.slice(0, 2));
+        renderHomeWorkers();
+      }
+
+      function renderHomeWorkers() {
+        const homeWorkers = document.getElementById("homeWorkers");
+        if (!homeWorkers) return;
+        homeWorkers.innerHTML = "";
+        services.filter(s => s.available).slice(0, 2).forEach((item) => {
+          const starsHtml = Array(5).fill(0).map((_, i) => 
+            i < item.stars ? '<span class="filled">★</span>' : '<span class="empty">★</span>'
+          ).join('');
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+              <span class="tag">${item.category}</span>
+              <div class="stars">${starsHtml}</div>
+            </div>
+            <h5>${item.name}</h5>
+            <p>${item.skill} · ${item.rate}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+              <span class="completed-jobs">✅ ${item.jobs} trabajos</span>
+              <button class="whatsapp-btn" data-worker="${item.name}">📱 WhatsApp</button>
+            </div>
+          `;
+          homeWorkers.appendChild(card);
+        });
+      }
+
+      function renderJobList() {
+        const filtered = jobs.filter((job) => {
+          const q = state.jobQuery.toLowerCase();
+          const matchQuery = !q || job.title.toLowerCase().includes(q) || job.company.toLowerCase().includes(q);
+          const matchModality = state.jobFilter === "all" || job.modality === state.jobFilter;
+          return matchQuery && matchModality;
+        });
+        renderJobs(jobsList, filtered);
+      }
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 1800);
+      }
+
+      document.getElementById("notify").addEventListener("click", () => {
+        showToast("Notificacion activada");
+      });
+
+      aiShortcut.addEventListener("click", () => setScreen("ai"));
+
+      document.querySelectorAll("[data-target]").forEach((btn) => {
+        btn.addEventListener("click", () => setScreen(btn.dataset.target));
+      });
+
+      modalityFilters.addEventListener("click", (event) => {
+        const pill = event.target.closest(".pill");
+        if (!pill) return;
+        document.querySelectorAll(".pill").forEach((item) => item.classList.remove("active"));
+        pill.classList.add("active");
+        state.jobFilter = pill.dataset.filter === "all" ? "all" : pill.dataset.filter;
+        renderJobList();
+      });
+
+      recencyTabs.addEventListener("click", (event) => {
+        const tab = event.target.closest(".tab");
+        if (!tab) return;
+        document.querySelectorAll(".tab").forEach((item) => item.classList.remove("active"));
+        tab.classList.add("active");
+        state.recency = Number(tab.dataset.range);
+        showToast(`Mostrando ultimos ${state.recency} dias`);
+      });
+
+      jobSearch.addEventListener("input", (event) => {
+        state.jobQuery = event.target.value;
+        renderJobList();
+      });
+
+      serviceSearch.addEventListener("input", (event) => {
+        state.serviceQuery = event.target.value;
+        renderServices();
+      });
+
+      peopleSearch.addEventListener("input", (event) => {
+        state.peopleQuery = event.target.value;
+        renderPeople();
+      });
+
+      serviceCategories.addEventListener("click", (event) => {
+        const chip = event.target.closest(".chip");
+        if (!chip) return;
+        document.querySelectorAll("#serviceCategories .chip").forEach((item) => item.classList.remove("active"));
+        chip.classList.add("active");
+        state.serviceCategory = chip.textContent.trim();
+        renderServices();
+      });
+
+      document.body.addEventListener("click", (event) => {
+        if (event.target.matches("[data-apply]") || event.target.matches("[data-contact]")) {
+          applyModal.classList.add("active");
+        }
+      });
+
+      document.getElementById("closeModal").addEventListener("click", () => {
+        applyModal.classList.remove("active");
+      });
+
+      document.getElementById("submitModal").addEventListener("click", () => {
+        applyModal.classList.remove("active");
+        showToast("📱 Mensaje enviado por WhatsApp");
+      });
+
+      document.getElementById("ctaStart").addEventListener("click", () => setScreen("jobs"));
+      document.getElementById("ctaWorkers").addEventListener("click", () => setScreen("services"));
+
+      // Modal de ayuda urgente
+      const helpModal = document.getElementById("helpModal");
+      document.getElementById("needHelpBtn").addEventListener("click", () => {
+        helpModal.classList.add("active");
+      });
+      document.getElementById("closeHelpModal").addEventListener("click", () => {
+        helpModal.classList.remove("active");
+      });
+      document.getElementById("submitHelp").addEventListener("click", () => {
+        helpModal.classList.remove("active");
+        showToast("📢 ¡Publicado! Recibirás respuestas pronto");
+      });
+
+      // Tipo de pago en modal
+      document.querySelectorAll("[data-paytype]").forEach(pill => {
+        pill.addEventListener("click", () => {
+          document.querySelectorAll("[data-paytype]").forEach(p => p.classList.remove("active"));
+          pill.classList.add("active");
+        });
+      });
+
+      // Categorías en home
+      document.querySelectorAll(".cat-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const cat = card.dataset.cat;
+          const catMap = { domestico: "Domestico", gastronomia: "Gastronomia", oficios: "Oficios", transporte: "Transporte", construccion: "Construccion", belleza: "Belleza" };
+          state.serviceCategory = catMap[cat] || "Todos";
+          setScreen("services");
+          renderServices();
+          // Actualizar chip activo
+          document.querySelectorAll("#serviceCategories .chip").forEach(chip => {
+            chip.classList.toggle("active", chip.textContent.trim() === state.serviceCategory);
+          });
+        });
+      });
+
+      // WhatsApp buttons
+      document.body.addEventListener("click", (event) => {
+        if (event.target.matches(".whatsapp-btn") || event.target.closest(".whatsapp-btn")) {
+          const btn = event.target.matches(".whatsapp-btn") ? event.target : event.target.closest(".whatsapp-btn");
+          if (!btn.disabled) {
+            showToast("📱 Abriendo WhatsApp...");
+          }
+        }
+      });
+
+      document.getElementById("chatSend").addEventListener("click", () => {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        const bubble = document.createElement("div");
+        bubble.className = "bubble me";
+        bubble.textContent = text;
+        chatMessages.appendChild(bubble);
+        chatInput.value = "";
+        setTimeout(() => {
+          const reply = document.createElement("div");
+          reply.className = "bubble bot";
+          const responses = [
+            "Encontré 3 opciones para ti. ¿Quieres que te pase los contactos por WhatsApp?",
+            "Perfecto, hay demanda para eso. Te recomiendo completar tu perfil con referencias.",
+            "Hay una chamba urgente que paga bien. ¿Te interesa? Te paso el número.",
+            "Entendido. Publica tu disponibilidad y te llegarán ofertas directas."
+          ];
+          reply.textContent = responses[Math.floor(Math.random() * responses.length)];
+          chatMessages.appendChild(reply);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 800);
+      });
+
+      const categories = ["Todos", "Domestico", "Oficios", "Gastronomia", "Belleza", "Transporte", "Construccion"];
+      categories.forEach((cat, index) => {
+        const chip = document.createElement("div");
+        chip.className = "chip" + (index === 0 ? " active" : "");
+        chip.textContent = cat;
+        serviceCategories.appendChild(chip);
+      });
+
+      renderHome();
+      renderJobList();
+      renderServices();
+      renderPeople();
+      renderVenture();
+      renderOpportunities();
+    </script>
+  </body>
+</html>
