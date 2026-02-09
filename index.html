@@ -107,8 +107,14 @@
         background: var(--bg);
         border-radius: 32px;
         overflow: hidden;
-        min-height: 760px;
+        height: 720px;
         position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .screen-top {
+        flex-shrink: 0;
       }
 
       .status {
@@ -129,7 +135,28 @@
       }
 
       .app {
-        padding: 0 18px 90px;
+        flex: 1;
+        overflow-y: auto;
+        padding: 0 18px 20px;
+        scroll-behavior: smooth;
+      }
+
+      /* Scrollbar personalizada */
+      .app::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .app::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .app::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+      }
+
+      .app::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.25);
       }
 
       .app-header {
@@ -137,12 +164,14 @@
         align-items: center;
         justify-content: space-between;
         padding: 8px 0 10px;
+        gap: 10px;
       }
 
       .brand {
         display: flex;
         align-items: center;
         gap: 10px;
+        flex: 1;
       }
 
       .brand-badge {
@@ -398,18 +427,14 @@
       }
 
       .bottom-nav {
-        position: absolute;
-        left: 14px;
-        right: 14px;
-        bottom: 14px;
+        flex-shrink: 0;
         background: #fff;
-        border-radius: 20px;
-        border: 1px solid var(--line);
+        border-radius: 0;
+        border-top: 1px solid var(--line);
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        padding: 8px 6px;
+        padding: 8px 6px 12px;
         gap: 6px;
-        box-shadow: 0 10px 20px rgba(15, 10, 0, 0.08);
       }
 
       .nav-item {
@@ -437,7 +462,7 @@
       .floating-ai {
         position: absolute;
         right: 18px;
-        bottom: 82px;
+        bottom: 90px;
         background: var(--mint);
         color: #fff;
         border-radius: 16px;
@@ -448,16 +473,20 @@
         align-items: center;
         box-shadow: 0 12px 24px rgba(18, 185, 129, 0.35);
         cursor: pointer;
+        z-index: 50;
       }
 
       .modal {
-        position: fixed;
+        position: absolute;
         inset: 0;
-        background: rgba(12, 8, 4, 0.4);
+        background: rgba(12, 8, 4, 0.5);
         display: none;
         align-items: flex-end;
         justify-content: center;
-        padding: 20px;
+        z-index: 100;
+        border-radius: 32px;
+        padding: 0;
+        backdrop-filter: blur(4px);
       }
 
       .modal.active {
@@ -466,9 +495,23 @@
 
       .sheet {
         background: #fff;
-        border-radius: 24px;
+        border-radius: 24px 24px 32px 32px;
         padding: 18px;
-        width: min(420px, 100%);
+        width: 100%;
+        max-height: 85%;
+        overflow-y: auto;
+        animation: slideUp 0.3s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
       }
 
       .sheet h4 {
@@ -476,7 +519,8 @@
       }
 
       .sheet input,
-      .sheet textarea {
+      .sheet textarea,
+      .sheet select {
         width: 100%;
         border-radius: 12px;
         border: 1px solid var(--line);
@@ -484,6 +528,26 @@
         font-family: inherit;
         margin-bottom: 10px;
         font-size: 12px;
+        background: #fff;
+      }
+
+      .sheet-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .sheet-close {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: none;
+        background: #f3f4f6;
+        cursor: pointer;
+        font-size: 14px;
       }
 
       .chat {
@@ -569,19 +633,34 @@
 
       .toast {
         position: absolute;
-        top: 80px;
-        right: 20px;
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%);
         background: #fff;
         border-radius: 12px;
         border: 1px solid var(--line);
-        padding: 8px 12px;
+        padding: 8px 16px;
         font-size: 12px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         display: none;
+        z-index: 200;
+        white-space: nowrap;
       }
 
       .toast.show {
         display: block;
+        animation: toastIn 0.3s ease;
+      }
+
+      @keyframes toastIn {
+        from {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
       }
 
       .tabs {
@@ -600,6 +679,12 @@
         cursor: pointer;
       }
 
+      .tab.active {
+        border-color: var(--brand);
+        color: var(--brand-dark);
+        background: var(--soft);
+      }
+
       /* Categorías de oficios */
       .category-grid {
         display: grid;
@@ -608,53 +693,75 @@
         margin: 12px 0;
       }
 
-      .cat-card {
+      .category-item {
         background: #fff;
         border: 1px solid var(--line);
         border-radius: 14px;
-        padding: 10px 8px;
+        padding: 12px 8px;
         text-align: center;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all 0.2s;
       }
 
-      .cat-card:hover, .cat-card.active {
+      .category-item:hover {
         border-color: var(--brand);
         background: var(--soft);
       }
 
-      .cat-card .icon {
-        font-size: 20px;
+      .category-item.active {
+        border-color: var(--brand);
+        background: var(--soft);
+      }
+
+      .category-icon {
+        font-size: 24px;
         margin-bottom: 4px;
       }
 
-      .cat-card span {
+      .category-label {
         font-size: 10px;
-        color: var(--muted);
-        display: block;
+        color: var(--ink);
+        font-weight: 500;
       }
 
       /* Botón de ayuda urgente */
-      .urgent-btn {
-        width: 100%;
-        padding: 14px;
-        border-radius: 16px;
-        border: none;
+      .help-banner {
         background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-        color: #fff;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
+        border-radius: 16px;
+        padding: 14px;
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 8px;
-        box-shadow: 0 8px 20px rgba(255, 107, 53, 0.35);
+        gap: 12px;
+        cursor: pointer;
         margin: 12px 0;
+        box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
       }
 
-      .urgent-btn:active {
-        transform: scale(0.98);
+      .help-banner:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(255, 107, 53, 0.4);
+      }
+
+      .help-icon {
+        width: 44px;
+        height: 44px;
+        background: rgba(255,255,255,0.25);
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-size: 20px;
+      }
+
+      .help-banner h4 {
+        margin: 0;
+        color: #fff;
+        font-size: 14px;
+      }
+
+      .help-banner p {
+        margin: 2px 0 0;
+        color: rgba(255,255,255,0.85);
+        font-size: 11px;
       }
 
       /* Estrellas y badges */
@@ -664,11 +771,11 @@
         font-size: 12px;
       }
 
-      .stars .filled {
+      .star {
         color: #fbbf24;
       }
 
-      .stars .empty {
+      .star.empty {
         color: #e5e7eb;
       }
 
@@ -676,89 +783,781 @@
         display: flex;
         gap: 6px;
         flex-wrap: wrap;
-        margin-top: 6px;
+        margin: 6px 0;
       }
 
       .badge {
         font-size: 9px;
-        padding: 3px 7px;
+        padding: 3px 8px;
         border-radius: 999px;
-        background: #ecfdf5;
-        color: #059669;
-        border: 1px solid #a7f3d0;
+        background: #e0f2fe;
+        color: #0369a1;
+        font-weight: 500;
       }
 
-      .badge.gold {
-        background: #fef3c7;
-        color: #d97706;
-        border-color: #fcd34d;
+      .badge.verified {
+        background: #dcfce7;
+        color: #166534;
       }
 
-      .badge.blue {
-        background: #dbeafe;
-        color: #2563eb;
-        border-color: #93c5fd;
+      .badge.urgent {
+        background: #fee2e2;
+        color: #dc2626;
       }
 
-      /* WhatsApp button */
-      .whatsapp-btn {
+      /* Botón WhatsApp */
+      .btn.whatsapp {
         background: #25d366;
         color: #fff;
-        border: none;
-        border-radius: 12px;
-        padding: 10px 12px;
-        font-size: 12px;
-        cursor: pointer;
         display: flex;
         align-items: center;
         gap: 6px;
       }
 
-      /* Skill chips en perfil */
-      .skill-chips {
+      .btn.whatsapp:hover {
+        background: #128c7e;
+      }
+
+      /* Skills chips */
+      .skills-row {
         display: flex;
         gap: 6px;
         flex-wrap: wrap;
         margin: 8px 0;
       }
 
-      .skill-chip {
+      .skill {
         font-size: 10px;
-        padding: 5px 10px;
+        padding: 4px 10px;
         border-radius: 999px;
-        background: var(--soft);
-        color: var(--brand-dark);
+        background: #f3f4f6;
+        color: var(--ink);
       }
 
-      /* Disponibilidad */
-      .availability {
+      /* Trabajador card mejorada */
+      .worker-card {
+        background: var(--card);
+        border-radius: 18px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        display: grid;
+        gap: 8px;
+      }
+
+      .worker-header {
         display: flex;
+        gap: 12px;
         align-items: center;
-        gap: 6px;
-        font-size: 11px;
-        color: var(--mint);
       }
 
-      .availability .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--mint);
+      .worker-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--soft) 0%, #ffe4cc 100%);
+        display: grid;
+        place-items: center;
+        font-size: 20px;
       }
 
-      /* Trabajos completados */
-      .completed-jobs {
+      .worker-info h5 {
+        margin: 0;
+        font-size: 14px;
+      }
+
+      .worker-info p {
+        margin: 2px 0 0;
         font-size: 11px;
         color: var(--muted);
+      }
+
+      .worker-stats {
+        display: flex;
+        gap: 12px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .stat {
         display: flex;
         align-items: center;
         gap: 4px;
       }
 
-      .tab.active {
-        border-color: var(--brand);
+      /* Modal de ayuda rápida */
+      .quick-help-form {
+        display: grid;
+        gap: 10px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .availability {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px;
+        background: #f0fdf4;
+        border-radius: 10px;
+        font-size: 12px;
+        color: #166534;
+      }
+
+      .toggle {
+        width: 40px;
+        height: 22px;
+        background: #d1d5db;
+        border-radius: 999px;
+        position: relative;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .toggle.on {
+        background: #22c55e;
+      }
+
+      .toggle::after {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: #fff;
+        border-radius: 50%;
+        top: 2px;
+        left: 2px;
+        transition: 0.2s;
+      }
+
+      .toggle.on::after {
+        left: 20px;
+      }
+
+      /* Reseñas */
+      .review-card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        margin-bottom: 10px;
+      }
+
+      .review-header {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+
+      .review-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        display: grid;
+        place-items: center;
+        font-size: 14px;
+      }
+
+      .review-info {
+        flex: 1;
+      }
+
+      .review-info h6 {
+        margin: 0;
+        font-size: 12px;
+      }
+
+      .review-info span {
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .review-text {
+        font-size: 11px;
+        color: var(--ink);
+        line-height: 1.4;
+        margin: 0;
+      }
+
+      .review-job {
+        font-size: 10px;
         color: var(--brand-dark);
         background: var(--soft);
+        padding: 4px 8px;
+        border-radius: 6px;
+        display: inline-block;
+        margin-top: 8px;
+      }
+
+      /* Emprendimientos */
+      .emprendimiento-card {
+        background: #fff;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        overflow: hidden;
+        margin-bottom: 12px;
+      }
+
+      .emprendimiento-gallery {
+        display: flex;
+        gap: 2px;
+        height: 100px;
+        overflow: hidden;
+      }
+
+      .emprendimiento-gallery img {
+        flex: 1;
+        object-fit: cover;
+        min-width: 0;
+      }
+
+      .emprendimiento-img {
+        flex: 1;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: grid;
+        place-items: center;
+        font-size: 28px;
+        color: #fff;
+      }
+
+      .emprendimiento-content {
+        padding: 12px;
+      }
+
+      .emprendimiento-content h5 {
+        margin: 0 0 4px;
+        font-size: 14px;
+      }
+
+      .emprendimiento-content p {
+        margin: 0;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .emprendimiento-category {
+        font-size: 10px;
+        color: #7c3aed;
+        background: #ede9fe;
+        padding: 3px 8px;
+        border-radius: 999px;
+        display: inline-block;
+        margin-bottom: 6px;
+      }
+
+      /* Demo alert */
+      .demo-btn {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        justify-content: center;
+        margin: 12px 0;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+      }
+
+      /* Notificación flotante desde arriba */
+      .floating-notification {
+        position: absolute;
+        top: 60px;
+        left: 10px;
+        right: 10px;
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border: 2px solid #f59e0b;
+        border-radius: 16px;
+        padding: 14px;
+        z-index: 200;
+        transform: translateY(-150%);
+        opacity: 0;
+        transition: all 0.4s ease;
+        box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+      }
+
+      .floating-notification.active {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .floating-notification .notif-close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 24px;
+        height: 24px;
+        background: rgba(0,0,0,0.1);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .floating-notification .notif-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+
+      .floating-notification .notif-icon {
+        width: 36px;
+        height: 36px;
+        background: #f59e0b;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-size: 18px;
+      }
+
+      .floating-notification .notif-title {
+        font-weight: 600;
+        font-size: 12px;
+        color: #92400e;
+        margin: 0;
+      }
+
+      .floating-notification .notif-time {
+        font-size: 10px;
+        color: #b45309;
+      }
+
+      .floating-notification .notif-body {
+        font-size: 11px;
+        color: #78350f;
+        margin-bottom: 10px;
+        line-height: 1.4;
+      }
+
+      .floating-notification .notif-body strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 12px;
+      }
+
+      .floating-notification .notif-meta {
+        display: flex;
+        gap: 10px;
+        font-size: 10px;
+        color: #92400e;
+        margin-bottom: 10px;
+      }
+
+      .floating-notification .notif-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .floating-notification .notif-btn {
+        flex: 1;
+        padding: 8px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+
+      .floating-notification .notif-btn.dismiss {
+        background: rgba(0,0,0,0.1);
+        color: #78350f;
+      }
+
+      .floating-notification .notif-btn.contact {
+        background: #25d366;
+        color: white;
+      }
+
+      .alert-card {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border: 2px solid #f59e0b;
+        border-radius: 16px;
+        padding: 14px;
+        margin-bottom: 12px;
+      }
+
+      .alert-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+
+      .alert-icon {
+        width: 40px;
+        height: 40px;
+        background: #f59e0b;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-size: 20px;
+      }
+
+      .alert-header h5 {
+        margin: 0;
+        font-size: 13px;
+        color: #92400e;
+      }
+
+      .alert-header span {
+        font-size: 10px;
+        color: #b45309;
+      }
+
+      .alert-body {
+        font-size: 12px;
+        color: #78350f;
+        margin-bottom: 10px;
+      }
+
+      .alert-meta {
+        display: flex;
+        gap: 12px;
+        font-size: 10px;
+        color: #92400e;
+        margin-bottom: 10px;
+      }
+
+      /* Pasantías */
+      .pasantia-card {
+        background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+        border: 1px solid #7dd3fc;
+        border-radius: 16px;
+        padding: 14px;
+        margin-bottom: 12px;
+      }
+
+      .pasantia-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+
+      .pasantia-header h5 {
+        margin: 0;
+        font-size: 14px;
+        color: #0369a1;
+      }
+
+      .pasantia-badge {
+        font-size: 9px;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: #0ea5e9;
+        color: #fff;
+        font-weight: 600;
+      }
+
+      .pasantia-company {
+        font-size: 11px;
+        color: #0284c7;
+        margin: 0 0 8px;
+      }
+
+      .pasantia-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        font-size: 10px;
+        color: #075985;
+        margin-bottom: 10px;
+      }
+
+      .pasantia-detail {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .viatico-suggestion {
+        background: #fff;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 11px;
+        color: #0369a1;
+        border: 1px dashed #7dd3fc;
+      }
+
+      .viatico-amount {
+        font-weight: 700;
+        font-size: 14px;
+        color: #0284c7;
+      }
+
+      /* Screen navigation header */
+      .screen-nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 0 12px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 12px;
+      }
+
+      .screen-nav h4 {
+        margin: 0;
+        flex: 1;
+        font-size: 14px;
+      }
+
+      .back-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        background: #fff;
+        cursor: pointer;
+        font-size: 16px;
+        display: grid;
+        place-items: center;
+        transition: all 0.2s;
+      }
+
+      .back-btn:hover {
+        background: var(--soft);
+        border-color: var(--brand);
+      }
+
+      .filter-btn {
+        font-size: 11px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: #fff;
+        cursor: pointer;
+        color: var(--brand);
+        font-weight: 500;
+      }
+
+      .filter-btn:hover {
+        background: var(--soft);
+      }
+
+      /* ========== SIDEBAR MENU ========== */
+      .sidebar-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+        z-index: 99;
+      }
+
+      .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 75%;
+        height: 100%;
+        background: #fff;
+        z-index: 100;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        border-radius: 0 24px 24px 0;
+        overflow: hidden;
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .sidebar-header {
+        background: linear-gradient(135deg, var(--brand) 0%, #ff9f3f 100%);
+        padding: 32px 16px 20px;
+        color: white;
+      }
+
+      .sidebar-header h3 {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .sidebar-header p {
+        margin: 4px 0 0;
+        font-size: 11px;
+        opacity: 0.9;
+      }
+
+      .sidebar-menu {
+        flex: 1;
+        overflow-y: auto;
+        padding: 12px 0;
+      }
+
+      .sidebar-section {
+        padding: 4px 12px;
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 8px;
+      }
+
+      .sidebar-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .sidebar-item:hover {
+        background: var(--soft);
+      }
+
+      .sidebar-item.active {
+        background: var(--soft);
+        color: var(--brand);
+        border-right: 3px solid var(--brand);
+      }
+
+      .sidebar-item .icon {
+        font-size: 18px;
+        width: 24px;
+        text-align: center;
+      }
+
+      .sidebar-item .badge {
+        margin-left: auto;
+        background: var(--brand);
+        color: white;
+        font-size: 9px;
+        padding: 2px 6px;
+        border-radius: 10px;
+      }
+
+      .sidebar-close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .hamburger {
+        width: 32px;
+        height: 32px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background 0.2s;
+      }
+
+      .hamburger:hover {
+        background: var(--soft);
+      }
+
+      .hamburger-icon {
+        width: 18px;
+        height: 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .hamburger-icon span {
+        display: block;
+        height: 2px;
+        background: var(--ink);
+        border-radius: 2px;
+      }
+
+      /* Quick action buttons - MEJORADOS */
+      .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin: 14px 0;
+      }
+
+      .quick-action {
+        background: linear-gradient(145deg, #fff 0%, #f8f5f2 100%);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 14px 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      }
+
+      .quick-action:hover {
+        border-color: var(--brand);
+        background: var(--soft);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,122,0,0.15);
+      }
+
+      .quick-action-icon {
+        font-size: 26px;
+        margin-bottom: 6px;
+      }
+
+      .quick-action-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      .quick-action-desc {
+        font-size: 9px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+
+      /* Sección destacada */
+      .featured-section {
+        background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+        border: 1px solid #fed7aa;
+        border-radius: 16px;
+        padding: 14px;
+        margin: 14px 0;
+      }
+
+      .featured-section h4 {
+        margin: 0 0 10px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
 
       @media (min-width: 960px) {
@@ -781,86 +1580,183 @@
         <div class="proposal-header">
           <h1>Propuesta visual mejorada</h1>
           <p>
-            Diseño inclusivo para TODOS los trabajos: desde profesionales hasta oficios, 
-            servicio doméstico, gastronomía y más. Sin CV complicado, con contacto directo 
-            por WhatsApp, sistema de estrellas y referencias de boca en boca.
+            Diseño inclusivo para TODOS los trabajos: oficios técnicos, empleadas domésticas,
+            meseros, plomeros, electricistas y más. Perfiles simples con WhatsApp directo,
+            sistema de estrellas y contacto inmediato. Sin barreras, sin complicaciones.
           </p>
         </div>
 
         <div class="phone">
           <div class="screen">
-            <div class="status">
-              <span>9:41</span>
-              <span>LTE 84%</span>
+            <!-- SIDEBAR MENU -->
+            <div class="sidebar-overlay" id="sidebarOverlay"></div>
+            <div class="sidebar" id="sidebar">
+              <button class="sidebar-close" id="closeSidebar">✕</button>
+              <div class="sidebar-header">
+                <h3>🅱️ BamBan</h3>
+                <p>Tu plataforma de empleo inclusiva</p>
+              </div>
+              <div class="sidebar-menu">
+                <div class="sidebar-section">Principal</div>
+                <div class="sidebar-item active" data-target="home">
+                  <span class="icon">🏠</span> Inicio
+                </div>
+                <div class="sidebar-item" data-target="jobs">
+                  <span class="icon">💼</span> Empleos
+                  <span class="badge">12</span>
+                </div>
+                <div class="sidebar-item" data-target="pasantias">
+                  <span class="icon">🎓</span> Pasantías
+                </div>
+                <div class="sidebar-item" data-target="services">
+                  <span class="icon">🛠️</span> Servicios
+                </div>
+                <div class="sidebar-item" data-target="reviews">
+                  <span class="icon">⭐</span> Reseñas
+                </div>
+                
+                <div class="sidebar-section">Comunidad</div>
+                <div class="sidebar-item" data-target="people">
+                  <span class="icon">👥</span> Personas
+                </div>
+                <div class="sidebar-item" data-target="emprendedores">
+                  <span class="icon">🚀</span> Emprendedores
+                </div>
+                <div class="sidebar-item" data-target="opportunities">
+                  <span class="icon">🎯</span> Oportunidades
+                </div>
+                
+                <div class="sidebar-section">Tu cuenta</div>
+                <div class="sidebar-item" data-target="profile">
+                  <span class="icon">👤</span> Mi Perfil
+                </div>
+                <div class="sidebar-item" data-target="chat">
+                  <span class="icon">💬</span> Mensajes
+                </div>
+              </div>
             </div>
-            <div class="notch"></div>
+
+            <div class="screen-top">
+              <div class="status">
+                <span>9:41</span>
+                <span>LTE 84%</span>
+              </div>
+              <div class="notch"></div>
+            </div>
 
             <div class="app">
               <div class="app-header">
+                <div class="hamburger" id="menuBtn">
+                  <div class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
                 <div class="brand">
                   <div class="brand-badge">B</div>
                   <div>
-                    <h2>BamBam</h2>
+                    <h2>BamBan</h2>
                     <span>Tu empleo seguro</span>
                   </div>
                 </div>
-                <button class="btn ghost" id="notify">Notificar</button>
+                <button class="btn ghost" id="notify">🔔</button>
               </div>
 
               <div class="screen-view active" data-screen="home">
                 <div class="hero-card">
                   <h3>Encuentra trabajo o ayuda hoy mismo</h3>
-                  <p>Para todos: desde profesionales hasta oficios y servicios del hogar. Sin CV, contacto directo.</p>
+                  <p>Para todos: meseros, empleadas domésticas, plomeros, electricistas, cocineros y más. Simple y directo.</p>
                   <div class="cta-row">
-                    <button class="btn primary" id="ctaStart">Ver chambas</button>
-                    <button class="btn ghost" id="ctaWorkers">Soy trabajador</button>
+                    <button class="btn primary" id="ctaStart">Buscar trabajo</button>
+                    <button class="btn ghost" id="ctaDocs">Ofrecer servicio</button>
                   </div>
                 </div>
 
-                <button class="urgent-btn" id="needHelpBtn">🆘 Necesito ayuda HOY</button>
+                <!-- Botón de ayuda urgente -->
+                <div class="help-banner" id="helpBanner">
+                  <div class="help-icon">🆘</div>
+                  <div>
+                    <h4>¿Necesitas ayuda HOY?</h4>
+                    <p>Publica gratis y recibe ofertas en minutos</p>
+                  </div>
+                </div>
 
                 <div class="search">
-                  <input id="globalSearch" type="search" placeholder="Busca mesero, plomero, niñera..." />
+                  <input id="globalSearch" type="search" placeholder="Busca plomero, niñera, mesero..." />
                   <button aria-label="Buscar">🔍</button>
                 </div>
 
+                <!-- Categorías de oficios -->
                 <div class="section-title">
                   <h4>¿Qué necesitas?</h4>
                   <button data-target="services">Ver todo</button>
                 </div>
                 <div class="category-grid" id="categoryGrid">
-                  <div class="cat-card" data-cat="domestico"><div class="icon">🏠</div><span>Doméstico</span></div>
-                  <div class="cat-card" data-cat="gastronomia"><div class="icon">🍽️</div><span>Gastronomía</span></div>
-                  <div class="cat-card" data-cat="oficios"><div class="icon">🔧</div><span>Oficios</span></div>
-                  <div class="cat-card" data-cat="transporte"><div class="icon">🚗</div><span>Transporte</span></div>
-                  <div class="cat-card" data-cat="construccion"><div class="icon">🏗️</div><span>Construcción</span></div>
-                  <div class="cat-card" data-cat="belleza"><div class="icon">💇</div><span>Belleza</span></div>
-                </div>
-
-                <div class="chip-row" id="homeChips">
-                  <div class="chip active">Cerca de mi</div>
-                  <div class="chip">Disponible hoy</div>
-                  <div class="chip">Con referencias</div>
-                  <div class="chip">Pago por hora</div>
+                  <div class="category-item" data-cat="domestico">
+                    <div class="category-icon">🏠</div>
+                    <div class="category-label">Doméstico</div>
+                  </div>
+                  <div class="category-item" data-cat="gastronomia">
+                    <div class="category-icon">🍽️</div>
+                    <div class="category-label">Gastronomía</div>
+                  </div>
+                  <div class="category-item" data-cat="oficios">
+                    <div class="category-icon">🔧</div>
+                    <div class="category-label">Oficios</div>
+                  </div>
+                  <div class="category-item" data-cat="transporte">
+                    <div class="category-icon">🚗</div>
+                    <div class="category-label">Transporte</div>
+                  </div>
+                  <div class="category-item" data-cat="construccion">
+                    <div class="category-icon">🏗️</div>
+                    <div class="category-label">Construcción</div>
+                  </div>
+                  <div class="category-item" data-cat="belleza">
+                    <div class="category-icon">💇</div>
+                    <div class="category-label">Belleza</div>
+                  </div>
                 </div>
 
                 <div class="section-title">
-                  <h4>Trabajadores destacados</h4>
-                  <button data-target="people">Ver todo</button>
+                  <h4>Trabajadores disponibles</h4>
+                  <button data-target="workers">Ver todo</button>
                 </div>
                 <div class="card-list" id="homeWorkers"></div>
 
-                <div class="section-title">
-                  <h4>Chambas urgentes</h4>
-                  <button data-target="jobs">Ver todo</button>
+                <!-- Sección destacada: NUEVAS FUNCIONES -->
+                <div class="featured-section">
+                  <h4>✨ Nuevas secciones - ¡Explora!</h4>
+                  <div class="quick-actions">
+                    <div class="quick-action" data-target="reviews">
+                      <div class="quick-action-icon">⭐</div>
+                      <div class="quick-action-label">Reseñas</div>
+                      <div class="quick-action-desc">Lee opiniones reales</div>
+                    </div>
+                    <div class="quick-action" data-target="emprendedores">
+                      <div class="quick-action-icon">🚀</div>
+                      <div class="quick-action-label">Emprendedores</div>
+                      <div class="quick-action-desc">Negocios locales</div>
+                    </div>
+                    <div class="quick-action" data-target="pasantias">
+                      <div class="quick-action-icon">🎓</div>
+                      <div class="quick-action-label">Pasantías</div>
+                      <div class="quick-action-desc">Para estudiantes</div>
+                    </div>
+                    <div class="quick-action" id="demoAlertBtn">
+                      <div class="quick-action-icon">🔔</div>
+                      <div class="quick-action-label">Demo Alerta</div>
+                      <div class="quick-action-desc">Ver notificación</div>
+                    </div>
+                  </div>
                 </div>
-                <div class="card-list" id="homeJobs"></div>
 
                 <div class="ai-banner" style="margin-top: 14px;">
                   <div class="ai-badge">IA</div>
                   <div>
                     <strong>¿No sabes qué buscar?</strong>
-                    <p>Dime qué necesitas y te conecto con la persona ideal.</p>
+                    <p>Cuéntame qué necesitas y te ayudo a encontrar la persona ideal.</p>
                   </div>
                 </div>
               </div>
@@ -904,7 +1800,6 @@
               <div class="screen-view" data-screen="people">
                 <div class="section-title">
                   <h4>Personas</h4>
-                  <button id="connectAll">Conectar</button>
                 </div>
                 <div class="search">
                   <input id="peopleSearch" type="search" placeholder="Buscar por carrera o ciudad" />
@@ -913,74 +1808,87 @@
                 <div class="card-list" id="peopleList"></div>
               </div>
 
-              <div class="screen-view" data-screen="ventures">
-                <div class="section-title">
-                  <h4>Emprendimientos</h4>
-                  <button id="createVenture">Crear</button>
-                </div>
-                <div class="card-list" id="ventureList"></div>
-              </div>
-
               <div class="screen-view" data-screen="opportunities">
-                <div class="section-title">
-                  <h4>Oportunidades</h4>
-                  <button id="sortOpp">Ordenar</button>
+                <div class="screen-nav">
+                  <button class="back-btn" data-target="home">←</button>
+                  <h4>🎯 Oportunidades</h4>
+                  <button class="filter-btn" id="sortOpp">Filtrar</button>
                 </div>
+                
+                <p style="font-size:11px;color:var(--muted);margin:0 0 12px;">Becas, capacitaciones, voluntariados y más para impulsar tu carrera</p>
+
+                <div class="filter-chips" id="oppTypeFilters" style="margin-bottom:12px;">
+                  <button class="chip active" data-opp-type="all">Todos</button>
+                  <button class="chip" data-opp-type="Beca">🎓 Becas</button>
+                  <button class="chip" data-opp-type="Capacitación">📚 Capacitación</button>
+                  <button class="chip" data-opp-type="Voluntariado">🤝 Voluntariado</button>
+                  <button class="chip" data-opp-type="Concurso">🏆 Concursos</button>
+                </div>
+
                 <div class="card-list" id="opportunityList"></div>
               </div>
 
               <div class="screen-view" data-screen="profile">
-                <div class="profile-hero">
-                  <div style="display: flex; justify-content: space-between; align-items: start;">
-                    <div>
-                      <strong style="font-size: 16px;">Rosa Mamani</strong>
-                      <p style="margin: 2px 0; font-size: 12px; color: var(--muted);">Empleada doméstica · La Paz</p>
-                    </div>
-                    <div class="stars">
-                      <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span>
+                <div class="worker-card">
+                  <div class="worker-header">
+                    <div class="worker-avatar">👩</div>
+                    <div class="worker-info">
+                      <h5>María López</h5>
+                      <p>La Paz · Disponible ahora</p>
+                      <div class="stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span style="font-size:11px;color:var(--muted);margin-left:4px;">5.0 (23)</span>
+                      </div>
                     </div>
                   </div>
                   <div class="badge-row">
-                    <span class="badge gold">⭐ Recomendada</span>
-                    <span class="badge">✓ Puntual</span>
-                    <span class="badge blue">🔒 Verificada</span>
+                    <span class="badge verified">✓ Verificada</span>
+                    <span class="badge">Puntual</span>
+                    <span class="badge">Confiable</span>
                   </div>
-                  <div class="availability"><span class="dot"></span> Disponible ahora</div>
                 </div>
 
                 <div class="section-title">
-                  <h4>Lo que sé hacer</h4>
+                  <h4>Mis habilidades</h4>
                   <button id="editProfile">Editar</button>
                 </div>
-                <div class="skill-chips">
-                  <span class="skill-chip">Limpieza profunda</span>
-                  <span class="skill-chip">Cocina boliviana</span>
-                  <span class="skill-chip">Cuidado de niños</span>
-                  <span class="skill-chip">Planchado</span>
-                  <span class="skill-chip">Horario flexible</span>
+                <div class="skills-row">
+                  <span class="skill">Limpieza</span>
+                  <span class="skill">Cocina</span>
+                  <span class="skill">Cuidado niños</span>
+                  <span class="skill">Planchado</span>
+                  <span class="skill">Horario flexible</span>
                 </div>
 
-                <div class="small-card" style="margin-top: 12px;">
-                  <div class="completed-jobs">✅ 47 trabajos completados</div>
-                  <p style="margin: 6px 0 0; font-size: 12px;">"Muy responsable y ordenada. La recomiendo." - María T.</p>
+                <div class="section-title">
+                  <h4>Disponibilidad</h4>
+                  <button>Cambiar</button>
+                </div>
+                <div class="availability">
+                  <div class="toggle on" id="availToggle"></div>
+                  <span>Disponible para trabajar hoy</span>
                 </div>
 
                 <div class="section-title">
                   <h4>Contacto directo</h4>
-                  <button id="viewGoals">Compartir</button>
+                  <button>Editar</button>
                 </div>
-                <div class="cta-row">
-                  <button class="whatsapp-btn" id="whatsappBtn">📱 WhatsApp</button>
-                  <button class="btn ghost" id="callBtn">📞 Llamar</button>
+                <div class="cta-row" style="margin-top:8px;">
+                  <button class="btn whatsapp" style="flex:1;">📱 WhatsApp</button>
+                  <button class="btn ghost" style="flex:1;">📞 Llamar</button>
                 </div>
 
                 <div class="section-title">
-                  <h4>Mis referencias</h4>
-                  <button>Agregar</button>
+                  <h4>Mi actividad</h4>
+                  <button id="viewGoals">Ver</button>
                 </div>
                 <div class="grid-two">
-                  <div class="small-card">👤 Sra. Patricia (empleadora 2 años)</div>
-                  <div class="small-card">👤 Don Carlos (referencia personal)</div>
+                  <div class="small-card"><strong>47</strong><br>Trabajos completados</div>
+                  <div class="small-card"><strong>12</strong><br>Referencias</div>
                 </div>
               </div>
 
@@ -988,26 +1896,358 @@
                 <div class="ai-banner">
                   <div class="ai-badge">IA</div>
                   <div>
-                    <strong>Asistente de chambas</strong>
-                    <p>Dime qué sabes hacer o qué necesitas y te ayudo.</p>
+                    <strong>Chat IA de empleo</strong>
+                    <p>Pregunta por vacantes, consejos o mejoras para tu CV.</p>
                   </div>
                 </div>
                 <div class="chat" id="chatMessages">
-                  <div class="bubble bot">¡Hola! Soy tu asistente. ¿Buscas trabajo o necesitas contratar a alguien?</div>
-                  <div class="bubble me">Busco trabajo de mesera, tengo experiencia.</div>
-                  <div class="bubble bot">Perfecto. Encontré 3 ofertas de mesera cerca de ti. Una paga 150 Bs/día y es para hoy. ¿Te interesa?</div>
-                  <div class="bubble me">Sí, ¿cómo los contacto?</div>
-                  <div class="bubble bot">Te paso el WhatsApp directo: 70012345. Menciona que vienes de BamBam. ¡Éxito! 👍</div>
+                  <div class="bubble bot">Hola, soy tu asistente. Que tipo de trabajo buscas hoy?</div>
+                  <div class="bubble me">Quiero algo remoto en diseno.</div>
+                  <div class="bubble bot">Perfecto. Te muestro opciones y tips para destacar tu portafolio.</div>
                 </div>
                 <div class="chat-input">
-                  <input id="chatInput" type="text" placeholder="Ej: busco trabajo de plomero..." />
+                  <input id="chatInput" type="text" placeholder="Escribe tu mensaje" />
                   <button id="chatSend">Enviar</button>
                 </div>
               </div>
+
+              <!-- PANTALLA DE MENSAJES -->
+              <div class="screen-view" data-screen="chat">
+                <div class="screen-nav">
+                  <button class="back-btn" data-target="home">←</button>
+                  <h4>💬 Mensajes</h4>
+                  <button class="filter-btn">Nuevo</button>
+                </div>
+                
+                <p style="font-size:11px;color:var(--muted);margin:0 0 12px;">Tus conversaciones recientes</p>
+
+                <div class="message-item" style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;cursor:pointer;">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:40px;height:40px;background:linear-gradient(135deg,#f97316,#ea580c);border-radius:50%;display:grid;place-items:center;font-size:18px;">👨</div>
+                    <div style="flex:1;">
+                      <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <strong style="font-size:12px;">Juan Pérez</strong>
+                        <span style="font-size:9px;color:var(--muted);">Hace 2h</span>
+                      </div>
+                      <p style="margin:2px 0 0;font-size:11px;color:var(--muted);">Perfecto, entonces quedamos mañana a las 10am 👍</p>
+                    </div>
+                    <div style="background:var(--brand);color:white;font-size:9px;padding:2px 6px;border-radius:10px;">2</div>
+                  </div>
+                </div>
+
+                <div class="message-item" style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;cursor:pointer;">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:40px;height:40px;background:linear-gradient(135deg,#10b981,#059669);border-radius:50%;display:grid;place-items:center;font-size:18px;">👩</div>
+                    <div style="flex:1;">
+                      <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <strong style="font-size:12px;">María Flores</strong>
+                        <span style="font-size:9px;color:var(--muted);">Ayer</span>
+                      </div>
+                      <p style="margin:2px 0 0;font-size:11px;color:var(--muted);">Gracias por el trabajo, excelente servicio!</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="message-item" style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;cursor:pointer;">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:40px;height:40px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);border-radius:50%;display:grid;place-items:center;font-size:18px;">🏢</div>
+                    <div style="flex:1;">
+                      <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <strong style="font-size:12px;">Restaurante La Casona</strong>
+                        <span style="font-size:9px;color:var(--muted);">Lun</span>
+                      </div>
+                      <p style="margin:2px 0 0;font-size:11px;color:var(--muted);">¿Puedes trabajar el fin de semana?</p>
+                    </div>
+                    <div style="background:var(--brand);color:white;font-size:9px;padding:2px 6px;border-radius:10px;">1</div>
+                  </div>
+                </div>
+
+                <div class="message-item" style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;cursor:pointer;">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:40px;height:40px;background:linear-gradient(135deg,#06b6d4,#0891b2);border-radius:50%;display:grid;place-items:center;font-size:18px;">👷</div>
+                    <div style="flex:1;">
+                      <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <strong style="font-size:12px;">Carlos Quispe</strong>
+                        <span style="font-size:9px;color:var(--muted);">25 Ene</span>
+                      </div>
+                      <p style="margin:2px 0 0;font-size:11px;color:var(--muted);">Listo, el trabajo de plomería quedó terminado</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="background:var(--soft);border-radius:12px;padding:16px;text-align:center;margin-top:12px;">
+                  <span style="font-size:24px;">💬</span>
+                  <p style="margin:8px 0 0;font-size:11px;color:var(--muted);">Toca una conversación para ver los mensajes completos</p>
+                </div>
+              </div>
+
+              <!-- PANTALLA DE RESEÑAS -->
+              <div class="screen-view" data-screen="reviews">
+                <div class="screen-nav">
+                  <button class="back-btn" data-target="home">←</button>
+                  <h4>⭐ Reseñas de la comunidad</h4>
+                  <button class="filter-btn">Filtrar</button>
+                </div>
+                
+                <div class="chip-row" id="reviewFilters" style="margin-bottom:12px;">
+                  <div class="chip active" data-filter="todas">Todas</div>
+                  <div class="chip" data-filter="trabajador">Trabajadores</div>
+                  <div class="chip" data-filter="empleador">Empleadores</div>
+                  <div class="chip" data-filter="empresa">Empresas</div>
+                </div>
+
+                <div id="reviewsList">
+                  <div class="review-card" data-type="empleador">
+                    <div class="review-header">
+                      <div class="review-avatar">👩</div>
+                      <div class="review-info">
+                        <h6>María García</h6>
+                        <span>Empleadora · Hace 2 días</span>
+                      </div>
+                      <div class="stars" style="font-size:10px;">★★★★★</div>
+                    </div>
+                    <p class="review-text">"Contraté a Rosa para limpieza y fue excelente. Llegó puntual, muy profesional y dejó todo impecable. Ya la recomendé a mis vecinas."</p>
+                    <span class="review-job">Limpieza doméstica · La Paz</span>
+                  </div>
+
+                  <div class="review-card" data-type="trabajador">
+                    <div class="review-header">
+                      <div class="review-avatar">👨</div>
+                      <div class="review-info">
+                        <h6>Carlos Quispe</h6>
+                        <span>Trabajador · Hace 1 semana</span>
+                      </div>
+                      <div class="stars" style="font-size:10px;">★★★★★</div>
+                    </div>
+                    <p class="review-text">"Encontré trabajo de plomero gracias a la app. El empleador pagó a tiempo y el trato fue muy respetuoso. Recomiendo 100%."</p>
+                    <span class="review-job">Plomería · El Alto</span>
+                  </div>
+
+                  <div class="review-card" data-type="trabajador">
+                    <div class="review-header">
+                      <div class="review-avatar">👩‍🍳</div>
+                      <div class="review-info">
+                        <h6>Ana Flores</h6>
+                        <span>Trabajadora · Hace 3 días</span>
+                      </div>
+                      <div class="stars" style="font-size:10px;">★★★★☆</div>
+                    </div>
+                    <p class="review-text">"Me contrataron para cocinar en un evento. Todo salió bien, aunque el pago se retrasó un poco. Igual volvería a trabajar."</p>
+                    <span class="review-job">Cocina · Cochabamba</span>
+                  </div>
+
+                  <div class="review-card" data-type="empresa">
+                    <div class="review-header">
+                      <div class="review-avatar">🏢</div>
+                      <div class="review-info">
+                        <h6>Restaurante La Casona</h6>
+                        <span>Empresa · Hace 5 días</span>
+                      </div>
+                      <div class="stars" style="font-size:10px;">★★★★★</div>
+                    </div>
+                    <p class="review-text">"Contratamos 3 meseros por la app para fin de semana. Todos llegaron puntuales y con buena actitud. Seguiremos usando BamBan."</p>
+                    <span class="review-job">Meseros · Santa Cruz</span>
+                  </div>
+
+                  <div class="review-card" data-type="empleador">
+                    <div class="review-header">
+                      <div class="review-avatar">👨</div>
+                      <div class="review-info">
+                        <h6>Roberto Mamani</h6>
+                        <span>Empleador · Hace 1 semana</span>
+                      </div>
+                      <div class="stars" style="font-size:10px;">★★★★★</div>
+                    </div>
+                    <p class="review-text">"Necesitaba un electricista urgente y en menos de 1 hora encontré a Pedro. Solucionó todo rápido y a buen precio."</p>
+                    <span class="review-job">Electricidad · La Paz</span>
+                  </div>
+
+                  <div class="review-card" data-type="empresa">
+                    <div class="review-header">
+                      <div class="review-avatar">🏨</div>
+                      <div class="review-info">
+                        <h6>Hotel Presidente</h6>
+                        <span>Empresa · Hace 2 semanas</span>
+                      </div>
+                      <div class="stars" style="font-size:10px;">★★★★★</div>
+                    </div>
+                    <p class="review-text">"Encontramos personal de cocina muy capacitado. La app facilita mucho el proceso de contratación temporal."</p>
+                    <span class="review-job">Cocina · La Paz</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PANTALLA DE EMPRENDEDORES -->
+              <div class="screen-view" data-screen="emprendedores">
+                <div class="screen-nav">
+                  <button class="back-btn" data-target="home">←</button>
+                  <h4>🚀 Emprendedores</h4>
+                  <button class="filter-btn">Agregar</button>
+                </div>
+                
+                <p style="font-size:11px;color:var(--muted);margin:0 0 12px;">Apoya emprendimientos locales de nuestra comunidad</p>
+
+                <div class="emprendimiento-card" data-emp="comida">
+                  <div class="emprendimiento-gallery">
+                    <div class="emprendimiento-img" style="background:linear-gradient(135deg,#f97316,#ea580c);">🍔</div>
+                    <div class="emprendimiento-img" style="background:linear-gradient(135deg,#fb923c,#f97316);">🌮</div>
+                  </div>
+                  <div class="emprendimiento-content">
+                    <span class="emprendimiento-category">🍽️ Comida</span>
+                    <h5>Sabores de Casa - Doña María</h5>
+                    <p>Comida casera boliviana para eventos y delivery. Especialidad en platos típicos.</p>
+                    <div class="cta-row" style="margin-top:10px;">
+                      <button class="btn ghost" style="flex:1;" data-emp-detail="comida">Ver más</button>
+                      <button class="btn whatsapp" style="flex:1;">📱 WhatsApp</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="emprendimiento-card" data-emp="belleza">
+                  <div class="emprendimiento-gallery">
+                    <div class="emprendimiento-img" style="background:linear-gradient(135deg,#ec4899,#be185d);">💅</div>
+                    <div class="emprendimiento-img" style="background:linear-gradient(135deg,#f472b6,#ec4899);">💇‍♀️</div>
+                  </div>
+                  <div class="emprendimiento-content">
+                    <span class="emprendimiento-category">💄 Belleza</span>
+                    <h5>Glamour Express - Lucía</h5>
+                    <p>Servicio de manicure, pedicure y peinados a domicilio. Precios accesibles.</p>
+                    <div class="cta-row" style="margin-top:10px;">
+                      <button class="btn ghost" style="flex:1;" data-emp-detail="belleza">Ver más</button>
+                      <button class="btn whatsapp" style="flex:1;">📱 WhatsApp</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="emprendimiento-card" data-emp="ropa">
+                  <div class="emprendimiento-gallery">
+                    <div class="emprendimiento-img" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);">👕</div>
+                    <div class="emprendimiento-img" style="background:linear-gradient(135deg,#a78bfa,#8b5cf6);">🧵</div>
+                  </div>
+                  <div class="emprendimiento-content">
+                    <span class="emprendimiento-category">👗 Moda</span>
+                    <h5>Confecciones Andinas - Pedro</h5>
+                    <p>Ropa a medida, arreglos y bordados. Trabajamos con aguayos y telas típicas.</p>
+                    <div class="cta-row" style="margin-top:10px;">
+                      <button class="btn ghost" style="flex:1;" data-emp-detail="ropa">Ver más</button>
+                      <button class="btn whatsapp" style="flex:1;">📱 WhatsApp</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PANTALLA DE PASANTÍAS -->
+              <div class="screen-view" data-screen="pasantias">
+                <div class="screen-nav">
+                  <button class="back-btn" data-target="home">←</button>
+                  <h4>🎓 Pasantías</h4>
+                  <button class="filter-btn">Publicar</button>
+                </div>
+                
+                <p style="font-size:11px;color:var(--muted);margin:0 0 12px;">Oportunidades para estudiantes y recién graduados</p>
+
+                <div class="pasantia-card">
+                  <div class="pasantia-header">
+                    <div>
+                      <h5>Asistente de Contabilidad</h5>
+                      <p class="pasantia-company">📍 Finanzas Pando S.R.L.</p>
+                    </div>
+                    <span class="pasantia-badge">3 meses</span>
+                  </div>
+                  <div class="pasantia-details">
+                    <div class="pasantia-detail">📅 Lun-Vie, 8:00-13:00</div>
+                    <div class="pasantia-detail">📍 Zona Central, La Paz</div>
+                    <div class="pasantia-detail">🎯 Contabilidad/Admin</div>
+                    <div class="pasantia-detail">👤 Estudiantes 3er año+</div>
+                  </div>
+                  <div class="viatico-suggestion">
+                    💡 <strong>Compensación sugerida:</strong> <span class="viatico-amount">500-700 Bs/mes</span><br>
+                    <span style="font-size:10px;color:#64748b;">Basado en transporte + almuerzo en la zona</span>
+                  </div>
+                  <div class="cta-row" style="margin-top:10px;">
+                    <button class="btn ghost pasantia-details-btn" style="flex:1;" data-pasantia="contabilidad">Ver detalles</button>
+                    <button class="btn primary pasantia-postular-btn" style="flex:1;" data-pasantia="contabilidad">Postular</button>
+                  </div>
+                </div>
+
+                <div class="pasantia-card">
+                  <div class="pasantia-header">
+                    <div>
+                      <h5>Diseño Gráfico Jr.</h5>
+                      <p class="pasantia-company">📍 Agencia Creativa Pixel</p>
+                    </div>
+                    <span class="pasantia-badge">6 meses</span>
+                  </div>
+                  <div class="pasantia-details">
+                    <div class="pasantia-detail">📅 Lun-Vie, 14:00-18:00</div>
+                    <div class="pasantia-detail">📍 Sopocachi, La Paz</div>
+                    <div class="pasantia-detail">🎯 Diseño/Comunicación</div>
+                    <div class="pasantia-detail">👤 Últimos semestres</div>
+                  </div>
+                  <div class="viatico-suggestion">
+                    💡 <strong>Compensación sugerida:</strong> <span class="viatico-amount">600-800 Bs/mes</span><br>
+                    <span style="font-size:10px;color:#64748b;">Transporte + refrigerio zona Sopocachi</span>
+                  </div>
+                  <div class="cta-row" style="margin-top:10px;">
+                    <button class="btn ghost pasantia-details-btn" style="flex:1;" data-pasantia="diseno">Ver detalles</button>
+                    <button class="btn primary pasantia-postular-btn" style="flex:1;" data-pasantia="diseno">Postular</button>
+                  </div>
+                </div>
+
+                <div class="pasantia-card">
+                  <div class="pasantia-header">
+                    <div>
+                      <h5>Auxiliar de Cocina</h5>
+                      <p class="pasantia-company">📍 Hotel Presidente</p>
+                    </div>
+                    <span class="pasantia-badge">4 meses</span>
+                  </div>
+                  <div class="pasantia-details">
+                    <div class="pasantia-detail">📅 Lun-Sáb, 7:00-12:00</div>
+                    <div class="pasantia-detail">📍 Centro, La Paz</div>
+                    <div class="pasantia-detail">🎯 Gastronomía</div>
+                    <div class="pasantia-detail">👤 Técnicos en cocina</div>
+                  </div>
+                  <div class="viatico-suggestion">
+                    💡 <strong>Compensación sugerida:</strong> <span class="viatico-amount">450-600 Bs/mes</span><br>
+                    <span style="font-size:10px;color:#64748b;">Incluye alimentación en hotel</span>
+                  </div>
+                  <div class="cta-row" style="margin-top:10px;">
+                    <button class="btn ghost pasantia-details-btn" style="flex:1;" data-pasantia="cocina">Ver detalles</button>
+                    <button class="btn primary pasantia-postular-btn" style="flex:1;" data-pasantia="cocina">Postular</button>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
             <div class="floating-ai" id="aiShortcut">🤖 IA</div>
             <div class="toast" id="toast">Notificacion activada</div>
+
+            <!-- Notificación flotante desde arriba -->
+            <div class="floating-notification" id="floatingNotification">
+              <button class="notif-close" id="closeNotification">✕</button>
+              <div class="notif-header">
+                <div class="notif-icon">🪚</div>
+                <div>
+                  <p class="notif-title">¡Trabajo urgente disponible!</p>
+                  <span class="notif-time">Hace 5 min · Cerca de ti</span>
+                </div>
+              </div>
+              <div class="notif-body">
+                <strong>"Necesito carpintero por el Trillo mañana a las 12"</strong>
+                Tengo que arreglar una puerta y un closet. Materiales incluidos. Pago al terminar.
+              </div>
+              <div class="notif-meta">
+                <span>📍 El Trillo</span>
+                <span>💰 200-300 Bs</span>
+                <span>👤 Juan Pérez ⭐4.8</span>
+              </div>
+              <div class="notif-actions">
+                <button class="notif-btn dismiss" id="dismissNotification">Cerrar</button>
+                <button class="notif-btn contact" id="contactNotification">📱 Contactar</button>
+              </div>
+            </div>
 
             <div class="bottom-nav" id="bottomNav">
               <div class="nav-item active" data-target="home">
@@ -1031,42 +2271,193 @@
                 Perfil
               </div>
             </div>
+
+            <!-- Modal de postulación (dentro del teléfono) -->
+            <div class="modal" id="applyModal">
+              <div class="sheet">
+                <div class="sheet-header">
+                  <h4 style="margin:0;">📝 Postular a la chamba</h4>
+                  <button class="sheet-close" id="closeModal">✕</button>
+                </div>
+                <input type="text" placeholder="Tu nombre completo" />
+                <input type="tel" placeholder="WhatsApp (ej: 71234567)" />
+                <textarea rows="2" placeholder="¿Qué sabes hacer? Cuéntanos tu experiencia..."></textarea>
+                <div class="availability" style="margin-bottom:10px;">
+                  <div class="toggle on" id="availNow"></div>
+                  <span>Puedo empezar de inmediato</span>
+                </div>
+                <button class="btn primary" style="width:100%;" id="submitModal">Enviar postulación</button>
+              </div>
+            </div>
+
+            <!-- Modal de ayuda rápida (dentro del teléfono) -->
+            <div class="modal" id="helpModal">
+              <div class="sheet">
+                <div class="sheet-header">
+                  <h4 style="margin:0;">🆘 Necesito ayuda hoy</h4>
+                  <button class="sheet-close" id="closeHelp">✕</button>
+                </div>
+                <p style="font-size:12px;color:var(--muted);margin:0 0 12px;">Publica gratis y recibe ofertas en minutos</p>
+                <select>
+                  <option>¿Qué tipo de ayuda necesitas?</option>
+                  <option>🏠 Limpieza / Doméstico</option>
+                  <option>🍽️ Cocina / Mesero</option>
+                  <option>🔧 Plomería / Electricidad</option>
+                  <option>🚗 Transporte / Flete</option>
+                  <option>🏗️ Albañilería / Pintura</option>
+                  <option>💇 Belleza / Peluquería</option>
+                  <option>👶 Cuidado de niños</option>
+                  <option>👴 Cuidado de adultos</option>
+                  <option>📦 Otro</option>
+                </select>
+                <textarea rows="2" placeholder="Describe brevemente qué necesitas..."></textarea>
+                <div class="form-row">
+                  <input type="text" placeholder="Zona/barrio" />
+                  <input type="text" placeholder="Pago (Bs)" />
+                </div>
+                <div class="form-row">
+                  <select>
+                    <option>¿Cuándo?</option>
+                    <option>🔴 Ahora mismo</option>
+                    <option>Hoy</option>
+                    <option>Mañana</option>
+                    <option>Esta semana</option>
+                  </select>
+                  <input type="tel" placeholder="Tu WhatsApp" />
+                </div>
+                <button class="btn primary" style="width:100%;margin-top:8px;" id="submitHelp">📢 Publicar gratis</button>
+              </div>
+            </div>
+
+            <!-- Modal de perfil trabajador (dentro del teléfono) -->
+            <div class="modal" id="workerModal">
+              <div class="sheet">
+                <div class="sheet-header">
+                  <h4 style="margin:0;">👤 Perfil del trabajador</h4>
+                  <button class="sheet-close" id="closeWorker">✕</button>
+                </div>
+                <div class="worker-card" style="border:none;padding:0;" id="workerModalContent">
+                  <!-- Se llena dinámicamente -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal de confirmación (dentro del teléfono) -->
+            <div class="modal" id="successModal">
+              <div class="sheet" style="text-align:center;padding:24px;">
+                <div style="font-size:48px;margin-bottom:12px;">✅</div>
+                <h4 style="margin:0 0 8px;">¡Listo!</h4>
+                <p style="color:var(--muted);font-size:13px;margin:0 0 16px;" id="successMessage">Tu solicitud ha sido enviada</p>
+                <button class="btn primary" style="width:100%;" id="closeSuccess">Continuar</button>
+              </div>
+            </div>
+
+            <!-- Modal de DEMO ALERTA (dentro del teléfono) -->
+            <div class="modal" id="demoAlertModal">
+              <div class="sheet">
+                <div class="sheet-header">
+                  <h4 style="margin:0;">🔔 Nueva alerta de trabajo</h4>
+                  <button class="sheet-close" id="closeDemoAlert">✕</button>
+                </div>
+                
+                <div class="alert-card">
+                  <div class="alert-header">
+                    <div class="alert-icon">🪚</div>
+                    <div>
+                      <h5>¡Trabajo urgente disponible!</h5>
+                      <span>Hace 5 minutos · Cerca de ti</span>
+                    </div>
+                  </div>
+                  <div class="alert-body">
+                    <strong>"Necesito carpintero por el Trillo mañana a las 12 AM"</strong>
+                    <p style="margin:8px 0 0;font-size:11px;">Tengo que arreglar una puerta y un closet. Materiales incluidos. Pago al terminar.</p>
+                  </div>
+                  <div class="alert-meta">
+                    <span>📍 Zona El Trillo</span>
+                    <span>💰 200-300 Bs</span>
+                    <span>⏰ Mañana 12:00</span>
+                  </div>
+                </div>
+
+                <div style="background:#f8fafc;border-radius:12px;padding:12px;margin-bottom:12px;">
+                  <strong style="font-size:12px;">Resumen del trabajo:</strong>
+                  <ul style="margin:8px 0 0;padding-left:20px;font-size:11px;color:var(--muted);">
+                    <li>Reparación de puerta (bisagras)</li>
+                    <li>Ajuste de closet empotrado</li>
+                    <li>Materiales ya comprados</li>
+                    <li>Herramientas necesarias: martillo, destornillador, taladro</li>
+                  </ul>
+                </div>
+
+                <div style="background:#fef3c7;border-radius:12px;padding:10px;margin-bottom:12px;font-size:11px;">
+                  <strong>👤 Publicado por:</strong> Juan Pérez<br>
+                  <span style="color:var(--muted);">⭐ 4.8 (12 trabajos anteriores) · Paga puntual</span>
+                </div>
+
+                <div class="cta-row">
+                  <button class="btn ghost" style="flex:1;" id="exitDemoAlert">Salir</button>
+                  <button class="btn whatsapp" style="flex:1;" id="contactDemoAlert">📱 Contactar</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal de DETALLE EMPRENDIMIENTO (dentro del teléfono) -->
+            <div class="modal" id="emprendimientoModal">
+              <div class="sheet">
+                <div class="sheet-header">
+                  <h4 style="margin:0;" id="empModalTitle">🚀 Emprendimiento</h4>
+                  <button class="sheet-close" id="closeEmprendimiento">✕</button>
+                </div>
+                
+                <div id="empModalContent">
+                  <!-- Se llena dinámicamente -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal de DETALLE PASANTÍA (dentro del teléfono) -->
+            <div class="modal" id="pasantiaModal">
+              <div class="sheet">
+                <div class="sheet-header">
+                  <h4 style="margin:0;" id="pasantiaModalTitle">🎓 Detalle de Pasantía</h4>
+                  <button class="sheet-close" id="closePasantia">✕</button>
+                </div>
+                
+                <div id="pasantiaModalContent">
+                  <!-- Se llena dinámicamente -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal de PERFIL DE PERSONA (dentro del teléfono) -->
+            <div class="modal" id="personProfileModal">
+              <div class="sheet">
+                <div class="sheet-header">
+                  <h4 style="margin:0;" id="personProfileTitle">👤 Perfil</h4>
+                  <button class="sheet-close" id="closePersonProfile">✕</button>
+                </div>
+                
+                <div id="personProfileContent">
+                  <!-- Se llena dinámicamente -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal de DETALLE OPORTUNIDAD (dentro del teléfono) -->
+            <div class="modal" id="oppDetailModal">
+              <div class="sheet">
+                <div class="sheet-header">
+                  <h4 style="margin:0;" id="oppDetailTitle">🎯 Oportunidad</h4>
+                  <button class="sheet-close" id="closeOppDetail">✕</button>
+                </div>
+                
+                <div id="oppDetailContent">
+                  <!-- Se llena dinámicamente -->
+                </div>
+              </div>
+            </div>
+
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal" id="applyModal">
-      <div class="sheet">
-        <h4>Contactar trabajador</h4>
-        <input type="text" placeholder="Tu nombre" />
-        <input type="tel" placeholder="Tu WhatsApp (ej: 70012345)" />
-        <textarea rows="2" placeholder="¿Qué necesitas? (ej: limpieza de departamento)"></textarea>
-        <div class="cta-row">
-          <button class="btn ghost" id="closeModal">Cancelar</button>
-          <button class="btn primary" id="submitModal">Enviar mensaje</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal" id="helpModal">
-      <div class="sheet">
-        <h4>🆘 Necesito ayuda HOY</h4>
-        <p style="font-size: 12px; color: var(--muted); margin: 0 0 12px;">Publica rápido y recibe respuestas en minutos.</p>
-        <input type="text" id="helpWhat" placeholder="¿Qué necesitas? (ej: mesero, plomero, niñera)" />
-        <input type="text" id="helpWhere" placeholder="¿Dónde? (tu zona o dirección)" />
-        <div style="display: flex; gap: 8px;">
-          <input type="text" id="helpWhen" placeholder="¿Cuándo? (ej: hoy 3pm)" style="flex: 1;" />
-          <input type="text" id="helpPay" placeholder="¿Cuánto pagas? (Bs)" style="width: 100px;" />
-        </div>
-        <div class="pill-row" style="margin: 10px 0;">
-          <div class="pill active" data-paytype="hora">Por hora</div>
-          <div class="pill" data-paytype="trabajo">Por trabajo</div>
-          <div class="pill" data-paytype="acordar">A acordar</div>
-        </div>
-        <div class="cta-row">
-          <button class="btn ghost" id="closeHelpModal">Cancelar</button>
-          <button class="btn primary" id="submitHelp">📢 Publicar ahora</button>
         </div>
       </div>
     </div>
@@ -1087,7 +2478,6 @@
       const serviceSearch = document.getElementById("serviceSearch");
       const peopleList = document.getElementById("peopleList");
       const peopleSearch = document.getElementById("peopleSearch");
-      const ventureList = document.getElementById("ventureList");
       const opportunityList = document.getElementById("opportunityList");
       const chatMessages = document.getElementById("chatMessages");
       const chatInput = document.getElementById("chatInput");
@@ -1100,94 +2490,360 @@
         serviceCategory: "Todos",
         serviceQuery: "",
         peopleQuery: "",
+        selectedCategory: null,
       };
 
       const jobs = [
         {
-          title: "Mesero/a para evento",
-          company: "Particular",
+          title: "Mesero/a tiempo completo",
+          company: "Restaurante La Casona",
           city: "La Paz",
           modality: "Presencial",
-          salary: "150 Bs/día",
-          tag: "🔥 Urgente",
-          category: "gastronomia"
+          salary: "2.000 Bs + propinas",
+          tag: "Urgente",
         },
         {
-          title: "Empleada doméstica cama afuera",
-          company: "Familia Rojas",
+          title: "Empleada doméstica",
+          company: "Familia Mendoza",
           city: "Zona Sur",
           modality: "Presencial",
-          salary: "2.800 Bs/mes",
-          tag: "✅ Verificado",
-          category: "domestico"
+          salary: "1.800 Bs",
+          tag: "Cama adentro",
         },
         {
-          title: "Plomero para baño urgente",
-          company: "Edificio Central",
+          title: "Ayudante de cocina",
+          company: "Pollos Copacabana",
+          city: "El Alto",
+          modality: "Presencial",
+          salary: "1.600 Bs",
+          tag: "Sin experiencia",
+        },
+        {
+          title: "Repartidor con moto",
+          company: "Delivery Express",
+          city: "Cochabamba",
+          modality: "Presencial",
+          salary: "Por entrega",
+          tag: "Moto propia",
+        },
+        {
+          title: "Asistente virtual",
+          company: "StartUp Bolivia",
+          city: "Remoto",
+          modality: "Remoto",
+          salary: "2.500 Bs",
+          tag: "Home office",
+        },
+        {
+          title: "Community Manager",
+          company: "Agencia Digital Pixel",
+          city: "La Paz / Remoto",
+          modality: "Hibrido",
+          salary: "3.000 Bs",
+          tag: "Medio tiempo",
+        },
+        {
+          title: "Diseñador gráfico freelance",
+          company: "Creativos Bolivia",
+          city: "Remoto",
+          modality: "Remoto",
+          salary: "Por proyecto",
+          tag: "Freelance",
+        },
+        {
+          title: "Recepcionista",
+          company: "Hotel Presidente",
+          city: "La Paz",
+          modality: "Presencial",
+          salary: "2.200 Bs",
+          tag: "Turno noche",
+        },
+        {
+          title: "Electricista",
+          company: "Construcciones Pando",
+          city: "El Alto",
+          modality: "Presencial",
+          salary: "2.800 Bs",
+          tag: "Experiencia",
+        },
+        {
+          title: "Vendedor/a tienda",
+          company: "Boutique Elegance",
+          city: "Zona Sur",
+          modality: "Presencial",
+          salary: "1.500 Bs + comisión",
+          tag: "Tiempo completo",
+        },
+        {
+          title: "Programador web junior",
+          company: "TechBolivia",
+          city: "Remoto",
+          modality: "Remoto",
+          salary: "4.000 Bs",
+          tag: "React/Node",
+        },
+        {
+          title: "Contador part-time",
+          company: "Consultora Finanzas",
+          city: "La Paz / Remoto",
+          modality: "Hibrido",
+          salary: "2.000 Bs",
+          tag: "3 días presencial",
+        },
+        {
+          title: "Niñera cama afuera",
+          company: "Familia Torres",
+          city: "Sopocachi",
+          modality: "Presencial",
+          salary: "1.600 Bs",
+          tag: "Lun-Vie",
+        },
+        {
+          title: "Atención al cliente",
+          company: "Call Center Global",
+          city: "La Paz / Remoto",
+          modality: "Hibrido",
+          salary: "1.800 Bs + bonos",
+          tag: "Bilingüe",
+        },
+        {
+          title: "Chofer particular",
+          company: "Ejecutivo privado",
+          city: "Zona Sur",
+          modality: "Presencial",
+          salary: "2.500 Bs",
+          tag: "Licencia A",
+        },
+        {
+          title: "Transcriptor de audio",
+          company: "Medios Bolivia",
+          city: "Remoto",
+          modality: "Remoto",
+          salary: "Por hora",
+          tag: "Horario libre",
+        },
+        {
+          title: "Barista",
+          company: "Café Altura",
           city: "Miraflores",
           modality: "Presencial",
-          salary: "200 Bs",
-          tag: "🆘 Hoy",
-          category: "oficios"
+          salary: "1.500 Bs + propinas",
+          tag: "Experiencia",
         },
         {
-          title: "Niñera fines de semana",
-          company: "Particular",
-          city: "Calacoto",
-          modality: "Presencial",
-          salary: "80 Bs/día",
-          tag: "Fijo",
-          category: "domestico"
+          title: "Editor de video",
+          company: "Productora Visión",
+          city: "Remoto",
+          modality: "Remoto",
+          salary: "3.500 Bs",
+          tag: "Premiere/After",
         },
         {
-          title: "Cocinero/a comida boliviana",
-          company: "Restaurant Pachamama",
-          city: "San Miguel",
+          title: "Secretaria ejecutiva",
+          company: "Bufete Abogados",
+          city: "Centro La Paz",
           modality: "Presencial",
-          salary: "3.500 Bs/mes",
-          tag: "⭐ Top",
-          category: "gastronomia"
+          salary: "2.800 Bs",
+          tag: "Tiempo completo",
         },
         {
-          title: "Electricista residencial",
-          company: "Condominio Los Pinos",
-          city: "Achumani",
-          modality: "Presencial",
-          salary: "250 Bs",
-          tag: "Mañana",
-          category: "oficios"
+          title: "Soporte técnico",
+          company: "ISP Conecta",
+          city: "La Paz / Remoto",
+          modality: "Hibrido",
+          salary: "2.200 Bs",
+          tag: "Turno rotativo",
+        },
+      ];
+
+      // Trabajadores con perfil simplificado
+      const workers = [
+        {
+          name: "Rosa Mamani",
+          skill: "Empleada doméstica",
+          category: "domestico",
+          city: "La Paz",
+          rating: 4.8,
+          reviews: 31,
+          badges: ["Verificada", "Puntual"],
+          skills: ["Limpieza", "Cocina", "Planchado"],
+          available: true,
+          whatsapp: "71234567"
+        },
+        {
+          name: "Carlos Quispe",
+          skill: "Plomero",
+          category: "oficios",
+          city: "El Alto",
+          rating: 4.9,
+          reviews: 45,
+          badges: ["Verificado", "Confiable"],
+          skills: ["Plomería", "Gas", "Urgencias"],
+          available: true,
+          whatsapp: "72345678"
+        },
+        {
+          name: "Ana Flores",
+          skill: "Cocinera",
+          category: "gastronomia",
+          city: "Cochabamba",
+          rating: 5.0,
+          reviews: 28,
+          badges: ["Top", "Recomendada"],
+          skills: ["Comida criolla", "Repostería", "Eventos"],
+          available: true,
+          whatsapp: "73456789"
+        },
+        {
+          name: "Pedro Condori",
+          skill: "Electricista",
+          category: "oficios",
+          city: "Santa Cruz",
+          rating: 4.7,
+          reviews: 19,
+          badges: ["Verificado"],
+          skills: ["Instalaciones", "Reparaciones", "Emergencias 24h"],
+          available: false,
+          whatsapp: "74567890"
+        },
+        {
+          name: "Lucia Choque",
+          skill: "Niñera",
+          category: "domestico",
+          city: "La Paz",
+          rating: 4.9,
+          reviews: 52,
+          badges: ["Verificada", "Confiable", "Recomendada"],
+          skills: ["Cuidado bebés", "Tareas escolares", "Cocina"],
+          available: true,
+          whatsapp: "75678901"
+        },
+        {
+          name: "Juan Huanca",
+          skill: "Albañil",
+          category: "construccion",
+          city: "El Alto",
+          rating: 4.6,
+          reviews: 38,
+          badges: ["Puntual"],
+          skills: ["Construcción", "Refacciones", "Pintura"],
+          available: true,
+          whatsapp: "76789012"
         },
       ];
 
       const services = [
-        { name: "Doña Rosa", skill: "Limpieza y cocina", category: "Domestico", rate: "25 Bs/h", stars: 5, badges: ["Puntual", "Recomendada"], jobs: 47, available: true },
-        { name: "Don Pedro", skill: "Plomería y gasfitería", category: "Oficios", rate: "40 Bs/h", stars: 4, badges: ["Verificado"], jobs: 32, available: true },
-        { name: "Carla", skill: "Mesera con experiencia", category: "Gastronomia", rate: "15 Bs/h", stars: 5, badges: ["Puntual"], jobs: 18, available: false },
-        { name: "Miguel", skill: "Electricista certificado", category: "Oficios", rate: "50 Bs/h", stars: 5, badges: ["Verificado", "Top"], jobs: 89, available: true },
-        { name: "Ana", skill: "Peluquera a domicilio", category: "Belleza", rate: "Desde 30 Bs", stars: 4, badges: ["Popular"], jobs: 56, available: true },
-        { name: "Juan Carlos", skill: "Albañil y pintor", category: "Construccion", rate: "35 Bs/h", stars: 4, badges: ["Confiable"], jobs: 41, available: true },
-        { name: "Lucía", skill: "Niñera y cuidado adultos", category: "Domestico", rate: "20 Bs/h", stars: 5, badges: ["Recomendada", "Verificada"], jobs: 63, available: true },
-        { name: "Roberto", skill: "Conductor y delivery", category: "Transporte", rate: "Acordar", stars: 4, badges: ["Tengo moto"], jobs: 120, available: true },
+        { name: "Rosa Mamani", skill: "Limpieza profunda", category: "Doméstico", rate: "80 Bs/día", rating: 4.8 },
+        { name: "Carlos Quispe", skill: "Plomería general", category: "Oficios", rate: "50 Bs/h", rating: 4.9 },
+        { name: "Ana Flores", skill: "Cocina para eventos", category: "Gastronomía", rate: "150 Bs/evento", rating: 5.0 },
+        { name: "Pedro Condori", skill: "Electricidad", category: "Oficios", rate: "60 Bs/h", rating: 4.7 },
+        { name: "Sonia Mamani", skill: "Peluquería a domicilio", category: "Belleza", rate: "40 Bs", rating: 4.5 },
+        { name: "Miguel Apaza", skill: "Flete y mudanzas", category: "Transporte", rate: "200 Bs", rating: 4.8 },
       ];
 
       const people = [
-        { name: "Rosa Mamani", role: "Empleada doméstica", city: "La Paz", stars: 5, badges: ["Recomendada"], available: true, jobs: 47 },
-        { name: "Pedro Quispe", role: "Plomero y gasfitero", city: "El Alto", stars: 4, badges: ["Verificado"], available: true, jobs: 32 },
-        { name: "María Condori", role: "Cocinera", city: "Cochabamba", stars: 5, badges: ["Top"], available: false, jobs: 28 },
-        { name: "Carlos Huanca", role: "Electricista", city: "La Paz", stars: 5, badges: ["Certificado"], available: true, jobs: 89 },
-        { name: "Juana Flores", role: "Niñera", city: "Santa Cruz", stars: 4, badges: ["Puntual"], available: true, jobs: 15 },
-      ];
-
-      const ventures = [
-        { name: "Cafe Ayni", desc: "Cafe de especialidad con entregas express" },
-        { name: "EcoPrint", desc: "Impresion sostenible para empresas" },
-        { name: "MotoRun", desc: "Logistica de ultima milla" },
+        { name: "Diego Lima", role: "Mesero con experiencia", city: "La Paz", rating: 4.5 },
+        { name: "Sofia Perez", role: "Cajera/atención", city: "Tarija", rating: 4.7 },
+        { name: "Hector Molina", role: "Conductor particular", city: "Cochabamba", rating: 4.9 },
       ];
 
       const opportunities = [
-        { title: "Beca UX 2026", desc: "Formacion intensiva con mentorias" },
-        { title: "Voluntariado social", desc: "Apoyo en gestion y comunicacion" },
-        { title: "Pitch Day", desc: "Presenta tu emprendimiento" },
+        { 
+          title: "Beca UX/UI Design 2026", 
+          desc: "Formación intensiva de 6 meses con mentorías personalizadas",
+          type: "Beca",
+          icon: "🎓",
+          org: "Fundación Alalay",
+          deadline: "28 Feb 2026",
+          location: "La Paz / Online",
+          fullDesc: "Programa completo de diseño UX/UI con certificación internacional. Incluye laptop prestada, material de estudio y conexión a internet. Dirigido a jóvenes de 18-30 años sin experiencia previa.",
+          requirements: ["Bachiller", "18-30 años", "Disponibilidad 20hrs/sem", "Motivación"],
+          benefits: ["Certificación internacional", "Laptop prestada", "Mentorías 1:1", "Bolsa de trabajo"]
+        },
+        { 
+          title: "Voluntariado Comunitario", 
+          desc: "Apoyo en gestión y comunicación para ONG local",
+          type: "Voluntariado",
+          icon: "🤝",
+          org: "Voces de Cambio",
+          deadline: "Abierto",
+          location: "El Alto",
+          fullDesc: "Únete a nuestro equipo de voluntarios para apoyar proyectos de desarrollo comunitario. Horarios flexibles, ideal para estudiantes que buscan experiencia práctica.",
+          requirements: ["Mayor de 16 años", "4 hrs semanales mín.", "Compromiso 3 meses"],
+          benefits: ["Certificado de voluntariado", "Networking", "Experiencia real", "Refrigerio"]
+        },
+        { 
+          title: "Pitch Day Emprendedores", 
+          desc: "Presenta tu emprendimiento ante inversores",
+          type: "Concurso",
+          icon: "🏆",
+          org: "Startup Bolivia",
+          deadline: "15 Mar 2026",
+          location: "Santa Cruz",
+          fullDesc: "Competencia de pitching donde los mejores emprendimientos ganan capital semilla y mentoría. Premios desde $1,000 hasta $10,000 USD.",
+          requirements: ["Emprendimiento activo", "Equipo de 2+ personas", "Prototipo funcional"],
+          benefits: ["Capital semilla hasta $10K", "Mentoría 6 meses", "Networking", "Visibilidad mediática"]
+        },
+        { 
+          title: "Curso Marketing Digital", 
+          desc: "Aprende ads, SEO y redes sociales gratis",
+          type: "Capacitación",
+          icon: "📚",
+          org: "Google Activate",
+          deadline: "Siempre abierto",
+          location: "100% Online",
+          fullDesc: "Curso gratuito de 40 horas sobre marketing digital. Aprende a crear campañas, analizar métricas y gestionar redes sociales profesionalmente.",
+          requirements: ["Acceso a internet", "Correo Gmail", "Ganas de aprender"],
+          benefits: ["Certificado Google", "A tu ritmo", "100% gratuito", "Acceso de por vida"]
+        },
+        { 
+          title: "Beca Técnico en Enfermería", 
+          desc: "Formación técnica superior 100% becada",
+          type: "Beca",
+          icon: "🎓",
+          org: "Instituto INFOCAL",
+          deadline: "10 Mar 2026",
+          location: "Cochabamba",
+          fullDesc: "Carrera técnica de 2 años en enfermería con prácticas en hospitales. Incluye matrícula, materiales y uniforme. Convenio con hospitales para inserción laboral.",
+          requirements: ["Bachiller", "Examen de admisión", "Certificado médico", "18-35 años"],
+          benefits: ["Matrícula 100%", "Materiales incluidos", "Prácticas garantizadas", "Bolsa de empleo"]
+        },
+        { 
+          title: "Hackathon Social 2026", 
+          desc: "48 hrs para crear soluciones tecnológicas sociales",
+          type: "Concurso",
+          icon: "🏆",
+          org: "JALA University",
+          deadline: "1 Abr 2026",
+          location: "Cochabamba / Híbrido",
+          fullDesc: "Competencia de desarrollo de software enfocada en resolver problemas sociales. Equipos de 3-5 personas compiten por premios y oportunidades laborales.",
+          requirements: ["Equipo 3-5 personas", "1+ programador", "Mayores de 18"],
+          benefits: ["Premios en efectivo", "Ofertas laborales", "Networking tech", "Comida incluida"]
+        },
+        { 
+          title: "Programa de Mentoría Mujeres", 
+          desc: "Acompañamiento profesional para mujeres emprendedoras",
+          type: "Capacitación",
+          icon: "📚",
+          org: "Pro Mujer Bolivia",
+          deadline: "20 Feb 2026",
+          location: "La Paz / El Alto",
+          fullDesc: "Programa de 4 meses con mentoras exitosas que te guían en tu emprendimiento. Talleres de finanzas, marketing y liderazgo incluidos.",
+          requirements: ["Mujer emprendedora", "Negocio iniciado", "Disponibilidad sábados"],
+          benefits: ["Mentora personal", "Red de contactos", "Microcréditos", "Talleres gratuitos"]
+        },
+        { 
+          title: "Voluntariado Ambiental", 
+          desc: "Reforestación y educación ambiental",
+          type: "Voluntariado",
+          icon: "🤝",
+          org: "Reforestemos Bolivia",
+          deadline: "Abierto",
+          location: "Varias ciudades",
+          fullDesc: "Únete a jornadas de plantación de árboles y talleres de concientización en colegios. Actividades los fines de semana con transporte incluido.",
+          requirements: ["Mayor de 14 años", "Compromiso mensual", "Autorización si menor"],
+          benefits: ["Transporte gratis", "Playera oficial", "Certificado", "Impacto real"]
+        },
       ];
 
       function setScreen(next) {
@@ -1198,6 +2854,14 @@
         navItems.forEach((item) => {
           item.classList.toggle("active", item.dataset.target === next);
         });
+      }
+
+      function renderStars(rating) {
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+          stars += `<span class="star${i <= Math.round(rating) ? '' : ' empty'}">★</span>`;
+        }
+        return stars;
       }
 
       function renderJobs(target, list) {
@@ -1212,7 +2876,42 @@
             <div class="meta"><span>${job.modality}</span><span>${job.salary}</span></div>
             <div class="cta-row">
               <button class="btn ghost">Guardar</button>
-              <button class="whatsapp-btn" data-contact="${job.title}">📱 Contactar</button>
+              <button class="btn whatsapp" data-apply="${job.title}">📱 Contactar</button>
+            </div>
+          `;
+          target.appendChild(card);
+        });
+      }
+
+      function renderWorkers(target, list) {
+        target.innerHTML = "";
+        const filtered = state.selectedCategory 
+          ? list.filter(w => w.category === state.selectedCategory)
+          : list;
+        filtered.slice(0, 3).forEach((worker) => {
+          const card = document.createElement("div");
+          card.className = "worker-card";
+          card.innerHTML = `
+            <div class="worker-header">
+              <div class="worker-avatar">${worker.available ? '✅' : '⏸️'}</div>
+              <div class="worker-info">
+                <h5>${worker.name}</h5>
+                <p>${worker.skill} · ${worker.city}</p>
+                <div class="stars">
+                  ${renderStars(worker.rating)}
+                  <span style="font-size:11px;color:var(--muted);margin-left:4px;">${worker.rating} (${worker.reviews})</span>
+                </div>
+              </div>
+            </div>
+            <div class="badge-row">
+              ${worker.badges.map(b => `<span class="badge${b === 'Verificada' || b === 'Verificado' ? ' verified' : ''}">${b === 'Verificada' || b === 'Verificado' ? '✓ ' : ''}${b}</span>`).join('')}
+            </div>
+            <div class="skills-row">
+              ${worker.skills.map(s => `<span class="skill">${s}</span>`).join('')}
+            </div>
+            <div class="cta-row">
+              <button class="btn ghost" style="flex:1;">Ver perfil</button>
+              <button class="btn whatsapp" style="flex:1;" data-whatsapp="${worker.whatsapp}">📱 WhatsApp</button>
             </div>
           `;
           target.appendChild(card);
@@ -1228,29 +2927,28 @@
           return matchCategory && matchQuery;
         });
         filtered.forEach((item) => {
-          const starsHtml = Array(5).fill(0).map((_, i) => 
-            i < item.stars ? '<span class="filled">★</span>' : '<span class="empty">★</span>'
-          ).join('');
-          const badgesHtml = item.badges.map(b => `<span class="badge">${b}</span>`).join('');
           const card = document.createElement("div");
           card.className = "card";
           card.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: start;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
               <span class="tag">${item.category}</span>
-              <div class="stars">${starsHtml}</div>
+              <div class="stars" style="font-size:10px;">${renderStars(item.rating || 4.5)}</div>
             </div>
             <h5>${item.name}</h5>
             <p>${item.skill}</p>
-            <div class="badge-row">${badgesHtml}</div>
-            <div class="meta">
-              <span>${item.rate}</span>
-              <span class="completed-jobs">✅ ${item.jobs} trabajos</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
-              ${item.available ? '<span class="availability"><span class="dot"></span> Disponible</span>' : '<span style="font-size: 11px; color: var(--muted);">No disponible</span>'}
-              <button class="whatsapp-btn" ${!item.available ? 'disabled style="opacity: 0.5;"' : ''} data-worker="${item.name}">📱 WhatsApp</button>
+            <div class="meta"><span>${item.rate}</span><span>Disponible</span></div>
+            <div class="cta-row">
+              <button class="btn ghost service-profile-btn">Ver perfil</button>
+              <button class="btn whatsapp service-whatsapp-btn">📱 WhatsApp</button>
             </div>
           `;
+          // Agregar event listeners
+          card.querySelector(".service-profile-btn").addEventListener("click", () => {
+            showSuccessModal(`Perfil de ${item.name} - ${item.skill}`);
+          });
+          card.querySelector(".service-whatsapp-btn").addEventListener("click", () => {
+            showToast(`Abriendo WhatsApp de ${item.name}...`);
+          });
           serviceList.appendChild(card);
         });
       }
@@ -1262,98 +2960,215 @@
           return !q || item.role.toLowerCase().includes(q) || item.city.toLowerCase().includes(q);
         });
         filtered.forEach((item) => {
-          const starsHtml = Array(5).fill(0).map((_, i) => 
-            i < item.stars ? '<span class="filled">★</span>' : '<span class="empty">★</span>'
-          ).join('');
-          const badgesHtml = item.badges.map(b => `<span class="badge">${b}</span>`).join('');
           const card = document.createElement("div");
           card.className = "card";
           card.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: start;">
-              <span class="tag">${item.city}</span>
-              <div class="stars">${starsHtml}</div>
-            </div>
+            <span class="tag">${item.city}</span>
             <h5>${item.name}</h5>
             <p>${item.role}</p>
-            <div class="badge-row">${badgesHtml}</div>
-            <div class="meta">
-              <span class="completed-jobs">✅ ${item.jobs} trabajos</span>
-              ${item.available ? '<span class="availability"><span class="dot"></span> Disponible</span>' : '<span style="color: var(--muted);">No disponible</span>'}
-            </div>
             <div class="cta-row">
-              <button class="btn ghost">Ver perfil</button>
-              <button class="whatsapp-btn" ${!item.available ? 'disabled style="opacity: 0.5;"' : ''} data-worker="${item.name}">📱 WhatsApp</button>
+              <button class="btn ghost people-profile-btn">Ver Perfil</button>
+              <button class="btn primary people-connect-btn">Conectar</button>
             </div>
           `;
+          // Agregar event listeners
+          card.querySelector(".people-profile-btn").addEventListener("click", () => {
+            showPersonProfile(item);
+          });
+          card.querySelector(".people-connect-btn").addEventListener("click", () => {
+            showSuccessModal(`¡Solicitud de conexión enviada a ${item.name}!`);
+          });
           peopleList.appendChild(card);
         });
       }
 
-      function renderVenture() {
-        ventureList.innerHTML = "";
-        ventures.forEach((item) => {
-          const card = document.createElement("div");
-          card.className = "card";
-          card.innerHTML = `
-            <span class="tag">Emprendimiento</span>
-            <h5>${item.name}</h5>
-            <p>${item.desc}</p>
-            <div class="cta-row">
-              <button class="btn ghost">Ver mas</button>
-              <button class="btn primary">Apoyar</button>
+      // Mostrar perfil de persona
+      function showPersonProfile(person) {
+        const modal = document.getElementById("personProfileModal");
+        const title = document.getElementById("personProfileTitle");
+        const content = document.getElementById("personProfileContent");
+        
+        // Generar datos aleatorios para demo
+        const skills = ["Comunicación", "Trabajo en equipo", "Liderazgo", "Creatividad", "Organización", "Resolución de problemas"];
+        const randomSkills = skills.sort(() => 0.5 - Math.random()).slice(0, 3);
+        const experience = Math.floor(Math.random() * 10) + 1;
+        const connections = Math.floor(Math.random() * 200) + 20;
+        const rating = (Math.random() * 1 + 4).toFixed(1);
+        
+        title.textContent = `👤 ${person.name}`;
+        content.innerHTML = `
+          <div style="text-align:center;padding:16px 0;">
+            <div style="width:70px;height:70px;background:linear-gradient(135deg,var(--brand),#ff9f3f);border-radius:50%;margin:0 auto 10px;display:grid;place-items:center;font-size:32px;">
+              ${person.name.charAt(0)}
             </div>
-          `;
-          ventureList.appendChild(card);
-        });
+            <h5 style="margin:0 0 4px;font-size:16px;">${person.name}</h5>
+            <p style="margin:0;color:var(--muted);font-size:12px;">${person.role}</p>
+            <div style="display:flex;justify-content:center;gap:6px;margin-top:8px;">
+              <span class="badge verified">✓ Verificado</span>
+              <span class="badge">⭐ ${rating}</span>
+            </div>
+          </div>
+          
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
+            <div style="background:#f8fafc;border-radius:10px;padding:10px;text-align:center;">
+              <strong style="display:block;font-size:16px;color:var(--brand);">${experience}</strong>
+              <span style="font-size:9px;color:var(--muted);">Años exp.</span>
+            </div>
+            <div style="background:#f8fafc;border-radius:10px;padding:10px;text-align:center;">
+              <strong style="display:block;font-size:16px;color:var(--brand);">${connections}</strong>
+              <span style="font-size:9px;color:var(--muted);">Conexiones</span>
+            </div>
+            <div style="background:#f8fafc;border-radius:10px;padding:10px;text-align:center;">
+              <strong style="display:block;font-size:16px;color:var(--brand);">📍</strong>
+              <span style="font-size:9px;color:var(--muted);">${person.city}</span>
+            </div>
+          </div>
+          
+          <div style="margin-bottom:14px;">
+            <strong style="font-size:11px;display:block;margin-bottom:6px;">Habilidades</strong>
+            <div class="skills-row">
+              ${randomSkills.map(s => `<span class="skill">${s}</span>`).join('')}
+            </div>
+          </div>
+          
+          <div style="background:#ecfdf5;border-radius:10px;padding:10px;margin-bottom:14px;font-size:11px;">
+            <strong>✨ Disponible para:</strong><br>
+            <span style="color:#059669;">Proyectos, colaboraciones y oportunidades laborales</span>
+          </div>
+          
+          <div class="cta-row">
+            <button class="btn ghost" style="flex:1;" onclick="document.getElementById('personProfileModal').classList.remove('active'); showToast('Mensaje enviado a ${person.name}')">💬 Mensaje</button>
+            <button class="btn primary" style="flex:1;" onclick="document.getElementById('personProfileModal').classList.remove('active'); showSuccessModal('¡Conectado con ${person.name}!')">🤝 Conectar</button>
+          </div>
+        `;
+        
+        modal.classList.add("active");
       }
+
+      // Estado de filtro de oportunidades
+      let oppTypeFilter = "all";
 
       function renderOpportunities() {
         opportunityList.innerHTML = "";
-        opportunities.forEach((item) => {
+        
+        const filtered = opportunities.filter(item => 
+          oppTypeFilter === "all" || item.type === oppTypeFilter
+        );
+
+        if (filtered.length === 0) {
+          opportunityList.innerHTML = `<p style="text-align:center;color:var(--muted);padding:20px;">No hay oportunidades en esta categoría</p>`;
+          return;
+        }
+
+        filtered.forEach((item) => {
           const card = document.createElement("div");
           card.className = "card";
+          card.style.cssText = "padding:14px;";
+          
+          const typeColors = {
+            "Beca": "linear-gradient(135deg,#10b981,#059669)",
+            "Capacitación": "linear-gradient(135deg,#3b82f6,#2563eb)",
+            "Voluntariado": "linear-gradient(135deg,#f59e0b,#d97706)",
+            "Concurso": "linear-gradient(135deg,#8b5cf6,#7c3aed)"
+          };
+          
           card.innerHTML = `
-            <span class="tag">Oportunidad</span>
-            <h5>${item.title}</h5>
-            <p>${item.desc}</p>
+            <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;">
+              <div style="width:42px;height:42px;background:${typeColors[item.type]};border-radius:12px;display:grid;place-items:center;font-size:20px;flex-shrink:0;">${item.icon}</div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="tag" style="margin:0;">${item.type}</span>
+                  <span style="font-size:9px;color:var(--muted);">📅 ${item.deadline}</span>
+                </div>
+                <h5 style="margin:4px 0 2px;font-size:13px;line-height:1.3;">${item.title}</h5>
+                <p style="font-size:10px;color:var(--muted);margin:0;">${item.org} · ${item.location}</p>
+              </div>
+            </div>
+            <p style="font-size:11px;color:var(--ink);margin:0 0 10px;line-height:1.4;">${item.desc}</p>
             <div class="cta-row">
-              <button class="btn ghost">Guardar</button>
-              <button class="btn primary">Aplicar</button>
+              <button class="btn ghost opp-details-btn" style="flex:1;">Ver más</button>
+              <button class="btn primary opp-apply-btn" style="flex:1;">Aplicar</button>
             </div>
           `;
+          
+          // Event listeners
+          card.querySelector(".opp-details-btn").addEventListener("click", () => {
+            showOppDetails(item);
+          });
+          card.querySelector(".opp-apply-btn").addEventListener("click", () => {
+            showSuccessModal(`¡Solicitud enviada para ${item.title}!\n\nTe contactaremos pronto.`);
+          });
           opportunityList.appendChild(card);
         });
       }
 
-      function renderHome() {
-        renderJobs(homeJobs, jobs.slice(0, 2));
-        renderHomeWorkers();
+      // Mostrar detalles de oportunidad
+      function showOppDetails(opp) {
+        const typeColors = {
+          "Beca": "linear-gradient(135deg,#10b981,#059669)",
+          "Capacitación": "linear-gradient(135deg,#3b82f6,#2563eb)",
+          "Voluntariado": "linear-gradient(135deg,#f59e0b,#d97706)",
+          "Concurso": "linear-gradient(135deg,#8b5cf6,#7c3aed)"
+        };
+        
+        const modal = document.getElementById("oppDetailModal");
+        const title = document.getElementById("oppDetailTitle");
+        const content = document.getElementById("oppDetailContent");
+        
+        title.textContent = `${opp.icon} ${opp.title}`;
+        content.innerHTML = `
+          <div style="text-align:center;padding:12px 0;">
+            <div style="width:56px;height:56px;background:${typeColors[opp.type]};border-radius:14px;margin:0 auto 10px;display:grid;place-items:center;font-size:26px;">
+              ${opp.icon}
+            </div>
+            <span class="tag">${opp.type}</span>
+          </div>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+            <div style="background:var(--soft);border-radius:10px;padding:10px;">
+              <span style="font-size:9px;color:var(--muted);display:block;">🏢 Organización</span>
+              <strong style="font-size:11px;">${opp.org}</strong>
+            </div>
+            <div style="background:var(--soft);border-radius:10px;padding:10px;">
+              <span style="font-size:9px;color:var(--muted);display:block;">📅 Fecha límite</span>
+              <strong style="font-size:11px;">${opp.deadline}</strong>
+            </div>
+          </div>
+          
+          <div style="background:#f0fdf4;border-radius:10px;padding:10px;margin-bottom:12px;border-left:3px solid #10b981;">
+            <span style="font-size:9px;color:#059669;display:block;">📍 Ubicación</span>
+            <strong style="font-size:11px;color:#047857;">${opp.location}</strong>
+          </div>
+          
+          <div style="background:#f8fafc;border-radius:12px;padding:12px;margin-bottom:12px;">
+            <p style="font-size:11px;color:var(--ink);margin:0;line-height:1.5;">${opp.fullDesc}</p>
+          </div>
+          
+          <div style="margin-bottom:12px;">
+            <strong style="font-size:11px;display:block;margin-bottom:6px;">📋 Requisitos</strong>
+            <div class="skills-row">
+              ${opp.requirements.map(r => `<span class="skill" style="background:#fef3c7;color:#92400e;">${r}</span>`).join('')}
+            </div>
+          </div>
+          
+          <div style="margin-bottom:14px;">
+            <strong style="font-size:11px;display:block;margin-bottom:6px;">🎁 Beneficios</strong>
+            <div class="skills-row">
+              ${opp.benefits.map(b => `<span class="skill" style="background:#d1fae5;color:#065f46;">${b}</span>`).join('')}
+            </div>
+          </div>
+          
+          <div class="cta-row">
+            <button class="btn ghost" style="flex:1;" onclick="document.getElementById('oppDetailModal').classList.remove('active')">Cerrar</button>
+            <button class="btn primary" style="flex:1;" onclick="showSuccessModal('¡Solicitud enviada para ${opp.title}!'); document.getElementById('oppDetailModal').classList.remove('active')">✨ Aplicar ahora</button>
+          </div>
+        `;
+        
+        modal.classList.add("active");
       }
 
-      function renderHomeWorkers() {
-        const homeWorkers = document.getElementById("homeWorkers");
-        if (!homeWorkers) return;
-        homeWorkers.innerHTML = "";
-        services.filter(s => s.available).slice(0, 2).forEach((item) => {
-          const starsHtml = Array(5).fill(0).map((_, i) => 
-            i < item.stars ? '<span class="filled">★</span>' : '<span class="empty">★</span>'
-          ).join('');
-          const card = document.createElement("div");
-          card.className = "card";
-          card.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: start;">
-              <span class="tag">${item.category}</span>
-              <div class="stars">${starsHtml}</div>
-            </div>
-            <h5>${item.name}</h5>
-            <p>${item.skill} · ${item.rate}</p>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
-              <span class="completed-jobs">✅ ${item.jobs} trabajos</span>
-              <button class="whatsapp-btn" data-worker="${item.name}">📱 WhatsApp</button>
-            </div>
-          `;
-          homeWorkers.appendChild(card);
-        });
+      function renderHome() {
+        renderWorkers(document.getElementById('homeWorkers'), workers);
       }
 
       function renderJobList() {
@@ -1425,7 +3240,7 @@
       });
 
       document.body.addEventListener("click", (event) => {
-        if (event.target.matches("[data-apply]") || event.target.matches("[data-contact]")) {
+        if (event.target.matches("[data-apply]")) {
           applyModal.classList.add("active");
         }
       });
@@ -1436,56 +3251,119 @@
 
       document.getElementById("submitModal").addEventListener("click", () => {
         applyModal.classList.remove("active");
-        showToast("📱 Mensaje enviado por WhatsApp");
+        showSuccessModal("¡Postulación enviada! Te contactarán pronto por WhatsApp.");
       });
 
       document.getElementById("ctaStart").addEventListener("click", () => setScreen("jobs"));
-      document.getElementById("ctaWorkers").addEventListener("click", () => setScreen("services"));
+      document.getElementById("ctaDocs").addEventListener("click", () => setScreen("services"));
 
-      // Modal de ayuda urgente
+      // Help modal
       const helpModal = document.getElementById("helpModal");
-      document.getElementById("needHelpBtn").addEventListener("click", () => {
+      document.getElementById("helpBanner").addEventListener("click", () => {
         helpModal.classList.add("active");
       });
-      document.getElementById("closeHelpModal").addEventListener("click", () => {
+      document.getElementById("closeHelp").addEventListener("click", () => {
         helpModal.classList.remove("active");
       });
       document.getElementById("submitHelp").addEventListener("click", () => {
         helpModal.classList.remove("active");
-        showToast("📢 ¡Publicado! Recibirás respuestas pronto");
+        showSuccessModal("¡Publicado! Recibirás ofertas en minutos.");
       });
 
-      // Tipo de pago en modal
-      document.querySelectorAll("[data-paytype]").forEach(pill => {
-        pill.addEventListener("click", () => {
-          document.querySelectorAll("[data-paytype]").forEach(p => p.classList.remove("active"));
-          pill.classList.add("active");
-        });
+      // Success modal
+      const successModal = document.getElementById("successModal");
+      function showSuccessModal(message) {
+        document.getElementById("successMessage").textContent = message;
+        successModal.classList.add("active");
+      }
+      document.getElementById("closeSuccess").addEventListener("click", () => {
+        successModal.classList.remove("active");
       });
 
-      // Categorías en home
-      document.querySelectorAll(".cat-card").forEach(card => {
-        card.addEventListener("click", () => {
-          const cat = card.dataset.cat;
-          const catMap = { domestico: "Domestico", gastronomia: "Gastronomia", oficios: "Oficios", transporte: "Transporte", construccion: "Construccion", belleza: "Belleza" };
-          state.serviceCategory = catMap[cat] || "Todos";
-          setScreen("services");
-          renderServices();
-          // Actualizar chip activo
-          document.querySelectorAll("#serviceCategories .chip").forEach(chip => {
-            chip.classList.toggle("active", chip.textContent.trim() === state.serviceCategory);
-          });
-        });
+      // Worker modal (ver perfil completo)
+      const workerModal = document.getElementById("workerModal");
+      function showWorkerModal(worker) {
+        const content = document.getElementById("workerModalContent");
+        content.innerHTML = `
+          <div class="worker-header">
+            <div class="worker-avatar">${worker.available ? '✅' : '⏸️'}</div>
+            <div class="worker-info">
+              <h5>${worker.name}</h5>
+              <p>${worker.skill} · ${worker.city}</p>
+              <div class="stars">
+                ${renderStars(worker.rating)}
+                <span style="font-size:11px;color:var(--muted);margin-left:4px;">${worker.rating} (${worker.reviews} reseñas)</span>
+              </div>
+            </div>
+          </div>
+          <div class="badge-row">
+            ${worker.badges.map(b => `<span class="badge${b === 'Verificada' || b === 'Verificado' ? ' verified' : ''}">${b === 'Verificada' || b === 'Verificado' ? '✓ ' : ''}${b}</span>`).join('')}
+          </div>
+          <div style="margin:12px 0;">
+            <strong style="font-size:12px;">Habilidades:</strong>
+            <div class="skills-row" style="margin-top:6px;">
+              ${worker.skills.map(s => `<span class="skill">${s}</span>`).join('')}
+            </div>
+          </div>
+          <div class="availability" style="margin:12px 0;">
+            <span>${worker.available ? '✅ Disponible para trabajar hoy' : '⏸️ No disponible ahora'}</span>
+          </div>
+          <div class="cta-row" style="margin-top:12px;">
+            <button class="btn whatsapp" style="flex:1;" onclick="showToast('Abriendo WhatsApp: ${worker.whatsapp}')">📱 WhatsApp</button>
+            <button class="btn ghost" style="flex:1;">📞 Llamar</button>
+          </div>
+        `;
+        workerModal.classList.add("active");
+      }
+      document.getElementById("closeWorker").addEventListener("click", () => {
+        workerModal.classList.remove("active");
       });
 
-      // WhatsApp buttons
+      // Click en "Ver perfil" de trabajador
       document.body.addEventListener("click", (event) => {
-        if (event.target.matches(".whatsapp-btn") || event.target.closest(".whatsapp-btn")) {
-          const btn = event.target.matches(".whatsapp-btn") ? event.target : event.target.closest(".whatsapp-btn");
-          if (!btn.disabled) {
-            showToast("📱 Abriendo WhatsApp...");
+        const btn = event.target.closest(".btn.ghost");
+        if (btn && btn.textContent.includes("Ver perfil")) {
+          const card = btn.closest(".worker-card");
+          if (card) {
+            const name = card.querySelector("h5").textContent;
+            const worker = workers.find(w => w.name === name);
+            if (worker) showWorkerModal(worker);
           }
         }
+      });
+
+      // Cerrar modal al hacer click fuera
+      document.querySelectorAll(".modal").forEach(modal => {
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            modal.classList.remove("active");
+          }
+        });
+      });
+
+      // Category selection
+      document.querySelectorAll(".category-item").forEach(item => {
+        item.addEventListener("click", () => {
+          document.querySelectorAll(".category-item").forEach(i => i.classList.remove("active"));
+          item.classList.add("active");
+          state.selectedCategory = item.dataset.cat;
+          renderHome();
+          showToast(`Mostrando: ${item.querySelector('.category-label').textContent}`);
+        });
+      });
+
+      // WhatsApp click
+      document.body.addEventListener("click", (event) => {
+        if (event.target.matches("[data-whatsapp]")) {
+          const num = event.target.dataset.whatsapp;
+          showToast(`Abriendo WhatsApp: ${num}`);
+        }
+      });
+
+      // Availability toggle
+      document.getElementById("availToggle")?.addEventListener("click", function() {
+        this.classList.toggle("on");
+        showToast(this.classList.contains("on") ? "Disponible activado" : "Disponible desactivado");
       });
 
       document.getElementById("chatSend").addEventListener("click", () => {
@@ -1496,22 +3374,13 @@
         bubble.textContent = text;
         chatMessages.appendChild(bubble);
         chatInput.value = "";
-        setTimeout(() => {
-          const reply = document.createElement("div");
-          reply.className = "bubble bot";
-          const responses = [
-            "Encontré 3 opciones para ti. ¿Quieres que te pase los contactos por WhatsApp?",
-            "Perfecto, hay demanda para eso. Te recomiendo completar tu perfil con referencias.",
-            "Hay una chamba urgente que paga bien. ¿Te interesa? Te paso el número.",
-            "Entendido. Publica tu disponibilidad y te llegarán ofertas directas."
-          ];
-          reply.textContent = responses[Math.floor(Math.random() * responses.length)];
-          chatMessages.appendChild(reply);
-          chatMessages.scrollTop = chatMessages.scrollHeight;
-        }, 800);
+        const reply = document.createElement("div");
+        reply.className = "bubble bot";
+        reply.textContent = "Te armare una lista personalizada ahora mismo.";
+        chatMessages.appendChild(reply);
       });
 
-      const categories = ["Todos", "Domestico", "Oficios", "Gastronomia", "Belleza", "Transporte", "Construccion"];
+      const categories = ["Todos", "Doméstico", "Gastronomía", "Oficios", "Transporte", "Belleza", "Construcción"];
       categories.forEach((cat, index) => {
         const chip = document.createElement("div");
         chip.className = "chip" + (index === 0 ? " active" : "");
@@ -1519,11 +3388,348 @@
         serviceCategories.appendChild(chip);
       });
 
+      // ========== DEMO ALERT - NOTIFICACIÓN FLOTANTE ==========
+      const floatingNotification = document.getElementById("floatingNotification");
+      const demoAlertModal = document.getElementById("demoAlertModal");
+      
+      // La campana de arriba muestra la notificación flotante
+      document.getElementById("notify")?.addEventListener("click", () => {
+        floatingNotification.classList.add("active");
+      });
+      
+      // El botón "Demo Alerta" en quick actions también muestra la notificación
+      document.getElementById("demoAlertBtn")?.addEventListener("click", () => {
+        floatingNotification.classList.add("active");
+      });
+      
+      // Cerrar notificación flotante
+      document.getElementById("closeNotification")?.addEventListener("click", () => {
+        floatingNotification.classList.remove("active");
+      });
+      document.getElementById("dismissNotification")?.addEventListener("click", () => {
+        floatingNotification.classList.remove("active");
+      });
+      document.getElementById("contactNotification")?.addEventListener("click", () => {
+        floatingNotification.classList.remove("active");
+        showSuccessModal("¡Contacto enviado! Juan te responderá pronto por WhatsApp.");
+      });
+      
+      // Modal de demo alert (para ver detalles completos)
+      document.getElementById("closeDemoAlert")?.addEventListener("click", () => {
+        demoAlertModal.classList.remove("active");
+      });
+      document.getElementById("exitDemoAlert")?.addEventListener("click", () => {
+        demoAlertModal.classList.remove("active");
+      });
+      document.getElementById("contactDemoAlert")?.addEventListener("click", () => {
+        demoAlertModal.classList.remove("active");
+        showSuccessModal("¡Contacto enviado! Juan te responderá pronto por WhatsApp.");
+      });
+
+      // ========== EMPRENDIMIENTOS ==========
+      const emprendimientoModal = document.getElementById("emprendimientoModal");
+      const emprendimientosData = {
+        comida: {
+          title: "🍔 Sabores de Casa - Doña María",
+          desc: "Emprendimiento familiar dedicado a la comida casera boliviana desde hace 5 años. Especialidad en platos típicos como fricasé, pique macho, silpancho y chairo.",
+          images: ["🍲", "🥘"],
+          details: [
+            "📍 Entrega en La Paz y El Alto",
+            "💰 Precios desde 25 Bs por plato",
+            "⏰ Pedidos con 24h de anticipación",
+            "🎉 Catering para eventos y fiestas"
+          ],
+          whatsapp: "71234567"
+        },
+        belleza: {
+          title: "💅 Glamour Express - Lucía",
+          desc: "Servicio profesional de belleza a domicilio. 8 años de experiencia en salones de prestigio, ahora llevando el servicio hasta tu puerta.",
+          images: ["💄", "✨"],
+          details: [
+            "📍 Atención en toda La Paz",
+            "💰 Manicure desde 30 Bs",
+            "⏰ Horarios flexibles",
+            "🎁 Paquetes para novias y quinceañeras"
+          ],
+          whatsapp: "72345678"
+        },
+        ropa: {
+          title: "👕 Confecciones Andinas - Pedro",
+          desc: "Taller de confección con 15 años de tradición. Trabajamos con telas típicas bolivianas, aguayos y diseños modernos con identidad cultural.",
+          images: ["🧥", "👗"],
+          details: [
+            "📍 Taller en zona 16 de Julio",
+            "💰 Cotizaciones gratis",
+            "⏰ Entrega en 1-2 semanas",
+            "✂️ Arreglos y ajustes express"
+          ],
+          whatsapp: "73456789"
+        }
+      };
+
+      // Ver detalles de emprendimiento - usando handlers directos
+      document.querySelectorAll("[data-emp-detail]").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const empId = btn.dataset.empDetail;
+          const emp = emprendimientosData[empId];
+          if (emp) {
+            document.getElementById("empModalTitle").textContent = emp.title;
+            document.getElementById("empModalContent").innerHTML = `
+              <div class="emprendimiento-gallery" style="height:80px;margin-bottom:12px;border-radius:12px;overflow:hidden;">
+                <div class="emprendimiento-img" style="font-size:36px;">${emp.images[0]}</div>
+                <div class="emprendimiento-img" style="font-size:36px;">${emp.images[1]}</div>
+              </div>
+              <p style="font-size:12px;color:var(--ink);margin:0 0 12px;">${emp.desc}</p>
+              <div style="background:#f8fafc;border-radius:10px;padding:12px;margin-bottom:12px;">
+                <strong style="font-size:11px;">Información:</strong>
+                <ul style="margin:8px 0 0;padding-left:18px;font-size:11px;color:var(--muted);">
+                  ${emp.details.map(d => `<li>${d}</li>`).join('')}
+                </ul>
+              </div>
+              <div class="cta-row">
+                <button class="btn ghost" style="flex:1;" onclick="document.getElementById('emprendimientoModal').classList.remove('active')">Cerrar</button>
+                <button class="btn whatsapp" style="flex:1;" onclick="showToast('Abriendo WhatsApp: ${emp.whatsapp}')">📱 WhatsApp</button>
+              </div>
+            `;
+            emprendimientoModal.classList.add("active");
+          }
+        });
+      });
+
+      document.getElementById("closeEmprendimiento")?.addEventListener("click", () => {
+        emprendimientoModal.classList.remove("active");
+      });
+
+      // ========== PASANTÍAS ==========
+      const pasantiaModal = document.getElementById("pasantiaModal");
+      const pasantiasData = {
+        contabilidad: {
+          title: "🎓 Asistente de Contabilidad",
+          empresa: "Finanzas Pando S.R.L.",
+          duracion: "3 meses",
+          horario: "Lunes a Viernes, 8:00 - 13:00",
+          ubicacion: "Zona Central, La Paz",
+          area: "Contabilidad / Administración",
+          requisitos: "Estudiantes de 3er año en adelante",
+          compensacion: "500-700 Bs/mes",
+          descripcion: "Buscamos estudiante proactivo para apoyar en el área contable. Aprenderás manejo de sistemas, conciliaciones bancarias y elaboración de reportes.",
+          tareas: ["Registro de facturas", "Conciliaciones bancarias", "Apoyo en declaraciones", "Archivo de documentos"],
+          beneficios: ["Certificado de prácticas", "Posibilidad de contratación", "Horario flexible para clases"]
+        },
+        diseno: {
+          title: "🎨 Diseño Gráfico Jr.",
+          empresa: "Agencia Creativa Pixel",
+          duracion: "6 meses",
+          horario: "Lunes a Viernes, 14:00 - 18:00",
+          ubicacion: "Sopocachi, La Paz",
+          area: "Diseño / Comunicación",
+          requisitos: "Últimos semestres de diseño gráfico",
+          compensacion: "600-800 Bs/mes",
+          descripcion: "Únete a nuestro equipo creativo. Trabajarás en proyectos reales para marcas reconocidas bajo supervisión de diseñadores senior.",
+          tareas: ["Diseño de piezas para redes", "Retoque fotográfico", "Apoyo en branding", "Animación básica"],
+          beneficios: ["Portafolio profesional", "Mentoría personalizada", "Ambiente creativo"]
+        },
+        cocina: {
+          title: "👨‍🍳 Auxiliar de Cocina",
+          empresa: "Hotel Presidente",
+          duracion: "4 meses",
+          horario: "Lunes a Sábado, 7:00 - 12:00",
+          ubicacion: "Centro, La Paz",
+          area: "Gastronomía",
+          requisitos: "Estudiantes o técnicos en cocina",
+          compensacion: "450-600 Bs/mes",
+          descripcion: "Forma parte del equipo de cocina de un hotel 5 estrellas. Aprende técnicas profesionales de cocina internacional y nacional.",
+          tareas: ["Mise en place", "Apoyo en línea caliente", "Preparación de buffet", "Control de inventario"],
+          beneficios: ["Alimentación incluida", "Uniforme proporcionado", "Carta de recomendación"]
+        }
+      };
+
+      // Ver detalles de pasantía
+      document.querySelectorAll(".pasantia-details-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const pasantiaId = btn.dataset.pasantia;
+          const pas = pasantiasData[pasantiaId];
+          if (pas) {
+            document.getElementById("pasantiaModalTitle").textContent = pas.title;
+            document.getElementById("pasantiaModalContent").innerHTML = `
+              <div style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);padding:12px;border-radius:12px;margin-bottom:12px;">
+                <strong style="font-size:12px;">${pas.empresa}</strong>
+                <div style="display:flex;gap:10px;margin-top:6px;font-size:10px;color:#0369a1;">
+                  <span>📅 ${pas.duracion}</span>
+                  <span>⏰ ${pas.horario}</span>
+                </div>
+              </div>
+              <p style="font-size:11px;color:var(--ink);margin:0 0 12px;line-height:1.5;">${pas.descripcion}</p>
+              <div style="background:#f8fafc;border-radius:10px;padding:12px;margin-bottom:10px;">
+                <strong style="font-size:11px;">📋 Tareas principales:</strong>
+                <ul style="margin:6px 0 0;padding-left:18px;font-size:10px;color:var(--muted);">
+                  ${pas.tareas.map(t => `<li>${t}</li>`).join('')}
+                </ul>
+              </div>
+              <div style="background:#ecfdf5;border-radius:10px;padding:12px;margin-bottom:10px;">
+                <strong style="font-size:11px;">✨ Beneficios:</strong>
+                <ul style="margin:6px 0 0;padding-left:18px;font-size:10px;color:#059669;">
+                  ${pas.beneficios.map(b => `<li>${b}</li>`).join('')}
+                </ul>
+              </div>
+              <div style="background:#fef3c7;border-radius:10px;padding:10px;margin-bottom:12px;font-size:11px;">
+                💰 <strong>Compensación:</strong> <span style="color:#d97706;font-weight:700;">${pas.compensacion}</span>
+              </div>
+              <div class="cta-row">
+                <button class="btn ghost" style="flex:1;" onclick="document.getElementById('pasantiaModal').classList.remove('active')">Cerrar</button>
+                <button class="btn primary" style="flex:1;" onclick="document.getElementById('pasantiaModal').classList.remove('active'); showSuccessModal('¡Postulación enviada!')">Postular</button>
+              </div>
+            `;
+            pasantiaModal.classList.add("active");
+          }
+        });
+      });
+
+      // Postular a pasantía
+      document.querySelectorAll(".pasantia-postular-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          showSuccessModal("¡Postulación enviada! Te contactarán pronto.");
+        });
+      });
+
+      // Cerrar modal pasantía
+      document.getElementById("closePasantia")?.addEventListener("click", () => {
+        pasantiaModal.classList.remove("active");
+      });
+
+      // Cerrar modal perfil de persona
+      document.getElementById("closePersonProfile")?.addEventListener("click", () => {
+        document.getElementById("personProfileModal").classList.remove("active");
+      });
+
+      // Cerrar modal detalle de oportunidad
+      document.getElementById("closeOppDetail")?.addEventListener("click", () => {
+        document.getElementById("oppDetailModal").classList.remove("active");
+      });
+
+      // Filtros de tipo de oportunidad
+      document.querySelectorAll("#oppTypeFilters .chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll("#oppTypeFilters .chip").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+          oppTypeFilter = chip.dataset.oppType;
+          renderOpportunities();
+          
+          const typeNames = {
+            "all": "todas las oportunidades",
+            "Beca": "becas",
+            "Capacitación": "capacitaciones",
+            "Voluntariado": "voluntariados",
+            "Concurso": "concursos"
+          };
+          showToast(`Mostrando ${typeNames[oppTypeFilter]}`);
+        });
+      });
+
+      // Botón Publicar de pasantías
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        if (btn.textContent.trim() === "Publicar") {
+          btn.addEventListener("click", () => {
+            showSuccessModal("Funcionalidad de publicar pasantía próximamente disponible.");
+          });
+        }
+      });
+
+      // ========== QUICK ACTIONS ==========
+      document.querySelectorAll(".quick-action[data-target]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          setScreen(btn.dataset.target);
+        });
+      });
+
+      // ========== SIDEBAR MENU ==========
+      const sidebar = document.getElementById("sidebar");
+      const sidebarOverlay = document.getElementById("sidebarOverlay");
+      const menuBtn = document.getElementById("menuBtn");
+      const closeSidebar = document.getElementById("closeSidebar");
+
+      function openSidebar() {
+        sidebar.classList.add("active");
+        sidebarOverlay.classList.add("active");
+      }
+
+      function closeSidebarMenu() {
+        sidebar.classList.remove("active");
+        sidebarOverlay.classList.remove("active");
+      }
+
+      menuBtn?.addEventListener("click", openSidebar);
+      closeSidebar?.addEventListener("click", closeSidebarMenu);
+      sidebarOverlay?.addEventListener("click", closeSidebarMenu);
+
+      // Sidebar navigation items
+      document.querySelectorAll(".sidebar-item[data-target]").forEach(item => {
+        item.addEventListener("click", () => {
+          // Update active state in sidebar
+          document.querySelectorAll(".sidebar-item").forEach(i => i.classList.remove("active"));
+          item.classList.add("active");
+          
+          // Navigate to screen
+          setScreen(item.dataset.target);
+          
+          // Close sidebar
+          closeSidebarMenu();
+        });
+      });
+
+      // Back buttons
+      document.querySelectorAll(".back-btn[data-target]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          setScreen(btn.dataset.target);
+        });
+      });
+
+      // ========== MENSAJES ==========
+      document.querySelectorAll(".message-item").forEach(item => {
+        item.addEventListener("click", () => {
+          const name = item.querySelector("strong").textContent;
+          showToast(`Abriendo chat con ${name}...`);
+        });
+      });
+
+      // ========== FILTRADO DE RESEÑAS ==========
+      const reviewFilters = document.getElementById("reviewFilters");
+      const reviewCards = document.querySelectorAll("#reviewsList .review-card");
+      
+      reviewFilters?.querySelectorAll(".chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          // Actualizar estado activo de chips
+          reviewFilters.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+          
+          const filter = chip.dataset.filter;
+          
+          // Filtrar reseñas
+          reviewCards.forEach(card => {
+            if (filter === "todas" || card.dataset.type === filter) {
+              card.style.display = "block";
+            } else {
+              card.style.display = "none";
+            }
+          });
+          
+          // Mostrar toast con info del filtro
+          const filterNames = {
+            "todas": "todas las reseñas",
+            "trabajador": "reseñas de trabajadores",
+            "empleador": "reseñas de empleadores",
+            "empresa": "reseñas de empresas"
+          };
+          showToast(`Mostrando ${filterNames[filter]}`);
+        });
+      });
+
       renderHome();
       renderJobList();
       renderServices();
       renderPeople();
-      renderVenture();
       renderOpportunities();
     </script>
   </body>
