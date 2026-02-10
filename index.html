@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Propuesta BamBam - Diseno Mejorado</title>
+    <title>Tucan - Tu empleo seguro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -174,16 +174,9 @@
         flex: 1;
       }
 
-      .brand-badge {
-        width: 38px;
-        height: 38px;
-        border-radius: 14px;
-        background: linear-gradient(140deg, var(--brand) 0%, #ff9f3f 60%, #ffd8a5 100%);
-        display: grid;
-        place-items: center;
-        font-weight: 700;
-        color: #1c0c00;
-        box-shadow: 0 10px 16px rgba(255, 122, 0, 0.25);
+      .brand-logo, .sidebar-logo {
+        object-fit: cover;
+        background: linear-gradient(140deg, #c45a1e 0%, #e07835 50%, #f4a261 100%);
       }
 
       .brand h2 {
@@ -688,8 +681,8 @@
       /* Categorías de oficios */
       .category-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
         margin: 12px 0;
       }
 
@@ -762,6 +755,225 @@
         margin: 2px 0 0;
         color: rgba(255,255,255,0.85);
         font-size: 11px;
+      }
+
+      /* Asistente de búsqueda fusionado */
+      .search-wizard {
+        background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+        border-radius: 18px;
+        padding: 16px;
+        margin-bottom: 14px;
+        box-shadow: 0 8px 24px rgba(255, 107, 53, 0.35);
+      }
+
+      .search-wizard-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .sos-icon {
+        width: 44px;
+        height: 44px;
+        background: linear-gradient(135deg, #ec4899, #be185d);
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-size: 16px;
+        font-weight: 700;
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+      }
+
+      .search-wizard-header h4 {
+        margin: 0;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .search-wizard-header p {
+        margin: 2px 0 0;
+        color: rgba(255,255,255,0.85);
+        font-size: 11px;
+      }
+
+      .search-wizard-input {
+        display: flex;
+        background: #fff;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+
+      .search-wizard-input input {
+        flex: 1;
+        border: none;
+        padding: 12px 14px;
+        font-size: 13px;
+        outline: none;
+      }
+
+      .search-wizard-input button {
+        background: var(--brand);
+        border: none;
+        padding: 0 16px;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+      }
+
+      .search-wizard-input button svg {
+        width: 20px;
+        height: 20px;
+        fill: #fff;
+      }
+
+      /* Steps del wizard */
+      .wizard-steps {
+        display: none;
+        background: #fff;
+        border-radius: 14px;
+        padding: 14px;
+        margin-top: 12px;
+        animation: slideUp 0.3s ease;
+      }
+
+      .wizard-steps.active {
+        display: block;
+      }
+
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .wizard-step-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--ink);
+        margin: 0 0 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .wizard-step-title span {
+        background: var(--brand);
+        color: #fff;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 10px;
+      }
+
+      .wizard-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+
+      .wizard-option {
+        background: var(--soft);
+        border: 2px solid transparent;
+        border-radius: 12px;
+        padding: 10px 8px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .wizard-option:hover {
+        border-color: var(--brand);
+        background: #fff7ed;
+      }
+
+      .wizard-option.selected {
+        border-color: var(--brand);
+        background: #fff7ed;
+      }
+
+      .wizard-option-icon {
+        font-size: 22px;
+        margin-bottom: 4px;
+      }
+
+      .wizard-option-label {
+        font-size: 10px;
+        color: var(--ink);
+        font-weight: 500;
+      }
+
+      .wizard-time-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .wizard-time-btn {
+        background: var(--soft);
+        border: 2px solid transparent;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .wizard-time-btn:hover, .wizard-time-btn.selected {
+        border-color: var(--brand);
+        background: #fff7ed;
+      }
+
+      .wizard-time-btn .time-icon {
+        font-size: 18px;
+      }
+
+      .wizard-time-btn .time-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--ink);
+        display: block;
+        margin-top: 2px;
+      }
+
+      .wizard-time-btn .time-desc {
+        font-size: 9px;
+        color: var(--muted);
+      }
+
+      .wizard-result {
+        background: #ecfdf5;
+        border-radius: 12px;
+        padding: 12px;
+        margin-top: 12px;
+        border-left: 3px solid #10b981;
+        display: none;
+      }
+
+      .wizard-result.active {
+        display: block;
+        animation: slideUp 0.3s ease;
+      }
+
+      .wizard-result-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: #065f46;
+        margin: 0 0 4px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .wizard-result-desc {
+        font-size: 11px;
+        color: #047857;
+        margin: 0;
       }
 
       /* Estrellas y badges */
@@ -1186,6 +1398,123 @@
         color: white;
       }
 
+      /* Panel de notificaciones */
+      .notifications-panel {
+        position: absolute;
+        top: 56px;
+        left: 10px;
+        right: 10px;
+        max-height: 400px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        z-index: 300;
+        display: none;
+        overflow: hidden;
+        animation: slideDown 0.3s ease;
+      }
+      .notifications-panel.active {
+        display: block;
+      }
+      @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .notifications-header {
+        padding: 12px 16px;
+        background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .notifications-header h4 {
+        margin: 0;
+        font-size: 14px;
+      }
+      .notifications-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+      }
+      .notifications-list {
+        max-height: 340px;
+        overflow-y: auto;
+      }
+      .notification-item {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .notification-item:hover {
+        background: #fff7ed;
+      }
+      .notification-item.unread {
+        background: #fef3e2;
+        border-left: 3px solid #f97316;
+      }
+      .notification-item .notif-type {
+        font-size: 20px;
+        margin-right: 10px;
+      }
+      .notification-item .notif-content {
+        flex: 1;
+      }
+      .notification-item .notif-content h5 {
+        margin: 0 0 4px;
+        font-size: 13px;
+        color: var(--heading);
+      }
+      .notification-item .notif-content p {
+        margin: 0;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .notification-item .notif-time {
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .notification-empty {
+        padding: 40px 20px;
+        text-align: center;
+        color: var(--muted);
+      }
+      .notification-empty span {
+        font-size: 40px;
+        display: block;
+        margin-bottom: 12px;
+      }
+      /* Badge en el botón de notificaciones */
+      .notify-badge {
+        position: relative;
+      }
+      .notify-badge::after {
+        content: attr(data-count);
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        background: #ef4444;
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+        min-width: 16px;
+        height: 16px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: scale(0);
+        transition: all 0.3s ease;
+      }
+      .notify-badge.has-notifications::after {
+        opacity: 1;
+        transform: scale(1);
+      }
+
       .alert-card {
         background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
         border: 2px solid #f59e0b;
@@ -1589,11 +1918,12 @@
         <div class="phone">
           <div class="screen">
             <!-- SIDEBAR MENU -->
-            <div class="sidebar-overlay" id="sidebarOverlay"></div>
+            <div class="sidebar-overlay" id="sidebarOverlay" onclick="document.getElementById('sidebar').classList.remove('active');this.classList.remove('active');"></div>
             <div class="sidebar" id="sidebar">
-              <button class="sidebar-close" id="closeSidebar">✕</button>
+              <button class="sidebar-close" id="closeSidebar" onclick="document.getElementById('sidebar').classList.remove('active');document.getElementById('sidebarOverlay').classList.remove('active');">✕</button>
               <div class="sidebar-header">
-                <h3>🅱️ BamBan</h3>
+                <img src="assets/logo-tucan.png" alt="Tucan" class="sidebar-logo" style="width:50px;height:50px;border-radius:12px;margin-bottom:8px;object-fit:contain;background:#f5f5f5;">
+                <h3 style="display:flex;align-items:center;gap:8px;">Tucan</h3>
                 <p>Tu plataforma de empleo inclusiva</p>
               </div>
               <div class="sidebar-menu">
@@ -1646,7 +1976,7 @@
 
             <div class="app">
               <div class="app-header">
-                <div class="hamburger" id="menuBtn">
+                <div class="hamburger" id="menuBtn" onclick="document.getElementById('sidebar').classList.add('active');document.getElementById('sidebarOverlay').classList.add('active');">
                   <div class="hamburger-icon">
                     <span></span>
                     <span></span>
@@ -1654,109 +1984,174 @@
                   </div>
                 </div>
                 <div class="brand">
-                  <div class="brand-badge">B</div>
+                  <img src="assets/logo-tucan.png" alt="Tucan" class="brand-logo" style="width:36px;height:36px;border-radius:8px;object-fit:contain;background:#f5f5f5;">
                   <div>
-                    <h2>BamBan</h2>
+                    <h2>Tucan</h2>
                     <span>Tu empleo seguro</span>
                   </div>
                 </div>
-                <button class="btn ghost" id="notify">🔔</button>
+                <button class="btn ghost notify-badge" id="notify" data-count="0">🔔</button>
+                
+                <!-- Panel de Notificaciones -->
+                <div class="notifications-panel" id="notificationsPanel">
+                  <div class="notifications-header">
+                    <h4>🔔 Mis Alertas de Empleo</h4>
+                    <button class="notifications-close" id="closeNotifications">✕</button>
+                  </div>
+                  <div class="notifications-list" id="notificationsList">
+                    <!-- Se llena dinámicamente -->
+                  </div>
+                </div>
               </div>
 
               <div class="screen-view active" data-screen="home">
-                <div class="hero-card">
-                  <h3>Encuentra trabajo o ayuda hoy mismo</h3>
-                  <p>Para todos: meseros, empleadas domésticas, plomeros, electricistas, cocineros y más. Simple y directo.</p>
-                  <div class="cta-row">
-                    <button class="btn primary" id="ctaStart">Buscar trabajo</button>
-                    <button class="btn ghost" id="ctaDocs">Ofrecer servicio</button>
-                  </div>
-                </div>
-
-                <!-- Botón de ayuda urgente -->
-                <div class="help-banner" id="helpBanner">
-                  <div class="help-icon">🆘</div>
-                  <div>
-                    <h4>¿Necesitas ayuda HOY?</h4>
-                    <p>Publica gratis y recibe ofertas en minutos</p>
-                  </div>
-                </div>
-
-                <div class="search">
-                  <input id="globalSearch" type="search" placeholder="Busca plomero, niñera, mesero..." />
-                  <button aria-label="Buscar">🔍</button>
-                </div>
-
-                <!-- Categorías de oficios -->
-                <div class="section-title">
-                  <h4>¿Qué necesitas?</h4>
-                  <button data-target="services">Ver todo</button>
-                </div>
-                <div class="category-grid" id="categoryGrid">
-                  <div class="category-item" data-cat="domestico">
-                    <div class="category-icon">🏠</div>
-                    <div class="category-label">Doméstico</div>
-                  </div>
-                  <div class="category-item" data-cat="gastronomia">
-                    <div class="category-icon">🍽️</div>
-                    <div class="category-label">Gastronomía</div>
-                  </div>
-                  <div class="category-item" data-cat="oficios">
-                    <div class="category-icon">🔧</div>
-                    <div class="category-label">Oficios</div>
-                  </div>
-                  <div class="category-item" data-cat="transporte">
-                    <div class="category-icon">🚗</div>
-                    <div class="category-label">Transporte</div>
-                  </div>
-                  <div class="category-item" data-cat="construccion">
-                    <div class="category-icon">🏗️</div>
-                    <div class="category-label">Construcción</div>
-                  </div>
-                  <div class="category-item" data-cat="belleza">
-                    <div class="category-icon">💇</div>
-                    <div class="category-label">Belleza</div>
-                  </div>
-                </div>
-
-                <div class="section-title">
-                  <h4>Trabajadores disponibles</h4>
-                  <button data-target="workers">Ver todo</button>
-                </div>
-                <div class="card-list" id="homeWorkers"></div>
-
-                <!-- Sección destacada: NUEVAS FUNCIONES -->
-                <div class="featured-section">
-                  <h4>✨ Nuevas secciones - ¡Explora!</h4>
-                  <div class="quick-actions">
-                    <div class="quick-action" data-target="reviews">
-                      <div class="quick-action-icon">⭐</div>
-                      <div class="quick-action-label">Reseñas</div>
-                      <div class="quick-action-desc">Lee opiniones reales</div>
+                <!-- Asistente de búsqueda fusionado -->
+                <div class="search-wizard" id="searchWizard">
+                  <div class="search-wizard-header">
+                    <div class="sos-icon">SOS</div>
+                    <div>
+                      <h4>Necesito hoy el servicio de</h4>
+                      <p>Publica gratis y recibe ofertas en minutos</p>
                     </div>
-                    <div class="quick-action" data-target="emprendedores">
-                      <div class="quick-action-icon">🚀</div>
-                      <div class="quick-action-label">Emprendedores</div>
-                      <div class="quick-action-desc">Negocios locales</div>
+                  </div>
+                  
+                  <div class="search-wizard-input">
+                    <input type="text" id="wizardSearch" placeholder="Busca chef, albáñil, guía turístico..." />
+                    <button type="button" id="wizardSearchBtn">
+                      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    </button>
+                  </div>
+
+                  <!-- Paso 1: Seleccionar categoría -->
+                  <div class="wizard-steps" id="wizardStep1">
+                    <p class="wizard-step-title"><span>1</span> ¿Qué servicio necesitas?</p>
+                    <div class="wizard-options" id="wizardCategories" style="grid-template-columns: repeat(2, 1fr);">
+                      <div class="wizard-option" data-service="gastronomia">
+                        <div class="wizard-option-icon">🍽️</div>
+                        <div class="wizard-option-label">Gastronomía</div>
+                      </div>
+                      <div class="wizard-option" data-service="construccion">
+                        <div class="wizard-option-icon">🏗️</div>
+                        <div class="wizard-option-label">Construcción Civil</div>
+                      </div>
+                      <div class="wizard-option" data-service="turismo">
+                        <div class="wizard-option-icon">🧭</div>
+                        <div class="wizard-option-label">Guía de Turismo</div>
+                      </div>
+                      <div class="wizard-option" data-service="madera">
+                        <div class="wizard-option-icon">🪵</div>
+                        <div class="wizard-option-label">Talla de Madera</div>
+                      </div>
                     </div>
-                    <div class="quick-action" data-target="pasantias">
-                      <div class="quick-action-icon">🎓</div>
-                      <div class="quick-action-label">Pasantías</div>
-                      <div class="quick-action-desc">Para estudiantes</div>
+
+                    <!-- Paso 2: Seleccionar momento -->
+                    <div id="wizardStep2" style="display:none;margin-top:12px;">
+                      <p class="wizard-step-title"><span>2</span> ¿Cuándo lo necesitas?</p>
+                      <div class="wizard-time-options">
+                        <div class="wizard-time-btn" data-time="ahora">
+                          <span class="time-icon">⚡</span>
+                          <span class="time-label">Ahora mismo</span>
+                          <span class="time-desc">Urgente</span>
+                        </div>
+                        <div class="wizard-time-btn" data-time="hoy">
+                          <span class="time-icon">📅</span>
+                          <span class="time-label">Hoy</span>
+                          <span class="time-desc">En las próximas horas</span>
+                        </div>
+                        <div class="wizard-time-btn" data-time="semana">
+                          <span class="time-icon">🗓️</span>
+                          <span class="time-label">Esta semana</span>
+                          <span class="time-desc">Próximos días</span>
+                        </div>
+                        <div class="wizard-time-btn" data-time="programar">
+                          <span class="time-icon">⏰</span>
+                          <span class="time-label">Programar</span>
+                          <span class="time-desc">Elegir fecha</span>
+                        </div>
+                      </div>
                     </div>
-                    <div class="quick-action" id="demoAlertBtn">
-                      <div class="quick-action-icon">🔔</div>
-                      <div class="quick-action-label">Demo Alerta</div>
-                      <div class="quick-action-desc">Ver notificación</div>
+
+                    <!-- Resultado: Alerta creada -->
+                    <div class="wizard-result" id="wizardResult">
+                      <p class="wizard-result-title">✅ ¡Alerta creada!</p>
+                      <p class="wizard-result-desc" id="wizardResultDesc">Buscando trabajadores disponibles...</p>
                     </div>
                   </div>
                 </div>
 
-                <div class="ai-banner" style="margin-top: 14px;">
-                  <div class="ai-badge">IA</div>
-                  <div>
-                    <strong>¿No sabes qué buscar?</strong>
-                    <p>Cuéntame qué necesitas y te ayudo a encontrar la persona ideal.</p>
+                <!-- Sección de trabajadores filtrados -->
+                <div id="filteredWorkersSection" style="display:none;">
+                  <div class="section-title">
+                    <h4 id="filteredWorkersTitle">👷 Disponibles ahora</h4>
+                    <button onclick="clearWizard()">✕ Limpiar</button>
+                  </div>
+                  <div class="card-list" id="filteredWorkers"></div>
+                </div>
+
+                <!-- Categorías de oficios (visible cuando no hay búsqueda) -->
+                <div id="defaultHomeContent">
+                  <div class="section-title">
+                    <h4>¿Qué necesitas?</h4>
+                    <button data-target="services">Ver todo</button>
+                  </div>
+                  <div class="category-grid" id="categoryGrid">
+                    <div class="category-item" data-cat="gastronomia">
+                      <div class="category-icon">🍽️</div>
+                      <div class="category-label">Gastronomía</div>
+                    </div>
+                    <div class="category-item" data-cat="construccion">
+                      <div class="category-icon">🏗️</div>
+                      <div class="category-label">Construcción Civil</div>
+                    </div>
+                    <div class="category-item" data-cat="turismo">
+                      <div class="category-icon">🧭</div>
+                      <div class="category-label">Guía de Turismo</div>
+                    </div>
+                    <div class="category-item" data-cat="madera">
+                      <div class="category-icon">🪵</div>
+                      <div class="category-label">Talla de Madera</div>
+                    </div>
+                  </div>
+
+                  <div class="section-title">
+                    <h4>Trabajadores disponibles</h4>
+                    <button data-target="people">Ver todo</button>
+                  </div>
+                  <div class="card-list" id="homeWorkers"></div>
+
+                  <!-- Sección destacada: NUEVAS FUNCIONES -->
+                  <div class="featured-section">
+                    <h4>✨ Nuevas secciones - ¡Explora!</h4>
+                    <div class="quick-actions">
+                      <div class="quick-action" data-target="reviews">
+                        <div class="quick-action-icon">⭐</div>
+                        <div class="quick-action-label">Reseñas</div>
+                        <div class="quick-action-desc">Lee opiniones reales</div>
+                      </div>
+                      <div class="quick-action" data-target="emprendedores">
+                        <div class="quick-action-icon">🚀</div>
+                        <div class="quick-action-label">Emprendedores</div>
+                        <div class="quick-action-desc">Negocios locales</div>
+                      </div>
+                      <div class="quick-action" data-target="pasantias">
+                        <div class="quick-action-icon">🎓</div>
+                        <div class="quick-action-label">Pasantías</div>
+                        <div class="quick-action-desc">Para estudiantes</div>
+                      </div>
+                      <div class="quick-action" id="demoAlertBtn">
+                        <div class="quick-action-icon">🔔</div>
+                        <div class="quick-action-label">Demo Alerta</div>
+                        <div class="quick-action-desc">Ver notificación</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ai-banner" style="margin-top: 14px;">
+                    <div class="ai-badge">IA</div>
+                    <div>
+                      <strong>¿No sabes qué buscar?</strong>
+                      <p>Cuéntame qué necesitas y te ayudo a encontrar la persona ideal.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1764,11 +2159,11 @@
               <div class="screen-view" data-screen="jobs">
                 <div class="section-title">
                   <h4>Empleos</h4>
-                  <button id="openFilters">Filtros</button>
+                  <button id="openFilters" onclick="showToast('Filtros activados')">Filtros</button>
                 </div>
                 <div class="search">
                   <input id="jobSearch" type="search" placeholder="Buscar por titulo o empresa" />
-                  <button aria-label="Buscar">🔍</button>
+                  <button aria-label="Buscar" onclick="renderJobList();showToast('Buscando empleos...')">🔍</button>
                 </div>
                 <div class="pill-row" id="modalityFilters">
                   <div class="pill active" data-filter="all">Todos</div>
@@ -1787,11 +2182,11 @@
               <div class="screen-view" data-screen="services">
                 <div class="section-title">
                   <h4>Servicios profesionales</h4>
-                  <button id="clearServices">Limpiar</button>
+                  <button id="clearServices" onclick="document.getElementById('serviceSearch').value='';showToast('Filtros limpiados')">Limpiar</button>
                 </div>
                 <div class="search">
                   <input id="serviceSearch" type="search" placeholder="Buscar por habilidad o servicio" />
-                  <button aria-label="Buscar">🔍</button>
+                  <button aria-label="Buscar" onclick="renderServices();showToast('Buscando servicios...')">🔍</button>
                 </div>
                 <div class="chip-row" id="serviceCategories"></div>
                 <div class="card-list" id="serviceList"></div>
@@ -1803,7 +2198,7 @@
                 </div>
                 <div class="search">
                   <input id="peopleSearch" type="search" placeholder="Buscar por carrera o ciudad" />
-                  <button aria-label="Buscar">🔍</button>
+                  <button aria-label="Buscar" onclick="renderPeople();showToast('Buscando personas...')">🔍</button>
                 </div>
                 <div class="card-list" id="peopleList"></div>
               </div>
@@ -1812,7 +2207,7 @@
                 <div class="screen-nav">
                   <button class="back-btn" data-target="home">←</button>
                   <h4>🎯 Oportunidades</h4>
-                  <button class="filter-btn" id="sortOpp">Filtrar</button>
+                  <button class="filter-btn" id="sortOpp" onclick="showToast('Usa los chips para filtrar')">Filtrar</button>
                 </div>
                 
                 <p style="font-size:11px;color:var(--muted);margin:0 0 12px;">Becas, capacitaciones, voluntariados y más para impulsar tu carrera</p>
@@ -1854,7 +2249,7 @@
 
                 <div class="section-title">
                   <h4>Mis habilidades</h4>
-                  <button id="editProfile">Editar</button>
+                  <button id="editProfile" onclick="showToast('Abriendo editor de perfil...')">Editar</button>
                 </div>
                 <div class="skills-row">
                   <span class="skill">Limpieza</span>
@@ -1866,7 +2261,7 @@
 
                 <div class="section-title">
                   <h4>Disponibilidad</h4>
-                  <button>Cambiar</button>
+                  <button onclick="showToast('Disponibilidad actualizada')">Cambiar</button>
                 </div>
                 <div class="availability">
                   <div class="toggle on" id="availToggle"></div>
@@ -1875,16 +2270,16 @@
 
                 <div class="section-title">
                   <h4>Contacto directo</h4>
-                  <button>Editar</button>
+                  <button onclick="showToast('Editando contacto...')">Editar</button>
                 </div>
                 <div class="cta-row" style="margin-top:8px;">
-                  <button class="btn whatsapp" style="flex:1;">📱 WhatsApp</button>
-                  <button class="btn ghost" style="flex:1;">📞 Llamar</button>
+                  <button class="btn whatsapp" style="flex:1;" onclick="showToast('Abriendo WhatsApp...')">📱 WhatsApp</button>
+                  <button class="btn ghost" style="flex:1;" onclick="showToast('Iniciando llamada...')">📞 Llamar</button>
                 </div>
 
                 <div class="section-title">
                   <h4>Mi actividad</h4>
-                  <button id="viewGoals">Ver</button>
+                  <button id="viewGoals" onclick="showToast('47 trabajos completados, 12 referencias')">Ver</button>
                 </div>
                 <div class="grid-two">
                   <div class="small-card"><strong>47</strong><br>Trabajos completados</div>
@@ -1907,7 +2302,7 @@
                 </div>
                 <div class="chat-input">
                   <input id="chatInput" type="text" placeholder="Escribe tu mensaje" />
-                  <button id="chatSend">Enviar</button>
+                  <button id="chatSend" onclick="if(document.getElementById('chatInput').value.trim()){showToast('Mensaje enviado');document.getElementById('chatInput').value='';}">Enviar</button>
                 </div>
               </div>
 
@@ -1916,7 +2311,7 @@
                 <div class="screen-nav">
                   <button class="back-btn" data-target="home">←</button>
                   <h4>💬 Mensajes</h4>
-                  <button class="filter-btn">Nuevo</button>
+                  <button class="filter-btn" onclick="showToast('Nuevo mensaje...')">Nuevo</button>
                 </div>
                 
                 <p style="font-size:11px;color:var(--muted);margin:0 0 12px;">Tus conversaciones recientes</p>
@@ -1986,7 +2381,7 @@
                 <div class="screen-nav">
                   <button class="back-btn" data-target="home">←</button>
                   <h4>⭐ Reseñas de la comunidad</h4>
-                  <button class="filter-btn">Filtrar</button>
+                  <button class="filter-btn" onclick="showToast('Filtros de reseñas')">Filtrar</button>
                 </div>
                 
                 <div class="chip-row" id="reviewFilters" style="margin-bottom:12px;">
@@ -2045,7 +2440,7 @@
                       </div>
                       <div class="stars" style="font-size:10px;">★★★★★</div>
                     </div>
-                    <p class="review-text">"Contratamos 3 meseros por la app para fin de semana. Todos llegaron puntuales y con buena actitud. Seguiremos usando BamBan."</p>
+                    <p class="review-text">"Contratamos 3 meseros por la app para fin de semana. Todos llegaron puntuales y con buena actitud. Seguiremos usando Tucan."</p>
                     <span class="review-job">Meseros · Santa Cruz</span>
                   </div>
 
@@ -2082,7 +2477,7 @@
                 <div class="screen-nav">
                   <button class="back-btn" data-target="home">←</button>
                   <h4>🚀 Emprendedores</h4>
-                  <button class="filter-btn">Agregar</button>
+                  <button class="filter-btn" onclick="showToast('Añadiendo emprendimiento...')">Agregar</button>
                 </div>
                 
                 <p style="font-size:11px;color:var(--muted);margin:0 0 12px;">Apoya emprendimientos locales de nuestra comunidad</p>
@@ -2097,8 +2492,8 @@
                     <h5>Sabores de Casa - Doña María</h5>
                     <p>Comida casera boliviana para eventos y delivery. Especialidad en platos típicos.</p>
                     <div class="cta-row" style="margin-top:10px;">
-                      <button class="btn ghost" style="flex:1;" data-emp-detail="comida">Ver más</button>
-                      <button class="btn whatsapp" style="flex:1;">📱 WhatsApp</button>
+                      <button class="btn ghost" style="flex:1;" data-emp-detail="comida" onclick="showEmprendimientoDetail('comida')">Ver más</button>
+                      <button class="btn whatsapp" style="flex:1;" onclick="showToast('Abriendo WhatsApp de Sabores de Casa...')">📱 WhatsApp</button>
                     </div>
                   </div>
                 </div>
@@ -2113,8 +2508,8 @@
                     <h5>Glamour Express - Lucía</h5>
                     <p>Servicio de manicure, pedicure y peinados a domicilio. Precios accesibles.</p>
                     <div class="cta-row" style="margin-top:10px;">
-                      <button class="btn ghost" style="flex:1;" data-emp-detail="belleza">Ver más</button>
-                      <button class="btn whatsapp" style="flex:1;">📱 WhatsApp</button>
+                      <button class="btn ghost" style="flex:1;" data-emp-detail="belleza" onclick="showEmprendimientoDetail('belleza')">Ver más</button>
+                      <button class="btn whatsapp" style="flex:1;" onclick="showToast('Abriendo WhatsApp de Glamour Express...')">📱 WhatsApp</button>
                     </div>
                   </div>
                 </div>
@@ -2129,8 +2524,8 @@
                     <h5>Confecciones Andinas - Pedro</h5>
                     <p>Ropa a medida, arreglos y bordados. Trabajamos con aguayos y telas típicas.</p>
                     <div class="cta-row" style="margin-top:10px;">
-                      <button class="btn ghost" style="flex:1;" data-emp-detail="ropa">Ver más</button>
-                      <button class="btn whatsapp" style="flex:1;">📱 WhatsApp</button>
+                      <button class="btn ghost" style="flex:1;" data-emp-detail="ropa" onclick="showEmprendimientoDetail('ropa')">Ver más</button>
+                      <button class="btn whatsapp" style="flex:1;" onclick="showToast('Abriendo WhatsApp de Confecciones Andinas...')">📱 WhatsApp</button>
                     </div>
                   </div>
                 </div>
@@ -2141,7 +2536,7 @@
                 <div class="screen-nav">
                   <button class="back-btn" data-target="home">←</button>
                   <h4>🎓 Pasantías</h4>
-                  <button class="filter-btn">Publicar</button>
+                  <button class="filter-btn" onclick="showToast('Publicar nueva pasantía...')">Publicar</button>
                 </div>
                 
                 <p style="font-size:11px;color:var(--muted);margin:0 0 12px;">Oportunidades para estudiantes y recién graduados</p>
@@ -2161,12 +2556,11 @@
                     <div class="pasantia-detail">👤 Estudiantes 3er año+</div>
                   </div>
                   <div class="viatico-suggestion">
-                    💡 <strong>Compensación sugerida:</strong> <span class="viatico-amount">500-700 Bs/mes</span><br>
-                    <span style="font-size:10px;color:#64748b;">Basado en transporte + almuerzo en la zona</span>
+                    � <strong>Bono:</strong> <span class="viatico-amount">500-700 Bs/mes</span>
                   </div>
                   <div class="cta-row" style="margin-top:10px;">
-                    <button class="btn ghost pasantia-details-btn" style="flex:1;" data-pasantia="contabilidad">Ver detalles</button>
-                    <button class="btn primary pasantia-postular-btn" style="flex:1;" data-pasantia="contabilidad">Postular</button>
+                    <button class="btn ghost pasantia-details-btn" style="flex:1;" data-pasantia="contabilidad" onclick="showPasantiaDetail('contabilidad')">Ver detalles</button>
+                    <button class="btn primary pasantia-postular-btn" style="flex:1;" data-pasantia="contabilidad" onclick="showSuccessModal('¡Postulación enviada a Estudio Contable!')">Postular</button>
                   </div>
                 </div>
 
@@ -2185,12 +2579,11 @@
                     <div class="pasantia-detail">👤 Últimos semestres</div>
                   </div>
                   <div class="viatico-suggestion">
-                    💡 <strong>Compensación sugerida:</strong> <span class="viatico-amount">600-800 Bs/mes</span><br>
-                    <span style="font-size:10px;color:#64748b;">Transporte + refrigerio zona Sopocachi</span>
+                    � <strong>Bono:</strong> <span class="viatico-amount">600-800 Bs/mes</span>
                   </div>
                   <div class="cta-row" style="margin-top:10px;">
-                    <button class="btn ghost pasantia-details-btn" style="flex:1;" data-pasantia="diseno">Ver detalles</button>
-                    <button class="btn primary pasantia-postular-btn" style="flex:1;" data-pasantia="diseno">Postular</button>
+                    <button class="btn ghost pasantia-details-btn" style="flex:1;" data-pasantia="diseno" onclick="showPasantiaDetail('diseno')">Ver detalles</button>
+                    <button class="btn primary pasantia-postular-btn" style="flex:1;" data-pasantia="diseno" onclick="showSuccessModal('¡Postulación enviada a Agencia Pixel!')">Postular</button>
                   </div>
                 </div>
 
@@ -2209,12 +2602,11 @@
                     <div class="pasantia-detail">👤 Técnicos en cocina</div>
                   </div>
                   <div class="viatico-suggestion">
-                    💡 <strong>Compensación sugerida:</strong> <span class="viatico-amount">450-600 Bs/mes</span><br>
-                    <span style="font-size:10px;color:#64748b;">Incluye alimentación en hotel</span>
+                    � <strong>Bono:</strong> <span class="viatico-amount">450-600 Bs/mes</span>
                   </div>
                   <div class="cta-row" style="margin-top:10px;">
-                    <button class="btn ghost pasantia-details-btn" style="flex:1;" data-pasantia="cocina">Ver detalles</button>
-                    <button class="btn primary pasantia-postular-btn" style="flex:1;" data-pasantia="cocina">Postular</button>
+                    <button class="btn ghost pasantia-details-btn" style="flex:1;" data-pasantia="cocina" onclick="showPasantiaDetail('cocina')">Ver detalles</button>
+                    <button class="btn primary pasantia-postular-btn" style="flex:1;" data-pasantia="cocina" onclick="showSuccessModal('¡Postulación enviada a Hotel Presidente!')">Postular</button>
                   </div>
                 </div>
               </div>
@@ -2226,7 +2618,7 @@
 
             <!-- Notificación flotante desde arriba -->
             <div class="floating-notification" id="floatingNotification">
-              <button class="notif-close" id="closeNotification">✕</button>
+              <button class="notif-close" id="closeNotification" onclick="document.getElementById('floatingNotification').classList.remove('active')">✕</button>
               <div class="notif-header">
                 <div class="notif-icon">🪚</div>
                 <div>
@@ -2244,8 +2636,8 @@
                 <span>👤 Juan Pérez ⭐4.8</span>
               </div>
               <div class="notif-actions">
-                <button class="notif-btn dismiss" id="dismissNotification">Cerrar</button>
-                <button class="notif-btn contact" id="contactNotification">📱 Contactar</button>
+                <button class="notif-btn dismiss" id="dismissNotification" onclick="document.getElementById('floatingNotification').classList.remove('active')">Cerrar</button>
+                <button class="notif-btn contact" id="contactNotification" onclick="document.getElementById('floatingNotification').classList.remove('active');showToast('Abriendo WhatsApp de Juan Pérez...')">📱 Contactar</button>
               </div>
             </div>
 
@@ -2277,7 +2669,7 @@
               <div class="sheet">
                 <div class="sheet-header">
                   <h4 style="margin:0;">📝 Postular a la chamba</h4>
-                  <button class="sheet-close" id="closeModal">✕</button>
+                  <button class="sheet-close" id="closeModal" onclick="document.getElementById('applyModal').classList.remove('active')">✕</button>
                 </div>
                 <input type="text" placeholder="Tu nombre completo" />
                 <input type="tel" placeholder="WhatsApp (ej: 71234567)" />
@@ -2286,7 +2678,7 @@
                   <div class="toggle on" id="availNow"></div>
                   <span>Puedo empezar de inmediato</span>
                 </div>
-                <button class="btn primary" style="width:100%;" id="submitModal">Enviar postulación</button>
+                <button class="btn primary" style="width:100%;" id="submitModal" onclick="document.getElementById('applyModal').classList.remove('active');showSuccessModal('¡Postulación enviada correctamente!')">Enviar postulación</button>
               </div>
             </div>
 
@@ -2295,7 +2687,7 @@
               <div class="sheet">
                 <div class="sheet-header">
                   <h4 style="margin:0;">🆘 Necesito ayuda hoy</h4>
-                  <button class="sheet-close" id="closeHelp">✕</button>
+                  <button class="sheet-close" id="closeHelp" onclick="document.getElementById('helpModal').classList.remove('active')">✕</button>
                 </div>
                 <p style="font-size:12px;color:var(--muted);margin:0 0 12px;">Publica gratis y recibe ofertas en minutos</p>
                 <select>
@@ -2325,7 +2717,7 @@
                   </select>
                   <input type="tel" placeholder="Tu WhatsApp" />
                 </div>
-                <button class="btn primary" style="width:100%;margin-top:8px;" id="submitHelp">📢 Publicar gratis</button>
+                <button class="btn primary" style="width:100%;margin-top:8px;" id="submitHelp" onclick="document.getElementById('helpModal').classList.remove('active');showSuccessModal('¡Solicitud publicada! Recibirás ofertas pronto.')">📢 Publicar gratis</button>
               </div>
             </div>
 
@@ -2334,7 +2726,7 @@
               <div class="sheet">
                 <div class="sheet-header">
                   <h4 style="margin:0;">👤 Perfil del trabajador</h4>
-                  <button class="sheet-close" id="closeWorker">✕</button>
+                  <button class="sheet-close" id="closeWorker" onclick="document.getElementById('workerModal').classList.remove('active')">✕</button>
                 </div>
                 <div class="worker-card" style="border:none;padding:0;" id="workerModalContent">
                   <!-- Se llena dinámicamente -->
@@ -2348,7 +2740,7 @@
                 <div style="font-size:48px;margin-bottom:12px;">✅</div>
                 <h4 style="margin:0 0 8px;">¡Listo!</h4>
                 <p style="color:var(--muted);font-size:13px;margin:0 0 16px;" id="successMessage">Tu solicitud ha sido enviada</p>
-                <button class="btn primary" style="width:100%;" id="closeSuccess">Continuar</button>
+                <button class="btn primary" style="width:100%;" id="closeSuccess" onclick="document.getElementById('successModal').classList.remove('active')">Continuar</button>
               </div>
             </div>
 
@@ -2357,7 +2749,7 @@
               <div class="sheet">
                 <div class="sheet-header">
                   <h4 style="margin:0;">🔔 Nueva alerta de trabajo</h4>
-                  <button class="sheet-close" id="closeDemoAlert">✕</button>
+                  <button class="sheet-close" id="closeDemoAlert" onclick="document.getElementById('demoAlertModal').classList.remove('active')">✕</button>
                 </div>
                 
                 <div class="alert-card">
@@ -2395,8 +2787,8 @@
                 </div>
 
                 <div class="cta-row">
-                  <button class="btn ghost" style="flex:1;" id="exitDemoAlert">Salir</button>
-                  <button class="btn whatsapp" style="flex:1;" id="contactDemoAlert">📱 Contactar</button>
+                  <button class="btn ghost" style="flex:1;" id="exitDemoAlert" onclick="document.getElementById('demoAlertModal').classList.remove('active')">Salir</button>
+                  <button class="btn whatsapp" style="flex:1;" id="contactDemoAlert" onclick="document.getElementById('demoAlertModal').classList.remove('active');showToast('Abriendo WhatsApp de Juan Pérez...')">📱 Contactar</button>
                 </div>
               </div>
             </div>
@@ -2406,7 +2798,7 @@
               <div class="sheet">
                 <div class="sheet-header">
                   <h4 style="margin:0;" id="empModalTitle">🚀 Emprendimiento</h4>
-                  <button class="sheet-close" id="closeEmprendimiento">✕</button>
+                  <button class="sheet-close" id="closeEmprendimiento" onclick="document.getElementById('emprendimientoModal').classList.remove('active')">✕</button>
                 </div>
                 
                 <div id="empModalContent">
@@ -2420,7 +2812,7 @@
               <div class="sheet">
                 <div class="sheet-header">
                   <h4 style="margin:0;" id="pasantiaModalTitle">🎓 Detalle de Pasantía</h4>
-                  <button class="sheet-close" id="closePasantia">✕</button>
+                  <button class="sheet-close" id="closePasantia" onclick="document.getElementById('pasantiaModal').classList.remove('active')">✕</button>
                 </div>
                 
                 <div id="pasantiaModalContent">
@@ -2434,7 +2826,7 @@
               <div class="sheet">
                 <div class="sheet-header">
                   <h4 style="margin:0;" id="personProfileTitle">👤 Perfil</h4>
-                  <button class="sheet-close" id="closePersonProfile">✕</button>
+                  <button class="sheet-close" id="closePersonProfile" onclick="document.getElementById('personProfileModal').classList.remove('active')">✕</button>
                 </div>
                 
                 <div id="personProfileContent">
@@ -2448,7 +2840,7 @@
               <div class="sheet">
                 <div class="sheet-header">
                   <h4 style="margin:0;" id="oppDetailTitle">🎯 Oportunidad</h4>
-                  <button class="sheet-close" id="closeOppDetail">✕</button>
+                  <button class="sheet-close" id="closeOppDetail" onclick="document.getElementById('oppDetailModal').classList.remove('active')">✕</button>
                 </div>
                 
                 <div id="oppDetailContent">
@@ -2492,6 +2884,133 @@
         peopleQuery: "",
         selectedCategory: null,
       };
+
+      // ========== WIZARD DE BÚSQUEDA - ESTADO GLOBAL ==========
+      let wizardState = {
+        service: null,
+        serviceName: null,
+        time: null,
+        searchQuery: ""
+      };
+
+      const serviceNames = {
+        "gastronomia": "Gastronomía", 
+        "construccion": "Construcción Civil",
+        "turismo": "Guía de Turismo",
+        "madera": "Talla de Madera"
+      };
+
+      const timeLabels = {
+        "ahora": "ahora mismo",
+        "hoy": "hoy",
+        "semana": "esta semana",
+        "programar": "fecha programada"
+      };
+
+      // Sistema de notificaciones
+      let notifications = [];
+      
+      function addNotification(type, title, description, data = {}) {
+        const notification = {
+          id: Date.now(),
+          type: type, // 'alert', 'job', 'match'
+          title: title,
+          description: description,
+          time: new Date(),
+          unread: true,
+          data: data
+        };
+        notifications.unshift(notification);
+        updateNotificationBadge();
+        renderNotifications();
+        return notification;
+      }
+      
+      function updateNotificationBadge() {
+        const btn = document.getElementById("notify");
+        const unreadCount = notifications.filter(n => n.unread).length;
+        btn.setAttribute("data-count", unreadCount);
+        if (unreadCount > 0) {
+          btn.classList.add("has-notifications");
+        } else {
+          btn.classList.remove("has-notifications");
+        }
+      }
+      
+      function renderNotifications() {
+        const list = document.getElementById("notificationsList");
+        if (notifications.length === 0) {
+          list.innerHTML = `
+            <div class="notification-empty">
+              <span>🔔</span>
+              <p>No tienes alertas de empleo</p>
+              <p style="font-size:11px;">Busca un servicio para crear una alerta</p>
+            </div>
+          `;
+          return;
+        }
+        
+        list.innerHTML = notifications.map(n => {
+          const icon = n.type === 'alert' ? '🔔' : n.type === 'job' ? '💼' : '✅';
+          const timeAgo = getTimeAgo(n.time);
+          return `
+            <div class="notification-item ${n.unread ? 'unread' : ''}" data-notif-id="${n.id}" style="display:flex;align-items:flex-start;gap:10px;">
+              <span class="notif-type">${icon}</span>
+              <div class="notif-content" style="flex:1;">
+                <h5>${n.title}</h5>
+                <p>${n.description}</p>
+              </div>
+              <span class="notif-time">${timeAgo}</span>
+            </div>
+          `;
+        }).join('');
+        
+        // Agregar click listeners a cada notificación
+        list.querySelectorAll(".notification-item").forEach(item => {
+          item.addEventListener("click", () => {
+            const id = parseInt(item.dataset.notifId);
+            markNotificationRead(id);
+          });
+        });
+      }
+      
+      function markNotificationRead(id) {
+        const notif = notifications.find(n => n.id === id);
+        if (notif && notif.unread) {
+          notif.unread = false;
+          updateNotificationBadge();
+          renderNotifications();
+          
+          // Si tiene datos de servicio, navegar a personas con ese filtro
+          if (notif.data.service) {
+            selectWizardService(notif.data.service);
+            document.getElementById("wizardStep1").classList.add("active");
+            closeNotificationsPanel();
+            showToast("Mostrando trabajadores para: " + notif.data.serviceName);
+          }
+        }
+      }
+      
+      function getTimeAgo(date) {
+        const now = new Date();
+        const diff = Math.floor((now - date) / 1000);
+        if (diff < 60) return "Ahora";
+        if (diff < 3600) return Math.floor(diff / 60) + " min";
+        if (diff < 86400) return Math.floor(diff / 3600) + " h";
+        return Math.floor(diff / 86400) + " d";
+      }
+      
+      function toggleNotificationsPanel() {
+        const panel = document.getElementById("notificationsPanel");
+        panel.classList.toggle("active");
+        if (panel.classList.contains("active")) {
+          renderNotifications();
+        }
+      }
+      
+      function closeNotificationsPanel() {
+        document.getElementById("notificationsPanel").classList.remove("active");
+      }
 
       const jobs = [
         {
@@ -2659,32 +3178,8 @@
       // Trabajadores con perfil simplificado
       const workers = [
         {
-          name: "Rosa Mamani",
-          skill: "Empleada doméstica",
-          category: "domestico",
-          city: "La Paz",
-          rating: 4.8,
-          reviews: 31,
-          badges: ["Verificada", "Puntual"],
-          skills: ["Limpieza", "Cocina", "Planchado"],
-          available: true,
-          whatsapp: "71234567"
-        },
-        {
-          name: "Carlos Quispe",
-          skill: "Plomero",
-          category: "oficios",
-          city: "El Alto",
-          rating: 4.9,
-          reviews: 45,
-          badges: ["Verificado", "Confiable"],
-          skills: ["Plomería", "Gas", "Urgencias"],
-          available: true,
-          whatsapp: "72345678"
-        },
-        {
           name: "Ana Flores",
-          skill: "Cocinera",
+          skill: "Chef profesional",
           category: "gastronomia",
           city: "Cochabamba",
           rating: 5.0,
@@ -2695,56 +3190,108 @@
           whatsapp: "73456789"
         },
         {
-          name: "Pedro Condori",
-          skill: "Electricista",
-          category: "oficios",
+          name: "Mario Condori",
+          skill: "Cocinero",
+          category: "gastronomia",
+          city: "La Paz",
+          rating: 4.8,
+          reviews: 45,
+          badges: ["Verificado", "Puntual"],
+          skills: ["Comida boliviana", "Cocina internacional", "Buffet"],
+          available: true,
+          whatsapp: "71234567"
+        },
+        {
+          name: "Juan Huanca",
+          skill: "Albañil certificado",
+          category: "construccion",
+          city: "El Alto",
+          rating: 4.9,
+          reviews: 52,
+          badges: ["Verificado", "Confiable"],
+          skills: ["Construcción", "Refacciones", "Acabados"],
+          available: true,
+          whatsapp: "76789012"
+        },
+        {
+          name: "Roberto Mamani",
+          skill: "Ingeniero civil",
+          category: "construccion",
           city: "Santa Cruz",
           rating: 4.7,
-          reviews: 19,
-          badges: ["Verificado"],
-          skills: ["Instalaciones", "Reparaciones", "Emergencias 24h"],
-          available: false,
+          reviews: 38,
+          badges: ["Profesional"],
+          skills: ["Supervisión obras", "Planos", "Presupuestos"],
+          available: true,
           whatsapp: "74567890"
         },
         {
-          name: "Lucia Choque",
-          skill: "Niñera",
-          category: "domestico",
+          name: "Elena Quispe",
+          skill: "Guía turístico",
+          category: "turismo",
           city: "La Paz",
           rating: 4.9,
-          reviews: 52,
-          badges: ["Verificada", "Confiable", "Recomendada"],
-          skills: ["Cuidado bebés", "Tareas escolares", "Cocina"],
+          reviews: 67,
+          badges: ["Verificada", "Top", "Bilingüe"],
+          skills: ["Tours La Paz", "Tiwanaku", "Copacabana"],
+          available: true,
+          whatsapp: "72345678"
+        },
+        {
+          name: "Carlos Apaza",
+          skill: "Tour guide",
+          category: "turismo",
+          city: "Uyuni",
+          rating: 5.0,
+          reviews: 89,
+          badges: ["Top", "Bilingüe", "Recomendado"],
+          skills: ["Salar de Uyuni", "Potosí", "Tours 4x4"],
           available: true,
           whatsapp: "75678901"
         },
         {
-          name: "Juan Huanca",
-          skill: "Albañil",
-          category: "construccion",
-          city: "El Alto",
-          rating: 4.6,
-          reviews: 38,
-          badges: ["Puntual"],
-          skills: ["Construcción", "Refacciones", "Pintura"],
+          name: "Pedro Choque",
+          skill: "Artesano tallador",
+          category: "madera",
+          city: "Cochabamba",
+          rating: 4.8,
+          reviews: 31,
+          badges: ["Artesano certificado"],
+          skills: ["Talla religiosa", "Marcos", "Muebles"],
           available: true,
-          whatsapp: "76789012"
+          whatsapp: "77890123"
+        },
+        {
+          name: "Miguel Limachi",
+          skill: "Maestro tallador",
+          category: "madera",
+          city: "Sucre",
+          rating: 4.9,
+          reviews: 25,
+          badges: ["Maestro", "Tradicional"],
+          skills: ["Esculturas", "Restauración", "Arte colonial"],
+          available: false,
+          whatsapp: "78901234"
         },
       ];
 
       const services = [
-        { name: "Rosa Mamani", skill: "Limpieza profunda", category: "Doméstico", rate: "80 Bs/día", rating: 4.8 },
-        { name: "Carlos Quispe", skill: "Plomería general", category: "Oficios", rate: "50 Bs/h", rating: 4.9 },
         { name: "Ana Flores", skill: "Cocina para eventos", category: "Gastronomía", rate: "150 Bs/evento", rating: 5.0 },
-        { name: "Pedro Condori", skill: "Electricidad", category: "Oficios", rate: "60 Bs/h", rating: 4.7 },
-        { name: "Sonia Mamani", skill: "Peluquería a domicilio", category: "Belleza", rate: "40 Bs", rating: 4.5 },
-        { name: "Miguel Apaza", skill: "Flete y mudanzas", category: "Transporte", rate: "200 Bs", rating: 4.8 },
+        { name: "Mario Condori", skill: "Chef a domicilio", category: "Gastronomía", rate: "200 Bs/día", rating: 4.8 },
+        { name: "Juan Huanca", skill: "Albañilería general", category: "Construcción Civil", rate: "100 Bs/día", rating: 4.9 },
+        { name: "Roberto Mamani", skill: "Supervisión de obras", category: "Construcción Civil", rate: "500 Bs/día", rating: 4.7 },
+        { name: "Elena Quispe", skill: "Tours La Paz", category: "Guía de Turismo", rate: "150 Bs/tour", rating: 4.9 },
+        { name: "Carlos Apaza", skill: "Tours Uyuni", category: "Guía de Turismo", rate: "300 Bs/día", rating: 5.0 },
+        { name: "Pedro Choque", skill: "Tallas personalizadas", category: "Talla de Madera", rate: "Según proyecto", rating: 4.8 },
+        { name: "Miguel Limachi", skill: "Restauración de muebles", category: "Talla de Madera", rate: "Presupuesto", rating: 4.9 },
       ];
 
       const people = [
-        { name: "Diego Lima", role: "Mesero con experiencia", city: "La Paz", rating: 4.5 },
-        { name: "Sofia Perez", role: "Cajera/atención", city: "Tarija", rating: 4.7 },
-        { name: "Hector Molina", role: "Conductor particular", city: "Cochabamba", rating: 4.9 },
+        { name: "Diego Lima", role: "Chef con experiencia", city: "La Paz", rating: 4.5 },
+        { name: "Sofia Perez", role: "Repostera profesional", city: "Tarija", rating: 4.7 },
+        { name: "Hector Molina", role: "Guía turístico bilingüe", city: "Cochabamba", rating: 4.9 },
+        { name: "Martha Quispe", role: "Artesana en madera", city: "Sucre", rating: 4.8 },
+        { name: "Luis Apaza", role: "Maestro de obra", city: "El Alto", rating: 4.6 },
       ];
 
       const opportunities = [
@@ -2875,10 +3422,17 @@
             <p>${job.company} · ${job.city}</p>
             <div class="meta"><span>${job.modality}</span><span>${job.salary}</span></div>
             <div class="cta-row">
-              <button class="btn ghost">Guardar</button>
-              <button class="btn whatsapp" data-apply="${job.title}">📱 Contactar</button>
+              <button class="btn ghost job-save-btn">Guardar</button>
+              <button class="btn whatsapp job-contact-btn" data-apply="${job.title}">📱 Contactar</button>
             </div>
           `;
+          // Agregar event listeners a los botones
+          card.querySelector('.job-save-btn').addEventListener('click', () => {
+            showToast(`Trabajo "${job.title}" guardado en favoritos`);
+          });
+          card.querySelector('.job-contact-btn').addEventListener('click', () => {
+            showToast(`Contactando a ${job.company} sobre "${job.title}"...`);
+          });
           target.appendChild(card);
         });
       }
@@ -2914,6 +3468,11 @@
               <button class="btn whatsapp" style="flex:1;" data-whatsapp="${worker.whatsapp}">📱 WhatsApp</button>
             </div>
           `;
+          // Agregar event listeners a los botones
+          const profileBtn = card.querySelector('.btn.ghost');
+          const whatsappBtn = card.querySelector('.btn.whatsapp');
+          profileBtn.addEventListener('click', () => showWorkerModal(worker));
+          whatsappBtn.addEventListener('click', () => showToast(`Abriendo WhatsApp: ${worker.whatsapp}`));
           target.appendChild(card);
         });
       }
@@ -3049,6 +3608,7 @@
       let oppTypeFilter = "all";
 
       function renderOpportunities() {
+        if (!opportunityList) return;
         opportunityList.innerHTML = "";
         
         const filtered = opportunities.filter(item => 
@@ -3187,8 +3747,106 @@
         setTimeout(() => toast.classList.remove("show"), 1800);
       }
 
-      document.getElementById("notify").addEventListener("click", () => {
-        showToast("Notificacion activada");
+      // ====== BUSCADOR PRINCIPAL ======
+      (function initSearchButton() {
+        const searchBtn = document.getElementById("wizardSearchBtn");
+        const searchInput = document.getElementById("wizardSearch");
+        
+        if (searchBtn) {
+          searchBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            doSearch();
+          });
+        }
+        
+        if (searchInput) {
+          searchInput.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              doSearch();
+            }
+          });
+        }
+        
+        function doSearch() {
+          const query = document.getElementById("wizardSearch").value.trim();
+          
+          if (!query) {
+            showToast("Escribe qué servicio necesitas");
+            document.getElementById("wizardStep1").classList.add("active");
+            return;
+          }
+          
+          // Normalizar texto para comparación
+          function normalize(text) {
+            return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+          }
+          
+          const normalizedQuery = normalize(query);
+          
+          // Detectar categoría
+          const keywords = {
+            "gastronomia": ["mesero", "cocinero", "chef", "cocina", "restaurante", "gastronomia", "comida", "panadero", "barista"],
+            "construccion": ["albanil", "pintor", "carpintero", "construccion", "civil", "obra", "plomero", "electricista", "techador"],
+            "turismo": ["guia", "turismo", "turista", "viaje", "tour", "excursion"],
+            "madera": ["madera", "talla", "tallado", "artesano", "carpinteria", "escultura", "ebanista"]
+          };
+          
+          const catNames = {
+            "gastronomia": "Gastronomía",
+            "construccion": "Construcción Civil",
+            "turismo": "Guía de Turismo",
+            "madera": "Talla de Madera"
+          };
+          
+          let detectedCat = null;
+          for (const [cat, words] of Object.entries(keywords)) {
+            if (words.some(w => normalizedQuery.includes(normalize(w)) || normalize(w).includes(normalizedQuery))) {
+              detectedCat = cat;
+              break;
+            }
+          }
+          
+          // Guardar estado
+          wizardState.searchQuery = query.toLowerCase();
+          if (detectedCat) {
+            wizardState.service = detectedCat;
+            wizardState.serviceName = catNames[detectedCat];
+          }
+          if (!wizardState.time) {
+            wizardState.time = "ahora";
+          }
+          
+          // Mostrar resultado
+          const searchTerm = wizardState.serviceName || query;
+          document.getElementById("wizardResult").classList.add("active");
+          document.getElementById("wizardResultDesc").textContent = `Buscando ${searchTerm.toLowerCase()}...`;
+          
+          // Mostrar trabajadores
+          setTimeout(function() {
+            document.getElementById("wizardResultDesc").textContent = `¡Encontramos resultados!`;
+            showFilteredWorkers();
+          }, 500);
+        }
+      })();
+
+      document.getElementById("notify").addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleNotificationsPanel();
+      });
+      
+      document.getElementById("closeNotifications").addEventListener("click", () => {
+        closeNotificationsPanel();
+      });
+      
+      // Cerrar panel al hacer clic fuera
+      document.addEventListener("click", (e) => {
+        const panel = document.getElementById("notificationsPanel");
+        const btn = document.getElementById("notify");
+        if (panel.classList.contains("active") && !panel.contains(e.target) && !btn.contains(e.target)) {
+          closeNotificationsPanel();
+        }
       });
 
       aiShortcut.addEventListener("click", () => setScreen("ai"));
@@ -3241,44 +3899,162 @@
 
       document.body.addEventListener("click", (event) => {
         if (event.target.matches("[data-apply]")) {
-          applyModal.classList.add("active");
+          applyModal?.classList.add("active");
         }
       });
 
-      document.getElementById("closeModal").addEventListener("click", () => {
-        applyModal.classList.remove("active");
+      document.getElementById("closeModal")?.addEventListener("click", () => {
+        applyModal?.classList.remove("active");
       });
 
-      document.getElementById("submitModal").addEventListener("click", () => {
-        applyModal.classList.remove("active");
+      document.getElementById("submitModal")?.addEventListener("click", () => {
+        applyModal?.classList.remove("active");
         showSuccessModal("¡Postulación enviada! Te contactarán pronto por WhatsApp.");
       });
 
-      document.getElementById("ctaStart").addEventListener("click", () => setScreen("jobs"));
-      document.getElementById("ctaDocs").addEventListener("click", () => setScreen("services"));
+      document.getElementById("ctaStart")?.addEventListener("click", () => setScreen("jobs"));
+      document.getElementById("ctaDocs")?.addEventListener("click", () => setScreen("services"));
 
       // Help modal
       const helpModal = document.getElementById("helpModal");
-      document.getElementById("helpBanner").addEventListener("click", () => {
-        helpModal.classList.add("active");
+      document.getElementById("helpBanner")?.addEventListener("click", () => {
+        helpModal?.classList.add("active");
       });
-      document.getElementById("closeHelp").addEventListener("click", () => {
-        helpModal.classList.remove("active");
+      document.getElementById("closeHelp")?.addEventListener("click", () => {
+        helpModal?.classList.remove("active");
       });
-      document.getElementById("submitHelp").addEventListener("click", () => {
-        helpModal.classList.remove("active");
+      document.getElementById("submitHelp")?.addEventListener("click", () => {
+        helpModal?.classList.remove("active");
         showSuccessModal("¡Publicado! Recibirás ofertas en minutos.");
       });
 
       // Success modal
       const successModal = document.getElementById("successModal");
       function showSuccessModal(message) {
-        document.getElementById("successMessage").textContent = message;
-        successModal.classList.add("active");
+        const msgEl = document.getElementById("successMessage");
+        if (msgEl) msgEl.textContent = message;
+        successModal?.classList.add("active");
       }
-      document.getElementById("closeSuccess").addEventListener("click", () => {
-        successModal.classList.remove("active");
+      document.getElementById("closeSuccess")?.addEventListener("click", () => {
+        successModal?.classList.remove("active");
       });
+
+      // Emprendimiento detail modal
+      const emprendimientos = {
+        comida: {
+          title: "🍔 Delicias Caseras",
+          desc: "Comida típica peruana preparada con amor",
+          owner: "María González",
+          phone: "+51 987 654 321",
+          location: "Lima, Perú",
+          services: ["Almuerzos", "Cenas", "Eventos"],
+          rating: 4.8,
+          reviews: 24
+        },
+        belleza: {
+          title: "💅 Belleza Total",
+          desc: "Servicios de belleza a domicilio",
+          owner: "Ana Rodríguez",
+          phone: "+51 912 345 678",
+          location: "Miraflores, Lima",
+          services: ["Manicure", "Pedicure", "Maquillaje"],
+          rating: 4.9,
+          reviews: 56
+        },
+        ropa: {
+          title: "👗 Moda Única",
+          desc: "Ropa artesanal y personalizada",
+          owner: "Carmen López",
+          phone: "+51 923 456 789",
+          location: "San Isidro, Lima",
+          services: ["Vestidos", "Blusas", "Accesorios"],
+          rating: 4.7,
+          reviews: 31
+        }
+      };
+      
+      function showEmprendimientoDetail(id) {
+        const emp = emprendimientos[id];
+        if (!emp) return;
+        
+        document.getElementById("empModalTitle").textContent = emp.title;
+        document.getElementById("empModalContent").innerHTML = `
+          <p style="color:var(--muted);margin-bottom:12px;">${emp.desc}</p>
+          <div style="margin-bottom:12px;">
+            <strong>👤 Propietaria:</strong> ${emp.owner}<br>
+            <strong>📍 Ubicación:</strong> ${emp.location}<br>
+            <strong>⭐ Calificación:</strong> ${emp.rating} (${emp.reviews} reseñas)
+          </div>
+          <div style="margin-bottom:12px;">
+            <strong>Servicios:</strong>
+            <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+              ${emp.services.map(s => `<span class="skill">${s}</span>`).join('')}
+            </div>
+          </div>
+          <div class="cta-row" style="margin-top:16px;">
+            <button class="btn whatsapp" style="flex:1;" onclick="showToast('Contactando a ${emp.owner}...')">📱 WhatsApp</button>
+            <button class="btn ghost" style="flex:1;" onclick="showToast('Llamando a ${emp.phone}')">📞 Llamar</button>
+          </div>
+        `;
+        document.getElementById("emprendimientoModal").classList.add("active");
+      }
+
+      // Pasantía detail modal
+      const pasantias = {
+        contabilidad: {
+          title: "📊 Pasantía en Contabilidad",
+          company: "Consultoría ABC",
+          location: "San Isidro, Lima",
+          duration: "3 meses",
+          stipend: "S/. 800/mes",
+          requirements: ["Estudiante de Contabilidad", "Excel avanzado", "Disponibilidad inmediata"],
+          description: "Oportunidad para aprender contabilidad empresarial en una consultoría líder."
+        },
+        diseno: {
+          title: "🎨 Pasantía en Diseño",
+          company: "Agencia Creativa XYZ",
+          location: "Miraflores, Lima",
+          duration: "4 meses",
+          stipend: "S/. 1,000/mes",
+          requirements: ["Estudiante de Diseño Gráfico", "Adobe Creative Suite", "Portafolio"],
+          description: "Únete a nuestro equipo creativo y trabaja en proyectos reales para marcas reconocidas."
+        },
+        cocina: {
+          title: "👨‍🍳 Pasantía en Cocina",
+          company: "Restaurante Gourmet",
+          location: "Barranco, Lima",
+          duration: "6 meses",
+          stipend: "S/. 600/mes + propinas",
+          requirements: ["Estudiante de Gastronomía", "Carnet de sanidad", "Disponibilidad de horarios"],
+          description: "Aprende de chefs profesionales en un restaurante de alta cocina."
+        }
+      };
+      
+      function showPasantiaDetail(id) {
+        const pas = pasantias[id];
+        if (!pas) return;
+        
+        document.getElementById("pasantiaModalTitle").textContent = pas.title;
+        document.getElementById("pasantiaModalContent").innerHTML = `
+          <p style="color:var(--muted);margin-bottom:12px;">${pas.description}</p>
+          <div style="margin-bottom:12px;">
+            <strong>🏢 Empresa:</strong> ${pas.company}<br>
+            <strong>📍 Ubicación:</strong> ${pas.location}<br>
+            <strong>⏱️ Duración:</strong> ${pas.duration}<br>
+            <strong>💰 Bono:</strong> ${pas.stipend}
+          </div>
+          <div style="margin-bottom:12px;">
+            <strong>Requisitos:</strong>
+            <ul style="margin:6px 0 0 16px;color:var(--muted);">
+              ${pas.requirements.map(r => `<li>${r}</li>`).join('')}
+            </ul>
+          </div>
+          <div class="cta-row" style="margin-top:16px;">
+            <button class="btn primary" style="flex:1;" onclick="showSuccessModal('¡Postulación enviada a ${pas.company}!')">📤 Postular ahora</button>
+          </div>
+        `;
+        document.getElementById("pasantiaModal").classList.add("active");
+      }
 
       // Worker modal (ver perfil completo)
       const workerModal = document.getElementById("workerModal");
@@ -3392,14 +4168,16 @@
       const floatingNotification = document.getElementById("floatingNotification");
       const demoAlertModal = document.getElementById("demoAlertModal");
       
-      // La campana de arriba muestra la notificación flotante
-      document.getElementById("notify")?.addEventListener("click", () => {
-        floatingNotification.classList.add("active");
-      });
-      
-      // El botón "Demo Alerta" en quick actions también muestra la notificación
+      // El botón "Demo Alerta" muestra una notificación de ejemplo
       document.getElementById("demoAlertBtn")?.addEventListener("click", () => {
-        floatingNotification.classList.add("active");
+        // Agregar una notificación demo
+        addNotification(
+          'job',
+          '💼 Nuevo trabajo urgente',
+          'Carpintero necesitado en El Trillo. Pago: 200-300 Bs',
+          { service: 'madera', serviceName: 'Talla de Madera' }
+        );
+        showToast("¡Nueva alerta de trabajo creada!");
       });
       
       // Cerrar notificación flotante
@@ -3575,7 +4353,7 @@
                 </ul>
               </div>
               <div style="background:#fef3c7;border-radius:10px;padding:10px;margin-bottom:12px;font-size:11px;">
-                💰 <strong>Compensación:</strong> <span style="color:#d97706;font-weight:700;">${pas.compensacion}</span>
+                💰 <strong>Bono:</strong> <span style="color:#d97706;font-weight:700;">${pas.compensacion}</span>
               </div>
               <div class="cta-row">
                 <button class="btn ghost" style="flex:1;" onclick="document.getElementById('pasantiaModal').classList.remove('active')">Cerrar</button>
@@ -3651,18 +4429,39 @@
       const closeSidebar = document.getElementById("closeSidebar");
 
       function openSidebar() {
-        sidebar.classList.add("active");
-        sidebarOverlay.classList.add("active");
+        console.log("Abriendo sidebar");
+        if (sidebar) {
+          sidebar.classList.add("active");
+        }
+        if (sidebarOverlay) {
+          sidebarOverlay.classList.add("active");
+        }
       }
 
       function closeSidebarMenu() {
-        sidebar.classList.remove("active");
-        sidebarOverlay.classList.remove("active");
+        if (sidebar) {
+          sidebar.classList.remove("active");
+        }
+        if (sidebarOverlay) {
+          sidebarOverlay.classList.remove("active");
+        }
       }
 
-      menuBtn?.addEventListener("click", openSidebar);
-      closeSidebar?.addEventListener("click", closeSidebarMenu);
-      sidebarOverlay?.addEventListener("click", closeSidebarMenu);
+      if (menuBtn) {
+        menuBtn.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openSidebar();
+        });
+      }
+      
+      if (closeSidebar) {
+        closeSidebar.addEventListener("click", closeSidebarMenu);
+      }
+      
+      if (sidebarOverlay) {
+        sidebarOverlay.addEventListener("click", closeSidebarMenu);
+      }
 
       // Sidebar navigation items
       document.querySelectorAll(".sidebar-item[data-target]").forEach(item => {
@@ -3724,6 +4523,338 @@
           };
           showToast(`Mostrando ${filterNames[filter]}`);
         });
+      });
+
+      // Abrir wizard al hacer clic en el input
+      document.getElementById("wizardSearch")?.addEventListener("focus", () => {
+        document.getElementById("wizardStep1").classList.add("active");
+      });
+
+      // Función para normalizar texto (quitar acentos)
+      function normalizeText(text) {
+        return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      }
+
+      // Búsqueda con el input
+      document.getElementById("wizardSearch")?.addEventListener("input", (e) => {
+        wizardState.searchQuery = e.target.value.toLowerCase();
+        const normalizedQuery = normalizeText(e.target.value);
+        
+        if (normalizedQuery.length >= 2) {
+          document.getElementById("wizardStep1").classList.add("active");
+          // Auto-detectar categoría por palabra clave
+          const keywords = {
+            "gastronomia": ["mesero", "cocinero", "chef", "cocina", "restaurante", "gastronomia", "comida", "panadero", "barista"],
+            "construccion": ["albanil", "albañil", "pintor", "carpintero", "construccion", "civil", "obra", "plomero", "electricista", "techador"],
+            "turismo": ["guia", "turismo", "turista", "viaje", "tour", "excursion"],
+            "madera": ["madera", "talla", "tallado", "artesano", "carpinteria", "escultura", "ebanista"]
+          };
+          
+          for (const [cat, words] of Object.entries(keywords)) {
+            if (words.some(w => normalizedQuery.includes(normalizeText(w)) || normalizeText(w).includes(normalizedQuery))) {
+              selectWizardService(cat);
+              break;
+            }
+          }
+        }
+      });
+
+      // Seleccionar categoría en el wizard
+      document.querySelectorAll("#wizardCategories .wizard-option").forEach(opt => {
+        opt.addEventListener("click", () => {
+          selectWizardService(opt.dataset.service);
+        });
+      });
+
+      function selectWizardService(service) {
+        wizardState.service = service;
+        wizardState.serviceName = serviceNames[service];
+        
+        // Marcar seleccionado
+        document.querySelectorAll("#wizardCategories .wizard-option").forEach(o => {
+          o.classList.toggle("selected", o.dataset.service === service);
+        });
+        
+        // Mostrar paso 2
+        document.getElementById("wizardStep2").style.display = "block";
+        
+        // Actualizar input si está vacío
+        const input = document.getElementById("wizardSearch");
+        if (!input.value) {
+          input.placeholder = `Buscando ${wizardState.serviceName.toLowerCase()}...`;
+        }
+      }
+
+      // Seleccionar tiempo
+      document.querySelectorAll(".wizard-time-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          wizardState.time = btn.dataset.time;
+          
+          // Marcar seleccionado
+          document.querySelectorAll(".wizard-time-btn").forEach(b => {
+            b.classList.toggle("selected", b === btn);
+          });
+          
+          // Completar wizard
+          completeWizard();
+        });
+      });
+
+      function completeWizard() {
+        // Mostrar resultado
+        const result = document.getElementById("wizardResult");
+        const resultDesc = document.getElementById("wizardResultDesc");
+        
+        const serviceTxt = wizardState.serviceName || "servicio";
+        const timeTxt = timeLabels[wizardState.time] || "ahora";
+        
+        resultDesc.textContent = `Buscando ${serviceTxt.toLowerCase()} para ${timeTxt}...`;
+        result.classList.add("active");
+        
+        // Simular carga y mostrar trabajadores
+        setTimeout(() => {
+          resultDesc.textContent = `¡Encontramos trabajadores de ${serviceTxt.toLowerCase()} disponibles!`;
+          showFilteredWorkers();
+        }, 800);
+      }
+
+      function showFilteredWorkers() {
+        // Ocultar contenido por defecto
+        document.getElementById("defaultHomeContent").style.display = "none";
+        
+        // Ocultar el wizard de categorías
+        document.getElementById("wizardStep1").classList.remove("active");
+        document.getElementById("wizardStep2").style.display = "none";
+        document.getElementById("wizardResult").classList.remove("active");
+        
+        // Mostrar sección filtrada
+        const section = document.getElementById("filteredWorkersSection");
+        section.style.display = "block";
+        
+        // Actualizar título
+        const title = document.getElementById("filteredWorkersTitle");
+        const serviceTxt = wizardState.serviceName || (wizardState.searchQuery ? `"${wizardState.searchQuery}"` : "Todos");
+        const timeEmoji = wizardState.time === "ahora" ? "⚡" : "📅";
+        title.innerHTML = `${timeEmoji} ${serviceTxt} disponibles`;
+        
+        // Filtrar trabajadores
+        let filtered = workers.filter(w => w.available);
+        
+        // Si hay categoría detectada, filtrar por categoría
+        if (wizardState.service) {
+          filtered = filtered.filter(w => w.category === wizardState.service);
+        } else if (wizardState.searchQuery) {
+          // Si no hay categoría pero hay búsqueda, filtrar por texto en todas las categorías
+          const normalizedQuery = normalizeText(wizardState.searchQuery);
+          filtered = filtered.filter(w => 
+            normalizeText(w.name).includes(normalizedQuery) ||
+            normalizeText(w.skill).includes(normalizedQuery) ||
+            normalizeText(w.category).includes(normalizedQuery) ||
+            w.skills.some(s => normalizeText(s).includes(normalizedQuery))
+          );
+        }
+        
+        // Renderizar trabajadores filtrados
+        const container = document.getElementById("filteredWorkers");
+        container.innerHTML = "";
+        
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div style="text-align:center;padding:20px;color:var(--muted);">
+              <p style="font-size:13px;">No encontramos trabajadores disponibles.</p>
+              <button class="btn primary" onclick="clearWizard()">Ver todos</button>
+            </div>
+          `;
+          return;
+        }
+        
+        filtered.forEach(worker => {
+          const card = document.createElement("div");
+          card.className = "worker-card";
+          card.innerHTML = `
+            <div class="worker-header">
+              <div class="worker-avatar">${worker.available ? '✅' : '⏸️'}</div>
+              <div class="worker-info">
+                <h5>${worker.name}</h5>
+                <p>${worker.skill} · ${worker.city}</p>
+                <div class="stars">${renderStars(worker.rating)} <span style="font-size:10px;color:var(--muted);">(${worker.reviews})</span></div>
+              </div>
+            </div>
+            <div class="badge-row">
+              ${worker.badges.map(b => `<span class="badge badge-${b.toLowerCase()}">${b}</span>`).join('')}
+            </div>
+            <div class="skills-row">
+              ${worker.skills.map(s => `<span class="skill">${s}</span>`).join('')}
+            </div>
+            <div class="cta-row">
+              <button class="btn ghost" onclick="showPersonProfile(workers.find(w => w.name === '${worker.name}'))">Ver perfil</button>
+              <button class="btn whatsapp" onclick="showToast('Abriendo WhatsApp: ${worker.whatsapp}')">📱 WhatsApp</button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+        
+        // Determinar nombre del servicio para mostrar
+        const searchTerm = wizardState.serviceName || (wizardState.searchQuery ? `"${wizardState.searchQuery}"` : 'Servicio');
+        
+        // Mostrar toast de alerta creada
+        showToast(`🔔 Alerta creada: ${searchTerm} para ${timeLabels[wizardState.time] || 'ahora'}`);
+        
+        // CREAR NOTIFICACIÓN EN EL PANEL
+        const timeLabel = timeLabels[wizardState.time] || 'ahora';
+        const workersCount = filtered.length;
+        addNotification(
+          'alert',
+          `🔍 Alerta: ${searchTerm}`,
+          `Buscando para ${timeLabel}. ${workersCount} trabajador${workersCount !== 1 ? 'es' : ''} disponible${workersCount !== 1 ? 's' : ''}.`,
+          { service: wizardState.service, serviceName: wizardState.serviceName || searchTerm, time: wizardState.time, query: wizardState.searchQuery }
+        );
+      }
+
+      function clearWizard() {
+        // Reset state
+        wizardState = { service: null, serviceName: null, time: null, searchQuery: "" };
+        
+        // Reset UI
+        document.getElementById("wizardSearch").value = "";
+        document.getElementById("wizardSearch").placeholder = "Busca chef, albáñil, guía turístico...";
+        document.querySelectorAll(".wizard-option").forEach(o => o.classList.remove("selected"));
+        document.querySelectorAll(".wizard-time-btn").forEach(b => b.classList.remove("selected"));
+        document.getElementById("wizardStep1").classList.remove("active");
+        document.getElementById("wizardStep2").style.display = "none";
+        document.getElementById("wizardResult").classList.remove("active");
+        
+        // Mostrar contenido por defecto
+        document.getElementById("defaultHomeContent").style.display = "block";
+        document.getElementById("filteredWorkersSection").style.display = "none";
+      }
+
+      // Hacer clearWizard global
+      window.clearWizard = clearWizard;
+
+      // ========== BOTONES DE SECCIÓN CON DATA-TARGET ==========
+      document.querySelectorAll(".section-title button[data-target]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          setScreen(btn.dataset.target);
+        });
+      });
+
+      // ========== BOTÓN DE FILTROS DE EMPLEOS ==========
+      document.getElementById("openFilters")?.addEventListener("click", () => {
+        showToast("Filtros activados - usa las opciones de modalidad");
+      });
+
+      // ========== BOTÓN FILTRAR EN OPORTUNIDADES ==========
+      document.getElementById("sortOpp")?.addEventListener("click", () => {
+        showToast("Usa los chips para filtrar por tipo de oportunidad");
+      });
+
+      // ========== AI BANNER INTERACTIVO ==========
+      document.querySelectorAll(".ai-banner").forEach(banner => {
+        banner.style.cursor = "pointer";
+        banner.addEventListener("click", () => {
+          setScreen("ai");
+          showToast("Abriendo chat de IA...");
+        });
+      });
+
+      // ========== CATEGORY ITEMS - ACTIVAN EL WIZARD ==========
+      document.querySelectorAll("#categoryGrid .category-item").forEach(item => {
+        item.addEventListener("click", () => {
+          const cat = item.dataset.cat;
+          // Activar el wizard con la categoría seleccionada
+          selectWizardService(cat);
+          document.getElementById("wizardStep1").classList.add("active");
+          showToast(`Buscando ${serviceNames[cat]}...`);
+        });
+      });
+
+      // ========== BOTONES DEL PERFIL ==========
+      // Botón Editar perfil
+      document.querySelectorAll(".profile-actions .btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (btn.textContent.includes("Editar")) {
+            showToast("Abriendo editor de perfil...");
+          } else if (btn.textContent.includes("Configuración")) {
+            showToast("Abriendo configuración...");
+          }
+        });
+      });
+
+      // Botones de cambiar/editar en secciones del perfil
+      document.querySelectorAll(".screen-view[data-screen='profile'] .section-title button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          showToast(`Función "${btn.textContent}" próximamente disponible`);
+        });
+      });
+
+      // Botón WhatsApp del perfil
+      document.querySelectorAll(".screen-view[data-screen='profile'] .btn.whatsapp").forEach(btn => {
+        btn.addEventListener("click", () => {
+          showToast("Abriendo WhatsApp: 71234567");
+        });
+      });
+
+      // Botón Llamar del perfil
+      document.querySelectorAll(".screen-view[data-screen='profile'] .btn.ghost").forEach(btn => {
+        if (btn.textContent.includes("Llamar")) {
+          btn.addEventListener("click", () => {
+            showToast("Iniciando llamada: 71234567");
+          });
+        }
+      });
+
+      // ========== BOTONES DE JOBS (GUARDAR, CONTACTAR) ==========
+      document.body.addEventListener("click", (e) => {
+        // Botón Guardar en cards de empleos
+        if (e.target.matches(".card .btn.ghost") && e.target.textContent.includes("Guardar")) {
+          e.target.textContent = "✓ Guardado";
+          e.target.style.color = "var(--brand)";
+          showToast("Empleo guardado en favoritos");
+        }
+        
+        // Botón Contactar en cards de empleos
+        if (e.target.matches(".card .btn.whatsapp") && e.target.dataset.apply) {
+          showSuccessModal(`¡Aplicación enviada para ${e.target.dataset.apply}!`);
+        }
+      });
+
+      // ========== NAV ITEMS (barra inferior) ==========
+      document.querySelectorAll(".nav-item").forEach(item => {
+        item.addEventListener("click", () => {
+          const target = item.dataset.target;
+          if (target) {
+            setScreen(target);
+            document.querySelectorAll(".nav-item").forEach(i => i.classList.remove("active"));
+            item.classList.add("active");
+          }
+        });
+      });
+
+      // ========== EMPRENDIMIENTOS BOTONES ==========
+      document.querySelectorAll(".emprendimiento-card .btn.whatsapp").forEach(btn => {
+        btn.addEventListener("click", () => {
+          showToast("Abriendo WhatsApp del emprendimiento...");
+        });
+      });
+
+      // ========== AGREGAR EMPRENDIMIENTO ==========
+      document.querySelectorAll(".screen-nav .filter-btn").forEach(btn => {
+        if (btn.textContent.includes("Agregar")) {
+          btn.addEventListener("click", () => {
+            showSuccessModal("Función para agregar emprendimiento próximamente disponible");
+          });
+        }
+      });
+
+      // ========== BOTÓN CREAR DE PASANTÍAS ==========
+      // Ya está manejado por el filter-btn "Publicar"
+
+      // ========== CHAT INPUT ENTER KEY ==========
+      document.getElementById("chatInput")?.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          document.getElementById("chatSend")?.click();
+        }
       });
 
       renderHome();
